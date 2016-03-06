@@ -13,7 +13,7 @@ public class YdlDownloadProgress {
 
 	private final long fileSize;
 
-	private final long bps;
+	protected final long bps;
 
 	private final LocalTime eta;
 
@@ -24,6 +24,22 @@ public class YdlDownloadProgress {
 		this.fileSize = fileSize;
 		this.bps = bps;
 		this.eta = eta;
+	}
+
+	public String getRaw() {
+		return raw;
+	}
+
+	public long getPercentage() {
+		return percentage;
+	}
+
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public static YdlDownloadProgressBuilder builder() {
+		return new YdlDownloadProgressBuilder();
 	}
 
 
@@ -59,7 +75,7 @@ public class YdlDownloadProgress {
 			return this;
 		}
 
-		public YdlDownloadProgress createYdlDownloadProgress() {
+		public YdlDownloadProgress build() {
 			return new YdlDownloadProgress(raw, percentage, fileSize, bps, eta);
 		}
 	}

@@ -6,6 +6,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 /**
+ * capture output from youtube-dl process
+ *
  * Created by lm on 06.03.16.
  */
 public class YdlOutput implements Iterable<String>{
@@ -13,7 +15,6 @@ public class YdlOutput implements Iterable<String>{
 	private final Deque<String> lines=new ConcurrentLinkedDeque<>();
 
 	private final AtomicReference<YdlDownloadProgress> lastProgressReference=new AtomicReference<>();
-	private final YdlDownloadProgressParser progressParser=new YdlDownloadProgressParser();
 
 	public void append(String line) {
 		lastProgressReference.set(null);
@@ -43,12 +44,13 @@ public class YdlOutput implements Iterable<String>{
 
 			if (currentProgress != null)
 				return currentProgress;
+			
+			if(lines.isEmpty())
+				return null;
 
-			return getProgressParser().parse(lastMessage());
+			return new YdlDownloadProgressParser(lastMessage()).parse();
 		});
 	}
 
-	public YdlDownloadProgressParser getProgressParser() {
-		return progressParser;
-	}
+
 }

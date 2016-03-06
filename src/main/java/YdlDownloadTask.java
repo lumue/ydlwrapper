@@ -69,7 +69,7 @@ public class YdlDownloadTask {
 			while (s.hasNextLine()) {
 				String line = s.nextLine();
 				if(LOGGER.isDebugEnabled())
-					LOGGER.debug("youtube-dl process "+p.toString()+" wrote to stdout: "+ line);
+					LOGGER.debug("youtube-dl process "+p.toString()+" wrote to stdout: \""+ line+"\"");
 				ydlOutput.append(line);
 				triggerOnChangeCallback();
 			}
