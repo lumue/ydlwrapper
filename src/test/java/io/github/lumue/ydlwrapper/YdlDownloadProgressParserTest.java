@@ -1,3 +1,6 @@
+package io.github.lumue.ydlwrapper;
+
+import io.github.lumue.ydlwrapper.YdlDownloadProgressParser;
 import org.junit.Before;
 
 import java.io.IOException;

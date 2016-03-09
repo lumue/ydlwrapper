@@ -1,3 +1,5 @@
+package io.github.lumue.ydlwrapper;
+
 import java.time.LocalTime;
 import java.util.Objects;
 
