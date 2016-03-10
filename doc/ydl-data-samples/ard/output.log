@@ -1,0 +1,7 @@
+[ARD:mediathek] 34021386: Downloading webpage
+[ARD:mediathek] 34021386: Downloading media JSON
+[ARD:mediathek] 34021386: Downloading m3u8 information
+[info] Writing video description metadata as JSON to: tagesschau, 12_00 Uhr-34021386.info.json
+[download] Destination: tagesschau, 12_00 Uhr-34021386.mp4
+[avconv] 371113629 bytes
+[download] 100% of 353.92MiB

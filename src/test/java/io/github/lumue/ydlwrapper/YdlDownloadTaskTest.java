@@ -27,6 +27,7 @@ public class YdlDownloadTaskTest {
 		downloadTask=YdlDownloadTask.builder()
 				.setUrl("https://www.youtube.com/watch?v=79TRDRPGx34")
 				.setOutputFolder(OUTPUT_FOLDER)
+				.onNewOutputFile((a,b)-> System.out.println("now writing to "+b.getAbsolutePath()))
 				.build();
 
 	}

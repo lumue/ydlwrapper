@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Objects;
-import java.util.Scanner;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -17,9 +17,10 @@ import java.util.function.Consumer;
 public class YdlDownloadTask {
 
 
-	private final YdlBinaryDiscoverer ydlDiscoverer= YdlBinaryDiscoverer.INSTANCE;
 
 	private final Logger LOGGER= LoggerFactory.getLogger(YdlDownloadTask.class);
+
+	private final String pathToYdl;
 
 	public enum YdlDownloadState{EXECUTING, ERROR, SUCCESS, PENDING}
 
@@ -27,27 +28,41 @@ public class YdlDownloadTask {
 
 	private final File outputFolder;
 
-	private final Consumer<YdlDownloadTask> onChangeCallback;
-
 	private final AtomicReference<YdlDownloadState> downloadState=new AtomicReference<>(YdlDownloadState.PENDING);
 
+	private final ExecutorService executorService;
 
-	private final YdlOutput ydlOutput =new YdlOutput();
+	private final YdlCallback<YdlDownloadState> onStateChanged;
+	private final YdlCallback<YdlStatusMessage> onStdout;
+	private final YdlCallback<YdlStatusMessage> onStderr;
+	private final YdlCallback<File> onNewOutputFile;
 
-
-	public YdlDownloadTask(String url, String outputFolder, Consumer<YdlDownloadTask> onChangeCallback) {
+	YdlDownloadTask(
+			String pathToYdl,
+			String url,
+			String outputFolder,
+			YdlCallback<YdlDownloadState> onStateChanged,
+			YdlCallback<YdlStatusMessage> onStdout,
+			YdlCallback<YdlStatusMessage> onStderr,
+			YdlCallback<File> onNewOutputFile,
+			ExecutorService executorService) {
+		this.pathToYdl = Objects.requireNonNull(pathToYdl);
+		this.onStateChanged = Objects.requireNonNull(onStateChanged);
+		this.onStdout = Objects.requireNonNull(onStdout);
+		this.onStderr = Objects.requireNonNull(onStderr);
+		this.onNewOutputFile = Objects.requireNonNull(onNewOutputFile);
 		this.url = Objects.requireNonNull(url,"url must not be null");
 		this.outputFolder = new File(Objects.requireNonNull(outputFolder));
-		this.onChangeCallback = onChangeCallback;
+		if(executorService!=null)
+			this.executorService=Objects.requireNonNull(executorService);
+		else
+			this.executorService=Executors.newFixedThreadPool(3);
 	}
 
 	public String getUrl() {
 		return url;
 	}
 
-	public YdlDownloadProgress getProgress(){
-		return ydlOutput.lastProgress();
-	}
 
 	public void execute()  {
 
@@ -56,24 +71,17 @@ public class YdlDownloadTask {
 		if(!downloadState.compareAndSet(YdlDownloadState.PENDING,YdlDownloadState.EXECUTING)){
 			throw new YdlDownloadError.IllegalDownloadState("can not start download with download-state:"+getDownloadState());
 		}
-		ydlOutput.clear();
-		triggerOnChangeCallback();
+		onStateChanged();
 
 		int result=-1;
 		try {
 			Process p;
-			String command=discoverYdlBinary()+" "+getUrl();
+			String command=this.pathToYdl+" --no-color "+getUrl();
 			p = Runtime.getRuntime().exec(command,null,outputFolder);
 
-			Scanner s = new Scanner(p.getInputStream());
-			while (s.hasNextLine()) {
-				String line = s.nextLine();
-				if(LOGGER.isDebugEnabled())
-					LOGGER.debug("youtube-dl process "+p.toString()+" wrote to stdout: \""+ line+"\"");
-				ydlOutput.append(line);
-				triggerOnChangeCallback();
-			}
-			s.close();
+			executorService.execute(() -> new StreamScanner(p.getInputStream(), s -> onStdout(s)).scan());
+			executorService.execute(() -> new StreamScanner(p.getErrorStream(), s -> onStderr(s)).scan());
+
 
 			result=p.waitFor();
 
@@ -84,18 +92,33 @@ public class YdlDownloadTask {
 		} catch (Exception e) {
 			downloadState.compareAndSet(YdlDownloadState.PENDING,YdlDownloadState.ERROR);
 		}
-		triggerOnChangeCallback();
 		LOGGER.info("finished download from url "+getUrl()+" to path "+outputFolder.getAbsolutePath()+" with success code "+result);
 	}
 
-	private void triggerOnChangeCallback() {
-		if(onChangeCallback!=null)
-			onChangeCallback.accept(this);
+	private void onStderr(String s) {
+		LOGGER.warn("youtube-dl wrote to stderr: "+s);
+		if(this.onStderr!=null)
+			this.onStderr.handleCallback(this,new YdlStatusMessage(s));
 	}
 
-	private String discoverYdlBinary() {
-		return ydlDiscoverer.discoverYdlBinary();
+
+	private void onStdout(String nextLine) {
+		LOGGER.debug("youtube-dl wrote to stdout: "+nextLine);
+
+		YdlStatusMessage message=new YdlStatusMessage(nextLine);
+
+		if(message.isNewOutputFileSignal())
+			this.onNewOutputFile.handleCallback(this,new File(outputFolder.getAbsolutePath()+message.parseFilename()));
+
+		if(this.onStdout!=null)
+			this.onStdout.handleCallback(this, message);
 	}
+
+	private void onStateChanged() {
+		if(onStateChanged!=null)
+			onStateChanged.handleCallback(this,downloadState.get());
+	}
+
 
 	public static YdlDownloadTaskBuilder builder(){
 		return new YdlDownloadTaskBuilder();
@@ -106,21 +129,48 @@ public class YdlDownloadTask {
 	}
 
 	public static class YdlDownloadTaskBuilder {
-		private String url;
-		private Consumer<YdlDownloadTask> onChangeCallback;
-		private String outputFolder=".";
 
-		public YdlDownloadTaskBuilder setUrl(String url) {
-			this.url = url;
+		private String pathToYdl="/usr/local/bin/youtube-dl";
+		private String url;
+		private YdlCallback<YdlStatusMessage> onStdout=(a,b)->{};
+		private YdlCallback<YdlStatusMessage> onStderr=(a,b)->{};
+		private YdlCallback<File> onNewOutputFile=(a,b)->{};
+		private String outputFolder=".";
+		private ExecutorService executorService;
+
+		private YdlCallback<YdlDownloadState> onStateChanged=(a,b)->{};
+
+		public YdlDownloadTask build() {
+			return new YdlDownloadTask(pathToYdl, url, outputFolder,  onStateChanged, onStdout, onStderr, onNewOutputFile,executorService);
+		}
+
+		public YdlDownloadTaskBuilder setPathToYdl(String pathToYdl) {
+			this.pathToYdl = pathToYdl;
 			return this;
 		}
 
-		public YdlDownloadTask build() {
-			return new YdlDownloadTask(url, outputFolder, onChangeCallback);
+		public YdlDownloadTaskBuilder onStdout(YdlCallback<YdlStatusMessage> onStdout) {
+			this.onStdout = onStdout;
+			return this;
 		}
 
-		public YdlDownloadTaskBuilder setOnChangeCallback(Consumer<YdlDownloadTask> onChangeCallback) {
-			this.onChangeCallback = onChangeCallback;
+		public YdlDownloadTaskBuilder onStderr(YdlCallback<YdlStatusMessage> onStderr) {
+			this.onStderr = onStderr;
+			return this;
+		}
+
+		public YdlDownloadTaskBuilder onNewOutputFile(YdlCallback<File> onNewOutputFile) {
+			this.onNewOutputFile = onNewOutputFile;
+			return this;
+		}
+
+		public YdlDownloadTaskBuilder setExecutorService(ExecutorService executorService) {
+			this.executorService = executorService;
+			return this;
+		}
+
+		public YdlDownloadTaskBuilder setUrl(String url) {
+			this.url = url;
 			return this;
 		}
 
@@ -128,7 +178,15 @@ public class YdlDownloadTask {
 			this.outputFolder = outputFolder;
 			return this;
 		}
+
+		public void setOnStateChanged(YdlCallback<YdlDownloadState> onStateChanged) {
+			this.onStateChanged = onStateChanged;
+		}
 	}
 
 
+	@FunctionalInterface
+	public interface  YdlCallback<T> {
+		void handleCallback(YdlDownloadTask task, T object);
+	}
 }

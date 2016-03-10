@@ -1,0 +1,59 @@
+{
+  "upload_date": "20160309",
+  "protocol": "http",
+  "extractor": "XHamster",
+  "like_count": null,
+  "duration": 63.0,
+  "fulltitle": "Ein schoener Legginsarsch immer noch das geilste",
+  "playlist_index": null,
+  "view_count": 2411,
+  "playlist": null,
+  "http_headers": {
+    "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+    "Accept-Language": "en-us,en;q=0.5",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/44.0 (Chrome)"
+  },
+  "_filename": "Ein schoener Legginsarsch immer noch das geilste-5775208.mp4",
+  "id": "5775208",
+  "dislike_count": null,
+  "comment_count": 0,
+  "age_limit": 18,
+  "thumbnail": "http://et09.xhcdn.com/t/208/320/4_5775208.jpg",
+  "webpage_url_basename": "ein_schoener_legginsarsch_immer_noch_das_geilste.html",
+  "display_id": "5775208",
+  "description": null,
+  "format": "sd - unknown",
+  "preference": 1,
+  "uploader": "Swissfunmaster1980",
+  "format_id": "sd",
+  "thumbnails": [
+    {
+      "url": "http://et09.xhcdn.com/t/208/320/4_5775208.jpg",
+      "id": "0"
+    }
+  ],
+  "url": "http://a9-19.clients.cdn13.com/005/775/5775208.mp4?cdn_creation_time=1457618811&cdn_ttl=14400&cdn_bw=150k&cdn_bw_fs=156k&cdn_cv_data=78.53.85.149-v&cdn_hash=8d984f4e5a55904c511f884bd0a17b93",
+  "extractor_key": "XHamster",
+  "title": "Ein schoener Legginsarsch immer noch das geilste",
+  "ext": "mp4",
+  "webpage_url": "http://xhamster.com/movies/5775208/ein_schoener_legginsarsch_immer_noch_das_geilste.html",
+  "formats": [
+    {
+      "protocol": "http",
+      "format": "sd - unknown",
+      "url": "http://a9-19.clients.cdn13.com/005/775/5775208.mp4?cdn_creation_time=1457618811&cdn_ttl=14400&cdn_bw=150k&cdn_bw_fs=156k&cdn_cv_data=78.53.85.149-v&cdn_hash=8d984f4e5a55904c511f884bd0a17b93",
+      "http_headers": {
+        "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+        "Accept-Language": "en-us,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/44.0 (Chrome)"
+      },
+      "ext": "mp4",
+      "preference": 1,
+      "format_id": "sd"
+    }
+  ]
+}
