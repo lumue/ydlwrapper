@@ -4,10 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 
 /**
  * Execute youtube-dl download
@@ -21,6 +22,7 @@ public class YdlDownloadTask {
 	private final Logger LOGGER= LoggerFactory.getLogger(YdlDownloadTask.class);
 
 	private final String pathToYdl;
+	private AtomicBoolean prepared=new AtomicBoolean(false);
 
 	public enum YdlDownloadState{EXECUTING, ERROR, SUCCESS, PENDING}
 
@@ -36,6 +38,8 @@ public class YdlDownloadTask {
 	private final YdlCallback<YdlStatusMessage> onStdout;
 	private final YdlCallback<YdlStatusMessage> onStderr;
 	private final YdlCallback<File> onNewOutputFile;
+
+	private final Map<String,YdlFileDownload> fileDownloadMap=new ConcurrentHashMap<>();
 
 	YdlDownloadTask(
 			String pathToYdl,
@@ -68,6 +72,9 @@ public class YdlDownloadTask {
 
 		LOGGER.info("starting download from url "+getUrl()+" to path "+outputFolder.getAbsolutePath());
 
+		if(!isPrepared())
+			prepare();
+
 		if(!downloadState.compareAndSet(YdlDownloadState.PENDING,YdlDownloadState.EXECUTING)){
 			throw new YdlDownloadError.IllegalDownloadState("can not start download with download-state:"+getDownloadState());
 		}
@@ -93,6 +100,14 @@ public class YdlDownloadTask {
 			downloadState.compareAndSet(YdlDownloadState.PENDING,YdlDownloadState.ERROR);
 		}
 		LOGGER.info("finished download from url "+getUrl()+" to path "+outputFolder.getAbsolutePath()+" with success code "+result);
+	}
+
+	private void prepare() {
+
+	}
+
+	private boolean isPrepared() {
+		return prepared.get();
 	}
 
 	private void onStderr(String s) {

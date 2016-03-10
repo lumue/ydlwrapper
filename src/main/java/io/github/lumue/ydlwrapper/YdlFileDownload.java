@@ -1,0 +1,100 @@
+package io.github.lumue.ydlwrapper;
+
+import java.time.LocalTime;
+
+/**
+ * provide information about downloaded files
+ *
+ * Created by lm on 10.03.16.
+ */
+public class YdlFileDownload {
+
+	private final String filename;
+	private final String format;
+	private final Long expectedSize;
+	private Long downloadedSize;
+	private Long bps;
+	private LocalTime started;
+	private LocalTime finished;
+	private LocalTime lastUpdate;
+	private State state=State.PENDING;
+
+	public YdlFileDownload updateDownloadedSize(Long downloadedSize) {
+		refreshLastUpdate();
+		this.downloadedSize = downloadedSize;
+		return this;
+	}
+
+	private void refreshLastUpdate() {
+		this.lastUpdate=LocalTime.now();
+	}
+
+	public YdlFileDownload updateBps(Long bps) {
+		refreshLastUpdate();
+		this.bps = bps;
+		return this;
+	}
+
+	public YdlFileDownload updateStarted(LocalTime started) {
+		refreshLastUpdate();
+		this.started = started;
+		return this;
+	}
+
+	public YdlFileDownload updateFinished(LocalTime finished) {
+		refreshLastUpdate();
+		this.finished = finished;
+		return this;
+	}
+
+	public YdlFileDownload updateLastUpdate(LocalTime lastUpdate) {
+		refreshLastUpdate();
+		this.lastUpdate = lastUpdate;
+		return this;
+	}
+
+	public YdlFileDownload updateState(State state) {
+		refreshLastUpdate();
+		this.state = state;
+		return this;
+	}
+
+	public enum State{PENDING,RUNNING,PAUSED,FINISHED}
+
+	YdlFileDownload(String filename, String format, Long expectedSize) {
+		this.filename = filename;
+		this.format = format;
+		this.expectedSize = expectedSize;
+	}
+
+	public static YdlFileDownloadBuilder builder(){
+		return new YdlFileDownloadBuilder();
+	}
+
+	public static class YdlFileDownloadBuilder {
+		private String filename;
+		private String format;
+		private Long expectedSize;
+
+		public YdlFileDownloadBuilder setFilename(String filename) {
+			this.filename = filename;
+			return this;
+		}
+
+		public YdlFileDownloadBuilder setFormat(String format) {
+			this.format = format;
+			return this;
+		}
+
+		public YdlFileDownloadBuilder setExpectedSize(Long expectedSize) {
+			this.expectedSize = expectedSize;
+			return this;
+		}
+
+		public YdlFileDownload createYdlFileDownload() {
+			return new YdlFileDownload(filename, format, expectedSize);
+		}
+	}
+
+
+}
