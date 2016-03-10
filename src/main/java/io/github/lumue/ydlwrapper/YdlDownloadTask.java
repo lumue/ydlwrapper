@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.*;
@@ -23,6 +24,8 @@ public class YdlDownloadTask {
 
 	private final String pathToYdl;
 	private AtomicBoolean prepared=new AtomicBoolean(false);
+	private YdlDownloadTaskMetadataParser infoJsonParser=new YdlDownloadTaskMetadataParser();
+	private YdlDownloadTaskMetadata ydlDownloadTaskMetadata;
 
 	public enum YdlDownloadState{EXECUTING, ERROR, SUCCESS, PENDING}
 
@@ -102,7 +105,16 @@ public class YdlDownloadTask {
 		LOGGER.info("finished download from url "+getUrl()+" to path "+outputFolder.getAbsolutePath()+" with success code "+result);
 	}
 
-	private void prepare() {
+	public void prepare() {
+		prepared.set(false);
+		String command=this.pathToYdl+" --no-color --dump-single-json "+getUrl();
+		fileDownloadMap.clear();
+		try {
+			Process p = Runtime.getRuntime().exec(command,null,outputFolder);
+			ydlDownloadTaskMetadata=infoJsonParser.parse(p.getInputStream());
+		} catch (IOException e) {
+			throw new RuntimeException("error getting metadata",e);
+		}
 
 	}
 

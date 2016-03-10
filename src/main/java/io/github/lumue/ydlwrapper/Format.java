@@ -44,7 +44,7 @@ public class Format {
 
     @JsonProperty("http_headers")
     @Valid
-    private HttpHeaders_ httpHeaders;
+    private HttpHeaders httpHeaders;
     @JsonProperty("tbr")
     private long tbr;
     @JsonProperty("protocol")
@@ -119,7 +119,7 @@ public class Format {
      * @param tbr
      * @param playerUrl
      */
-    public Format(HttpHeaders_ httpHeaders, long tbr, String protocol, String format, String url, long filesize, String vcodec, String formatNote, long abr, Object playerUrl, String ext, long preference, String formatId, String acodec, Object asr, long height, Object language, long width, long fps, String container, String resolution) {
+    public Format(HttpHeaders httpHeaders, long tbr, String protocol, String format, String url, long filesize, String vcodec, String formatNote, long abr, Object playerUrl, String ext, long preference, String formatId, String acodec, Object asr, long height, Object language, long width, long fps, String container, String resolution) {
         this.httpHeaders = httpHeaders;
         this.tbr = tbr;
         this.protocol = protocol;
@@ -149,7 +149,7 @@ public class Format {
      *     The httpHeaders
      */
     @JsonProperty("http_headers")
-    public HttpHeaders_ getHttpHeaders() {
+    public HttpHeaders getHttpHeaders() {
         return httpHeaders;
     }
 
@@ -159,11 +159,11 @@ public class Format {
      *     The http_headers
      */
     @JsonProperty("http_headers")
-    public void setHttpHeaders(HttpHeaders_ httpHeaders) {
+    public void setHttpHeaders(HttpHeaders httpHeaders) {
         this.httpHeaders = httpHeaders;
     }
 
-    public Format withHttpHeaders(HttpHeaders_ httpHeaders) {
+    public Format withHttpHeaders(HttpHeaders httpHeaders) {
         this.httpHeaders = httpHeaders;
         return this;
     }
