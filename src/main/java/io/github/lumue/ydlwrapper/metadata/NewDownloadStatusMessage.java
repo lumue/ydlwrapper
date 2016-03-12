@@ -16,11 +16,11 @@ public class NewDownloadStatusMessage extends YdlStatusMessage{
 	}
 
 	public String parseExtension() {
-		return getLine().substring(getLine().lastIndexOf('.') +1);
+		return getLine().substring(getLine().lastIndexOf('.') +1).replace("\"","");
 	}
 
 	public String parseFormatId() {
-		return getLine().substring(getLine().lastIndexOf(".f") +1,getLine().lastIndexOf('.'));
+		return getLine().substring(getLine().lastIndexOf(".f") +2,getLine().lastIndexOf('.'));
 	}
 
 	protected static boolean isMessageTypeFor(String line) {

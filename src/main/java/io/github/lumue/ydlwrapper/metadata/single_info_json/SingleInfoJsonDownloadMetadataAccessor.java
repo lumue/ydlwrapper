@@ -18,40 +18,40 @@ public class SingleInfoJsonDownloadMetadataAccessor implements YdlDownloadMetada
 	}
 
 	@Override
-	public Optional<Long> getFilesize(String filename, String formatExtension) {
+	public Optional<Long> getFilesize(String filename, String formatId) {
 		Long filesize;
 		if(isPlaylist()){
-			filesize=getFilesizeFromPlaylist(filename,formatExtension);
+			filesize=getFilesizeFromPlaylist(filename,formatId);
 		}else if(isMergedFormat()){
-			filesize=getFilesizeFromMergedFormat(filename,formatExtension);
+			filesize=getFilesizeFromMergedFormat(formatId);
 		} else
-			filesize=getFilesizeFromSingleFileDownload();
-		return Optional.of(filesize);
+			filesize=getFilesizeFromSingleFileDownload(formatId);
+		return filesize!=null?Optional.of(filesize):Optional.empty();
 	}
 
-	private Long getFilesizeFromMergedFormat(String filename, String formatExtension) {
+	private Long getFilesizeFromMergedFormat(String formatId) {
 		return ydlInfoJson.getRequestedFormats().stream()
-				.filter((requestedFormat -> formatExtension.equals(requestedFormat.getExt())))
+				.filter((requestedFormat -> formatId.equals(requestedFormat.getFormatId())))
 				.findFirst()
 				.orElseThrow(() -> new RuntimeException("format not found"))
 				.getFilesize()
 				.longValue();
 	}
 
-	private Long getFilesizeFromPlaylist(String filename, String formatExtension) {
+	private Long getFilesizeFromPlaylist(String filename, String formatId) {
 		Entry entry=getPlaylistEntryByFilename(filename);
 
 		if(isMergedFormat(entry)){
 			return entry.getRequestedFormats().stream()
-					.filter((requestedFormat -> formatExtension.equals(requestedFormat.getExt())))
+					.filter((requestedFormat -> formatId.equals(requestedFormat.getFormatId())))
 					.findFirst()
 					.orElseThrow(() -> new RuntimeException("format not found"))
 					.getFilesize()
 					.longValue();
 		}
-		String formatId=entry.getFormatId();
+
 		return entry.getFormats().stream()
-				.filter((requestedFormat -> formatId.equals(requestedFormat.getFormat())))
+				.filter((requestedFormat -> formatId.equals(requestedFormat.getFormatId())))
 				.findFirst()
 				.orElseThrow(() -> new RuntimeException("format not found"))
 				.getFilesize()
@@ -82,10 +82,9 @@ public class SingleInfoJsonDownloadMetadataAccessor implements YdlDownloadMetada
 		return requestedFormats!=null&&!requestedFormats.isEmpty();
 	}
 
-	public Long getFilesizeFromSingleFileDownload() {
-		String ext=ydlInfoJson.getFormat();
+	public Long getFilesizeFromSingleFileDownload(String formatId) {
 		Integer filesize = ydlInfoJson.getFormats().stream()
-				.filter(requestedFormat -> ext.equals(requestedFormat.getFormat()))
+				.filter(requestedFormat -> formatId.equals(requestedFormat.getFormatId()))
 				.findFirst()
 				.orElseThrow(() -> new RuntimeException("format not found"))
 				.getFilesize();

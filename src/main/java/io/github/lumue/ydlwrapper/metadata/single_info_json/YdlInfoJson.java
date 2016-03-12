@@ -148,7 +148,7 @@ public class YdlInfoJson {
     private Object startTime;
     @JsonProperty("uploader")
     private String uploader;
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     private String formatId;
     @JsonProperty("uploader_id")
     private String uploaderId;
@@ -1043,7 +1043,7 @@ public class YdlInfoJson {
      * @return
      *     The formatId
      */
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     public String getFormatId() {
         return formatId;
     }
@@ -1053,7 +1053,7 @@ public class YdlInfoJson {
      * @param formatId
      *     The Formatid
      */
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     public void setFormatId(String formatId) {
         this.formatId = formatId;
     }

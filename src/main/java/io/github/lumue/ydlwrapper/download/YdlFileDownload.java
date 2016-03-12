@@ -11,6 +11,7 @@ public class YdlFileDownload {
 
 	private final String filename;
 	private final String format;
+	private final String extension;
 	private final Long expectedSize;
 	private Long downloadedSize;
 	private Long bps;
@@ -70,8 +71,9 @@ public class YdlFileDownload {
 				'}';
 	}
 
-	YdlFileDownload(String filename, String format, Long expectedSize) {
+	private YdlFileDownload(String filename, String extension, String format, Long expectedSize) {
 		this.filename = filename;
+		this.extension = extension;
 		this.format = format;
 		this.expectedSize = expectedSize;
 	}
@@ -84,6 +86,7 @@ public class YdlFileDownload {
 		private String filename;
 		private String format;
 		private Long expectedSize;
+		private String extension;
 
 		public YdlFileDownloadBuilder setFilename(String filename) {
 			this.filename = filename;
@@ -100,8 +103,13 @@ public class YdlFileDownload {
 			return this;
 		}
 
+		public YdlFileDownloadBuilder setExtension(String extension) {
+			this.extension = extension;
+			return this;
+		}
+
 		public YdlFileDownload createYdlFileDownload() {
-			return new YdlFileDownload(filename, format, expectedSize);
+			return new YdlFileDownload(filename, extension, format, expectedSize);
 		}
 	}
 

@@ -53,7 +53,7 @@ public class RequestedFormat {
     private Integer height;
     @JsonProperty("preference")
     private Integer preference;
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     private String formatId;
     @JsonProperty("language")
     private Object language;
@@ -276,7 +276,7 @@ public class RequestedFormat {
      * @return
      *     The formatId
      */
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     public String getFormatId() {
         return formatId;
     }
@@ -286,7 +286,7 @@ public class RequestedFormat {
      * @param formatId
      *     The Formatid
      */
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     public void setFormatId(String formatId) {
         this.formatId = formatId;
     }

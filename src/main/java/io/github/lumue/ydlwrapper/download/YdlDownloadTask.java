@@ -168,8 +168,14 @@ public class YdlDownloadTask {
 	private void onNewDownloadFile(NewDownloadStatusMessage message) {
 		String extension = message.parseExtension();
 		String filename = message.parseFilename();
-		Long filesize = ydlDownloadMetadataAccessor.getFilesize(filename, extension).orElse(0L);
-		YdlFileDownload download = new YdlFileDownload(filename, extension, filesize);
+		String formatId = message.parseFormatId();
+		Long filesize = ydlDownloadMetadataAccessor.getFilesize(filename, formatId).orElse(0L);
+		YdlFileDownload download = YdlFileDownload.builder()
+				.setExtension(extension)
+				.setFilename(filename)
+				.setExpectedSize(filesize)
+				.setFormat(formatId)
+				.createYdlFileDownload();
 		this.currentDownload.getAndSet(download);
 	}
 

@@ -65,7 +65,7 @@ public class Format {
     private String ext;
     @JsonProperty("preference")
     private Integer preference;
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     private String formatId;
     @JsonProperty("acodec")
     private String acodec;
@@ -386,7 +386,7 @@ public class Format {
      * @return
      *     The formatId
      */
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     public String getFormatId() {
         return formatId;
     }
@@ -396,7 +396,7 @@ public class Format {
      * @param formatId
      *     The Formatid
      */
-    @JsonProperty("Formatid")
+    @JsonProperty("format_id")
     public void setFormatId(String formatId) {
         this.formatId = formatId;
     }
