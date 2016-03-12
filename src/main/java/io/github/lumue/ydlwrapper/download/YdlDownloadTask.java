@@ -1,8 +1,10 @@
 package io.github.lumue.ydlwrapper.download;
 
+import io.github.lumue.ydlwrapper.metadata.FileMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.single_info_json.SingleInfoJsonFileMetadataAccessor;
 import io.github.lumue.ydlwrapper.shared.StreamScanner;
-import io.github.lumue.ydlwrapper.metadata.YdlDownloadTaskMetadata;
-import io.github.lumue.ydlwrapper.metadata.YdlDownloadTaskMetadataParser;
+import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJson;
+import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJsonParser;
 import io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +29,10 @@ public class YdlDownloadTask {
 
 	private final String pathToYdl;
 	private final AtomicBoolean prepared=new AtomicBoolean(false);
-	private final YdlDownloadTaskMetadataParser infoJsonParser=new YdlDownloadTaskMetadataParser();
+	private final YdlInfoJsonParser infoJsonParser=new YdlInfoJsonParser();
 	private final boolean writeInfoJson;
-	private final AtomicReference<YdlDownloadTaskMetadata> ydlDownloadTaskMetadata=new AtomicReference<>(null);
+	private final AtomicReference<YdlInfoJson> ydlDownloadTaskMetadata=new AtomicReference<>(null);
+	private FileMetadataAccessor fileMetadataAccessor;
 
 	public enum YdlDownloadState{EXECUTING, ERROR, SUCCESS, PENDING}
 
@@ -114,15 +117,19 @@ public class YdlDownloadTask {
 	}
 
 	public synchronized void prepare()  {
-		prepared.set(false);
+		prepared.getAndSet(false);
 		fileDownloads.clear();
 		try {
 			int result = YoutubeDlExecutor.newBuilder(templateExecutor)
 					.withOptions(DUMP_SINGLE_JSON)
-					.withStdoutConsumer(inputStream -> ydlDownloadTaskMetadata.getAndSet(infoJsonParser.apply(inputStream)))
+					.withStdoutConsumer(inputStream -> {
+						YdlInfoJson ydlInfoJson = infoJsonParser.apply(inputStream);
+						ydlDownloadTaskMetadata.getAndSet(ydlInfoJson);
+					})
 					.build()
 					.execute();
-			prepared.set(result==0);
+			prepared.getAndSet(result==0);
+			this.fileMetadataAccessor =new SingleInfoJsonFileMetadataAccessor(ydlDownloadTaskMetadata.get());
 		} catch (Exception e) {
 			throw new RuntimeException("error getting metadata",e);
 		}
@@ -159,12 +166,11 @@ public class YdlDownloadTask {
 	private void onNewDownloadFile(YdlStatusMessage message) {
 		String extension = message.parseExtension();
 		String filename = message.parseFilename();
-		new YdlFileDownload(filename, extension,getExpectedFilsize(filename,extension));
+		Long filesize = fileMetadataAccessor.getFilesize(filename, extension);
+		new YdlFileDownload(filename, extension, filesize);
 	}
 
-	private Long getExpectedFilsize(String filename, String extension) {
-		return 0L;
-	}
+
 
 	private void onStateChanged() {
 		if(onStateChanged!=null)

@@ -1,5 +1,5 @@
 
-package io.github.lumue.ydlwrapper.metadata;
+package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     "id",
     "webpage_url_basename"
 })
-public class YdlDownloadTaskMetadata {
+public class YdlInfoJson {
 
     @JsonProperty("extractor")
     private String extractor;
@@ -55,7 +55,7 @@ public class YdlDownloadTaskMetadata {
      * No args constructor for use in serialization
      * 
      */
-    public YdlDownloadTaskMetadata() {
+    public YdlInfoJson() {
     }
 
     /**
@@ -69,7 +69,7 @@ public class YdlDownloadTaskMetadata {
      * @param extractorKey
      * @param webpageUrl
      */
-    public YdlDownloadTaskMetadata(String extractor, String Type, String title, String extractorKey, String webpageUrl, List<Entry> entries, String id, String webpageUrlBasename) {
+    public YdlInfoJson(String extractor, String Type, String title, String extractorKey, String webpageUrl, List<Entry> entries, String id, String webpageUrlBasename) {
         this.extractor = extractor;
         this.Type = Type;
         this.title = title;
@@ -100,7 +100,7 @@ public class YdlDownloadTaskMetadata {
         this.extractor = extractor;
     }
 
-    public YdlDownloadTaskMetadata withExtractor(String extractor) {
+    public YdlInfoJson withExtractor(String extractor) {
         this.extractor = extractor;
         return this;
     }
@@ -125,7 +125,7 @@ public class YdlDownloadTaskMetadata {
         this.Type = Type;
     }
 
-    public YdlDownloadTaskMetadata withType(String Type) {
+    public YdlInfoJson withType(String Type) {
         this.Type = Type;
         return this;
     }
@@ -150,7 +150,7 @@ public class YdlDownloadTaskMetadata {
         this.title = title;
     }
 
-    public YdlDownloadTaskMetadata withTitle(String title) {
+    public YdlInfoJson withTitle(String title) {
         this.title = title;
         return this;
     }
@@ -175,7 +175,7 @@ public class YdlDownloadTaskMetadata {
         this.extractorKey = extractorKey;
     }
 
-    public YdlDownloadTaskMetadata withExtractorKey(String extractorKey) {
+    public YdlInfoJson withExtractorKey(String extractorKey) {
         this.extractorKey = extractorKey;
         return this;
     }
@@ -200,7 +200,7 @@ public class YdlDownloadTaskMetadata {
         this.webpageUrl = webpageUrl;
     }
 
-    public YdlDownloadTaskMetadata withWebpageUrl(String webpageUrl) {
+    public YdlInfoJson withWebpageUrl(String webpageUrl) {
         this.webpageUrl = webpageUrl;
         return this;
     }
@@ -225,7 +225,7 @@ public class YdlDownloadTaskMetadata {
         this.entries = entries;
     }
 
-    public YdlDownloadTaskMetadata withEntries(List<Entry> entries) {
+    public YdlInfoJson withEntries(List<Entry> entries) {
         this.entries = entries;
         return this;
     }
@@ -250,7 +250,7 @@ public class YdlDownloadTaskMetadata {
         this.id = id;
     }
 
-    public YdlDownloadTaskMetadata withId(String id) {
+    public YdlInfoJson withId(String id) {
         this.id = id;
         return this;
     }
@@ -275,7 +275,7 @@ public class YdlDownloadTaskMetadata {
         this.webpageUrlBasename = webpageUrlBasename;
     }
 
-    public YdlDownloadTaskMetadata withWebpageUrlBasename(String webpageUrlBasename) {
+    public YdlInfoJson withWebpageUrlBasename(String webpageUrlBasename) {
         this.webpageUrlBasename = webpageUrlBasename;
         return this;
     }
@@ -295,7 +295,7 @@ public class YdlDownloadTaskMetadata {
         this.additionalProperties.put(name, value);
     }
 
-    public YdlDownloadTaskMetadata withAdditionalProperty(String name, Object value) {
+    public YdlInfoJson withAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
         return this;
     }
@@ -310,10 +310,10 @@ public class YdlDownloadTaskMetadata {
         if (other == this) {
             return true;
         }
-        if ((other instanceof YdlDownloadTaskMetadata) == false) {
+        if ((other instanceof YdlInfoJson) == false) {
             return false;
         }
-        YdlDownloadTaskMetadata rhs = ((YdlDownloadTaskMetadata) other);
+        YdlInfoJson rhs = ((YdlInfoJson) other);
         return new EqualsBuilder().append(extractor, rhs.extractor).append(Type, rhs.Type).append(title, rhs.title).append(extractorKey, rhs.extractorKey).append(webpageUrl, rhs.webpageUrl).append(entries, rhs.entries).append(id, rhs.id).append(webpageUrlBasename, rhs.webpageUrlBasename).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 

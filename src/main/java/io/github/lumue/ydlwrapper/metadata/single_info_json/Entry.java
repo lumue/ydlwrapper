@@ -1,5 +1,5 @@
 
-package io.github.lumue.ydlwrapper.metadata;
+package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
 import java.util.ArrayList;
 import java.util.HashMap;
