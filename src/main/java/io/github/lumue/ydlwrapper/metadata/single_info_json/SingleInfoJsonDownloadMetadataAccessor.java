@@ -4,6 +4,7 @@ import io.github.lumue.ydlwrapper.metadata.YdlDownloadMetadataAccessor;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by lm on 12.03.16.
@@ -17,13 +18,15 @@ public class SingleInfoJsonDownloadMetadataAccessor implements YdlDownloadMetada
 	}
 
 	@Override
-	public Long getFilesize(String filename, String formatExtension) {
+	public Optional<Long> getFilesize(String filename, String formatExtension) {
+		Long filesize;
 		if(isPlaylist()){
-			return getFilesizeFromPlaylist(filename,formatExtension);
+			filesize=getFilesizeFromPlaylist(filename,formatExtension);
 		}else if(isMergedFormat()){
-			return getFilesizeFromMergedFormat(filename,formatExtension);
-		}
-		return getFilesizeFromSingleFileDownload();
+			filesize=getFilesizeFromMergedFormat(filename,formatExtension);
+		} else
+			filesize=getFilesizeFromSingleFileDownload();
+		return Optional.of(filesize);
 	}
 
 	private Long getFilesizeFromMergedFormat(String filename, String formatExtension) {
@@ -81,13 +84,16 @@ public class SingleInfoJsonDownloadMetadataAccessor implements YdlDownloadMetada
 
 	public Long getFilesizeFromSingleFileDownload() {
 		String ext=ydlInfoJson.getFormat();
-		Format format = ydlInfoJson.getFormats().stream()
+		Integer filesize = ydlInfoJson.getFormats().stream()
 				.filter(requestedFormat -> ext.equals(requestedFormat.getFormat()))
 				.findFirst()
-				.orElseThrow(() -> new RuntimeException("format not found"));
-		return format
-				.getFilesize()
-				.longValue();
+				.orElseThrow(() -> new RuntimeException("format not found"))
+				.getFilesize();
+
+		if(filesize!=null)
+			return filesize.longValue();
+		else
+			return null;
 	}
 
 	;

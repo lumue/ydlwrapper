@@ -166,7 +166,7 @@ public class YdlDownloadTask {
 	private void onNewDownloadFile(YdlStatusMessage message) {
 		String extension = message.parseExtension();
 		String filename = message.parseFilename();
-		Long filesize = ydlDownloadMetadataAccessor.getFilesize(filename, extension);
+		Long filesize = ydlDownloadMetadataAccessor.getFilesize(filename, extension).orElse(0L);
 		YdlFileDownload download = new YdlFileDownload(filename, extension, filesize);
 		this.currentDownload.getAndSet(download);
 	}
