@@ -26,7 +26,7 @@ public class YdlDownloadTaskTest {
 	public void setUp() throws IOException {
 		prepareOutputFolder();
 		downloadTask=YdlDownloadTask.builder()
-				.setUrl("https://www.youtube.com/watch?v=79TRDRPGx34")
+				.setUrl("https://www.youtube.com/watch?v=BiG6_1LS_AI")
 				.setOutputFolder(OUTPUT_FOLDER)
 				.setWriteInfoJson(true)
 				.onNewOutputFile((a,b)-> System.out.println(b.toString()))

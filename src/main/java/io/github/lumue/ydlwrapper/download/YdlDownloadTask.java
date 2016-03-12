@@ -1,6 +1,8 @@
 package io.github.lumue.ydlwrapper.download;
 
+import io.github.lumue.ydlwrapper.metadata.NewDownloadStatusMessage;
 import io.github.lumue.ydlwrapper.metadata.YdlDownloadMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.YdlStatusMessage;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.SingleInfoJsonDownloadMetadataAccessor;
 import io.github.lumue.ydlwrapper.shared.StreamScanner;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJson;
@@ -143,18 +145,18 @@ public class YdlDownloadTask {
 	private void onStderr(String s) {
 		LOGGER.warn("youtube-dl wrote to stderr: "+s);
 		if(this.onStderr!=null)
-			this.onStderr.handleCallback(this,new YdlStatusMessage(s));
+			this.onStderr.handleCallback(this, YdlStatusMessage.createYdlStatusMessage(s));
 	}
 
 
 	private void onStdout(String nextLine) {
 		LOGGER.debug("youtube-dl wrote to stdout: "+nextLine);
 
-		YdlStatusMessage message=new YdlStatusMessage(nextLine);
+		YdlStatusMessage message= YdlStatusMessage.createYdlStatusMessage(nextLine);
 
-		if(message.isNewOutputFileSignal()){
-			onNewDownloadFile(message);
-			String filename = message.parseFilename();
+		if(message instanceof NewDownloadStatusMessage){
+			NewDownloadStatusMessage downloadStatusMessage = (NewDownloadStatusMessage) message;
+			onNewDownloadFile(downloadStatusMessage);
 			this.onNewOutputFile.handleCallback(this,this.currentDownload.get());
 		}
 
@@ -163,7 +165,7 @@ public class YdlDownloadTask {
 			this.onStdout.handleCallback(this, message);
 	}
 
-	private void onNewDownloadFile(YdlStatusMessage message) {
+	private void onNewDownloadFile(NewDownloadStatusMessage message) {
 		String extension = message.parseExtension();
 		String filename = message.parseFilename();
 		Long filesize = ydlDownloadMetadataAccessor.getFilesize(filename, extension).orElse(0L);
