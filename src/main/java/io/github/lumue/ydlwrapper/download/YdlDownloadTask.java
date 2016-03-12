@@ -8,15 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor.Option.DUMP_SINGLE_JSON;
-import static io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor.Option.NEW_LINE;
-import static io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor.Option.NO_COLOR;
+import static io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor.Option.*;
 
 /**
  * Execute youtube-dl download
@@ -31,7 +28,8 @@ public class YdlDownloadTask {
 	private final String pathToYdl;
 	private final AtomicBoolean prepared=new AtomicBoolean(false);
 	private final YdlDownloadTaskMetadataParser infoJsonParser=new YdlDownloadTaskMetadataParser();
-	private YdlDownloadTaskMetadata ydlDownloadTaskMetadata;
+	private final boolean writeInfoJson;
+	private final AtomicReference<YdlDownloadTaskMetadata> ydlDownloadTaskMetadata=new AtomicReference<>(null);
 
 	public enum YdlDownloadState{EXECUTING, ERROR, SUCCESS, PENDING}
 
@@ -40,13 +38,13 @@ public class YdlDownloadTask {
 	private final File outputFolder;
 
 	private final AtomicReference<YdlDownloadState> downloadState=new AtomicReference<>(YdlDownloadState.PENDING);
-
+	private final AtomicReference<YdlFileDownload> currentDownload=new AtomicReference<>(null);
 	private final YdlCallback<YdlDownloadState> onStateChanged;
 	private final YdlCallback<YdlStatusMessage> onStdout;
 	private final YdlCallback<YdlStatusMessage> onStderr;
 	private final YdlCallback<File> onNewOutputFile;
 
-	private final Map<String,YdlFileDownload> fileDownloadMap=new ConcurrentHashMap<>();
+	private final ConcurrentLinkedDeque<YdlFileDownload> fileDownloads =new ConcurrentLinkedDeque<>();
 
 	YdlDownloadTask(
 			String pathToYdl,
@@ -55,7 +53,8 @@ public class YdlDownloadTask {
 			YdlCallback<YdlDownloadState> onStateChanged,
 			YdlCallback<YdlStatusMessage> onStdout,
 			YdlCallback<YdlStatusMessage> onStderr,
-			YdlCallback<File> onNewOutputFile) {
+			YdlCallback<File> onNewOutputFile,
+			boolean writeInfoJson) {
 		this.pathToYdl = Objects.requireNonNull(pathToYdl);
 		this.onStateChanged = Objects.requireNonNull(onStateChanged);
 		this.onStdout = Objects.requireNonNull(onStdout);
@@ -63,6 +62,7 @@ public class YdlDownloadTask {
 		this.onNewOutputFile = Objects.requireNonNull(onNewOutputFile);
 		this.url = Objects.requireNonNull(url,"url must not be null");
 		this.outputFolder = new File(Objects.requireNonNull(outputFolder));
+		this.writeInfoJson=writeInfoJson;
 		templateExecutor = YoutubeDlExecutor.newBuilder()
 				.withYdlLocation(pathToYdl)
 				.withUrl(getUrl())
@@ -92,9 +92,14 @@ public class YdlDownloadTask {
 
 		int result=-1;
 		try {
-			result= YoutubeDlExecutor.newBuilder(templateExecutor)
-					.withStdoutConsumer(new StreamScanner(s -> onStdout(s)))
-					.withStderrConsumer(new StreamScanner(s -> onStderr(s)))
+			YoutubeDlExecutor.Builder builder = YoutubeDlExecutor.newBuilder(templateExecutor)
+					.withStdoutConsumer(new StreamScanner(this::onStdout))
+					.withStderrConsumer(new StreamScanner(this::onStderr));
+
+			if(this.writeInfoJson)
+				builder.withOptions(WRITE_INFO_JSON);
+
+			result= builder
 					.build()
 					.execute();
 
@@ -110,11 +115,11 @@ public class YdlDownloadTask {
 
 	public synchronized void prepare()  {
 		prepared.set(false);
-		fileDownloadMap.clear();
+		fileDownloads.clear();
 		try {
 			int result = YoutubeDlExecutor.newBuilder(templateExecutor)
 					.withOptions(DUMP_SINGLE_JSON)
-					.withStdoutConsumer(inputStream -> ydlDownloadTaskMetadata=infoJsonParser.apply(inputStream))
+					.withStdoutConsumer(inputStream -> ydlDownloadTaskMetadata.getAndSet(infoJsonParser.apply(inputStream)))
 					.build()
 					.execute();
 			prepared.set(result==0);
@@ -140,11 +145,25 @@ public class YdlDownloadTask {
 
 		YdlStatusMessage message=new YdlStatusMessage(nextLine);
 
-		if(message.isNewOutputFileSignal())
-			this.onNewOutputFile.handleCallback(this,new File(outputFolder.getAbsolutePath()+message.parseFilename()));
+		if(message.isNewOutputFileSignal()){
+			onNewDownloadFile(message);
+			String filename = message.parseFilename();
+			this.onNewOutputFile.handleCallback(this,new File(outputFolder.getAbsolutePath()+ filename));
+		}
+
 
 		if(this.onStdout!=null)
 			this.onStdout.handleCallback(this, message);
+	}
+
+	private void onNewDownloadFile(YdlStatusMessage message) {
+		String extension = message.parseExtension();
+		String filename = message.parseFilename();
+		new YdlFileDownload(filename, extension,getExpectedFilsize(filename,extension));
+	}
+
+	private Long getExpectedFilsize(String filename, String extension) {
+		return 0L;
 	}
 
 	private void onStateChanged() {
@@ -169,12 +188,12 @@ public class YdlDownloadTask {
 		private YdlCallback<YdlStatusMessage> onStderr=(a,b)->{};
 		private YdlCallback<File> onNewOutputFile=(a,b)->{};
 		private String outputFolder=".";
-		private ExecutorService executorService;
 
 		private YdlCallback<YdlDownloadState> onStateChanged=(a,b)->{};
+		private boolean writeInfoJson;
 
 		public YdlDownloadTask build() {
-			return new YdlDownloadTask(pathToYdl, url, outputFolder,  onStateChanged, onStdout, onStderr, onNewOutputFile);
+			return new YdlDownloadTask(pathToYdl, url, outputFolder,  onStateChanged, onStdout, onStderr, onNewOutputFile,writeInfoJson );
 		}
 
 		public YdlDownloadTaskBuilder setPathToYdl(String pathToYdl) {
@@ -197,10 +216,6 @@ public class YdlDownloadTask {
 			return this;
 		}
 
-		public YdlDownloadTaskBuilder setExecutorService(ExecutorService executorService) {
-			this.executorService = executorService;
-			return this;
-		}
 
 		public YdlDownloadTaskBuilder setUrl(String url) {
 			this.url = url;
@@ -214,6 +229,11 @@ public class YdlDownloadTask {
 
 		public void setOnStateChanged(YdlCallback<YdlDownloadState> onStateChanged) {
 			this.onStateChanged = onStateChanged;
+		}
+
+		public YdlDownloadTaskBuilder setWriteInfoJson(boolean writeInfoJson) {
+			this.writeInfoJson = writeInfoJson;
+			return this;
 		}
 	}
 

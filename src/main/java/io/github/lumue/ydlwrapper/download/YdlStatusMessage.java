@@ -30,4 +30,9 @@ public class YdlStatusMessage implements Serializable{
 	public String parseFilename() {
 		return line.substring(NEW_FILE_STATUS_PREFIX_LENGTH);
 	}
+
+	public String parseExtension() {
+
+		return line.substring(line.lastIndexOf('.') +1);
+	}
 }

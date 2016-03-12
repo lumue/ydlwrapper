@@ -59,6 +59,12 @@ public class YoutubeDlExecutor {
 				return "--dump-single-json";
 			}
 		},
+		WRITE_INFO_JSON{
+			@Override
+			public String toString(){
+				return "--write-info-json";
+			}
+		},
 		NO_COLOR{
 			@Override
 			public String toString(){
