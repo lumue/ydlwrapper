@@ -1,4 +1,4 @@
-package io.github.lumue.ydlwrapper;
+package io.github.lumue.ydlwrapper.download;
 
 import java.time.LocalTime;
 

@@ -1,15 +1,22 @@
-package io.github.lumue.ydlwrapper;
+package io.github.lumue.ydlwrapper.download;
 
+import io.github.lumue.ydlwrapper.shared.StreamScanner;
+import io.github.lumue.ydlwrapper.metadata.YdlDownloadTaskMetadata;
+import io.github.lumue.ydlwrapper.metadata.YdlDownloadTaskMetadataParser;
+import io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor.Option.DUMP_SINGLE_JSON;
+import static io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor.Option.NEW_LINE;
+import static io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor.Option.NO_COLOR;
 
 /**
  * Execute youtube-dl download
@@ -18,13 +25,12 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class YdlDownloadTask {
 
-
-
+	private final YoutubeDlExecutor templateExecutor;
 	private final Logger LOGGER= LoggerFactory.getLogger(YdlDownloadTask.class);
 
 	private final String pathToYdl;
-	private AtomicBoolean prepared=new AtomicBoolean(false);
-	private YdlDownloadTaskMetadataParser infoJsonParser=new YdlDownloadTaskMetadataParser();
+	private final AtomicBoolean prepared=new AtomicBoolean(false);
+	private final YdlDownloadTaskMetadataParser infoJsonParser=new YdlDownloadTaskMetadataParser();
 	private YdlDownloadTaskMetadata ydlDownloadTaskMetadata;
 
 	public enum YdlDownloadState{EXECUTING, ERROR, SUCCESS, PENDING}
@@ -34,8 +40,6 @@ public class YdlDownloadTask {
 	private final File outputFolder;
 
 	private final AtomicReference<YdlDownloadState> downloadState=new AtomicReference<>(YdlDownloadState.PENDING);
-
-	private final ExecutorService executorService;
 
 	private final YdlCallback<YdlDownloadState> onStateChanged;
 	private final YdlCallback<YdlStatusMessage> onStdout;
@@ -51,8 +55,7 @@ public class YdlDownloadTask {
 			YdlCallback<YdlDownloadState> onStateChanged,
 			YdlCallback<YdlStatusMessage> onStdout,
 			YdlCallback<YdlStatusMessage> onStderr,
-			YdlCallback<File> onNewOutputFile,
-			ExecutorService executorService) {
+			YdlCallback<File> onNewOutputFile) {
 		this.pathToYdl = Objects.requireNonNull(pathToYdl);
 		this.onStateChanged = Objects.requireNonNull(onStateChanged);
 		this.onStdout = Objects.requireNonNull(onStdout);
@@ -60,18 +63,22 @@ public class YdlDownloadTask {
 		this.onNewOutputFile = Objects.requireNonNull(onNewOutputFile);
 		this.url = Objects.requireNonNull(url,"url must not be null");
 		this.outputFolder = new File(Objects.requireNonNull(outputFolder));
-		if(executorService!=null)
-			this.executorService=Objects.requireNonNull(executorService);
-		else
-			this.executorService=Executors.newFixedThreadPool(3);
+		templateExecutor = YoutubeDlExecutor.newBuilder()
+				.withYdlLocation(pathToYdl)
+				.withUrl(getUrl())
+				.withOutputFolder(this.outputFolder)
+				.withOptions(NEW_LINE,NO_COLOR)
+				.build();
 	}
+
+
 
 	public String getUrl() {
 		return url;
 	}
 
 
-	public void execute()  {
+	public synchronized void execute()  {
 
 		LOGGER.info("starting download from url "+getUrl()+" to path "+outputFolder.getAbsolutePath());
 
@@ -85,34 +92,33 @@ public class YdlDownloadTask {
 
 		int result=-1;
 		try {
-			Process p;
-			String command=this.pathToYdl+" --no-color "+getUrl();
-			p = Runtime.getRuntime().exec(command,null,outputFolder);
-
-			executorService.execute(() -> new StreamScanner(p.getInputStream(), s -> onStdout(s)).scan());
-			executorService.execute(() -> new StreamScanner(p.getErrorStream(), s -> onStderr(s)).scan());
-
-
-			result=p.waitFor();
+			result= YoutubeDlExecutor.newBuilder(templateExecutor)
+					.withStdoutConsumer(new StreamScanner(s -> onStdout(s)))
+					.withStderrConsumer(new StreamScanner(s -> onStderr(s)))
+					.build()
+					.execute();
 
 			YdlDownloadState exitDownloadState=result==0?
 					YdlDownloadState.SUCCESS
 					:YdlDownloadState.ERROR;
-			downloadState.compareAndSet(YdlDownloadState.PENDING,exitDownloadState);
+			downloadState.compareAndSet(YdlDownloadState.EXECUTING,exitDownloadState);
 		} catch (Exception e) {
-			downloadState.compareAndSet(YdlDownloadState.PENDING,YdlDownloadState.ERROR);
+			downloadState.compareAndSet(YdlDownloadState.EXECUTING,YdlDownloadState.ERROR);
 		}
 		LOGGER.info("finished download from url "+getUrl()+" to path "+outputFolder.getAbsolutePath()+" with success code "+result);
 	}
 
-	public void prepare() {
+	public synchronized void prepare()  {
 		prepared.set(false);
-		String command=this.pathToYdl+" --no-color --dump-single-json "+getUrl();
 		fileDownloadMap.clear();
 		try {
-			Process p = Runtime.getRuntime().exec(command,null,outputFolder);
-			ydlDownloadTaskMetadata=infoJsonParser.parse(p.getInputStream());
-		} catch (IOException e) {
+			int result = YoutubeDlExecutor.newBuilder(templateExecutor)
+					.withOptions(DUMP_SINGLE_JSON)
+					.withStdoutConsumer(inputStream -> ydlDownloadTaskMetadata=infoJsonParser.apply(inputStream))
+					.build()
+					.execute();
+			prepared.set(result==0);
+		} catch (Exception e) {
 			throw new RuntimeException("error getting metadata",e);
 		}
 
@@ -168,7 +174,7 @@ public class YdlDownloadTask {
 		private YdlCallback<YdlDownloadState> onStateChanged=(a,b)->{};
 
 		public YdlDownloadTask build() {
-			return new YdlDownloadTask(pathToYdl, url, outputFolder,  onStateChanged, onStdout, onStderr, onNewOutputFile,executorService);
+			return new YdlDownloadTask(pathToYdl, url, outputFolder,  onStateChanged, onStdout, onStderr, onNewOutputFile);
 		}
 
 		public YdlDownloadTaskBuilder setPathToYdl(String pathToYdl) {

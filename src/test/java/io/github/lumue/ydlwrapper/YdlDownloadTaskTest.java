@@ -1,5 +1,6 @@
 package io.github.lumue.ydlwrapper;
 
+import io.github.lumue.ydlwrapper.download.YdlDownloadTask;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

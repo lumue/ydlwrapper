@@ -1,4 +1,4 @@
-package io.github.lumue.ydlwrapper;
+package io.github.lumue.ydlwrapper.download;
 
 /**
  * Created by lm on 06.03.16.

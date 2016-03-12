@@ -1,5 +1,5 @@
 
-package io.github.lumue.ydlwrapper;
+package io.github.lumue.ydlwrapper.metadata;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @JsonPropertyOrder({
 
 })
-public class AutomaticCaptions {
+public class Subtitles {
 
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -38,7 +38,7 @@ public class AutomaticCaptions {
         this.additionalProperties.put(name, value);
     }
 
-    public AutomaticCaptions withAdditionalProperty(String name, Object value) {
+    public Subtitles withAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
         return this;
     }
@@ -53,10 +53,10 @@ public class AutomaticCaptions {
         if (other == this) {
             return true;
         }
-        if ((other instanceof AutomaticCaptions) == false) {
+        if ((other instanceof Subtitles) == false) {
             return false;
         }
-        AutomaticCaptions rhs = ((AutomaticCaptions) other);
+        Subtitles rhs = ((Subtitles) other);
         return new EqualsBuilder().append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 

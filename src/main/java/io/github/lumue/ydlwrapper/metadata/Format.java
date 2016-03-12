@@ -1,5 +1,5 @@
 
-package io.github.lumue.ydlwrapper;
+package io.github.lumue.ydlwrapper.metadata;
 
 import java.util.HashMap;
 import java.util.Map;
