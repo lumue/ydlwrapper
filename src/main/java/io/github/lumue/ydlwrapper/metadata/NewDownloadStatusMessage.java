@@ -19,6 +19,10 @@ public class NewDownloadStatusMessage extends YdlStatusMessage{
 		return getLine().substring(getLine().lastIndexOf('.') +1);
 	}
 
+	public String parseFormatId() {
+		return getLine().substring(getLine().lastIndexOf(".f") +1,getLine().lastIndexOf('.'));
+	}
+
 	protected static boolean isMessageTypeFor(String line) {
 		return line.startsWith(NEW_FILE_STATUS_PREFIX);
 	}
