@@ -4,7 +4,6 @@ package io.github.lumue.ydlwrapper.metadata.single_info_json;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
-import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,10 +21,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     "tbr",
     "protocol",
     "format",
-    "format_note",
+    "Formatnote",
     "height",
     "preference",
-    "format_id",
+    "Formatid",
     "language",
     "http_headers",
     "url",
@@ -43,40 +42,39 @@ public class RequestedFormat {
     @JsonProperty("asr")
     private Object asr;
     @JsonProperty("tbr")
-    private float tbr;
+    private Float tbr;
     @JsonProperty("protocol")
     private String protocol;
     @JsonProperty("format")
     private String format;
-    @JsonProperty("format_note")
+    @JsonProperty("Formatnote")
     private String formatNote;
     @JsonProperty("height")
-    private long height;
+    private Integer height;
     @JsonProperty("preference")
-    private long preference;
-    @JsonProperty("format_id")
+    private Integer preference;
+    @JsonProperty("Formatid")
     private String formatId;
     @JsonProperty("language")
     private Object language;
     @JsonProperty("http_headers")
-    @Valid
     private HttpHeaders httpHeaders;
     @JsonProperty("url")
     private String url;
     @JsonProperty("vcodec")
     private String vcodec;
     @JsonProperty("width")
-    private long width;
+    private Integer width;
     @JsonProperty("ext")
     private String ext;
     @JsonProperty("filesize")
-    private long filesize;
+    private Integer filesize;
     @JsonProperty("fps")
-    private long fps;
+    private Integer fps;
     @JsonProperty("acodec")
     private String acodec;
     @JsonProperty("abr")
-    private long abr;
+    private Integer abr;
     @JsonProperty("player_url")
     private Object playerUrl;
     @JsonIgnore
@@ -111,7 +109,7 @@ public class RequestedFormat {
      * @param tbr
      * @param playerUrl
      */
-    public RequestedFormat(Object asr, float tbr, String protocol, String format, String formatNote, long height, long preference, String formatId, Object language, HttpHeaders httpHeaders, String url, String vcodec, long width, String ext, long filesize, long fps, String acodec, long abr, Object playerUrl) {
+    public RequestedFormat(Object asr, Float tbr, String protocol, String format, String formatNote, Integer height, Integer preference, String formatId, Object language, HttpHeaders httpHeaders, String url, String vcodec, Integer width, String ext, Integer filesize, Integer fps, String acodec, Integer abr, Object playerUrl) {
         this.asr = asr;
         this.tbr = tbr;
         this.protocol = protocol;
@@ -153,18 +151,13 @@ public class RequestedFormat {
         this.asr = asr;
     }
 
-    public RequestedFormat withAsr(Object asr) {
-        this.asr = asr;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The tbr
      */
     @JsonProperty("tbr")
-    public float getTbr() {
+    public Float getTbr() {
         return tbr;
     }
 
@@ -174,13 +167,8 @@ public class RequestedFormat {
      *     The tbr
      */
     @JsonProperty("tbr")
-    public void setTbr(float tbr) {
+    public void setTbr(Float tbr) {
         this.tbr = tbr;
-    }
-
-    public RequestedFormat withTbr(float tbr) {
-        this.tbr = tbr;
-        return this;
     }
 
     /**
@@ -203,11 +191,6 @@ public class RequestedFormat {
         this.protocol = protocol;
     }
 
-    public RequestedFormat withProtocol(String protocol) {
-        this.protocol = protocol;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -228,17 +211,12 @@ public class RequestedFormat {
         this.format = format;
     }
 
-    public RequestedFormat withFormat(String format) {
-        this.format = format;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The formatNote
      */
-    @JsonProperty("format_note")
+    @JsonProperty("Formatnote")
     public String getFormatNote() {
         return formatNote;
     }
@@ -246,16 +224,11 @@ public class RequestedFormat {
     /**
      * 
      * @param formatNote
-     *     The format_note
+     *     The Formatnote
      */
-    @JsonProperty("format_note")
+    @JsonProperty("Formatnote")
     public void setFormatNote(String formatNote) {
         this.formatNote = formatNote;
-    }
-
-    public RequestedFormat withFormatNote(String formatNote) {
-        this.formatNote = formatNote;
-        return this;
     }
 
     /**
@@ -264,7 +237,7 @@ public class RequestedFormat {
      *     The height
      */
     @JsonProperty("height")
-    public long getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
@@ -274,13 +247,8 @@ public class RequestedFormat {
      *     The height
      */
     @JsonProperty("height")
-    public void setHeight(long height) {
+    public void setHeight(Integer height) {
         this.height = height;
-    }
-
-    public RequestedFormat withHeight(long height) {
-        this.height = height;
-        return this;
     }
 
     /**
@@ -289,7 +257,7 @@ public class RequestedFormat {
      *     The preference
      */
     @JsonProperty("preference")
-    public long getPreference() {
+    public Integer getPreference() {
         return preference;
     }
 
@@ -299,13 +267,8 @@ public class RequestedFormat {
      *     The preference
      */
     @JsonProperty("preference")
-    public void setPreference(long preference) {
+    public void setPreference(Integer preference) {
         this.preference = preference;
-    }
-
-    public RequestedFormat withPreference(long preference) {
-        this.preference = preference;
-        return this;
     }
 
     /**
@@ -313,7 +276,7 @@ public class RequestedFormat {
      * @return
      *     The formatId
      */
-    @JsonProperty("format_id")
+    @JsonProperty("Formatid")
     public String getFormatId() {
         return formatId;
     }
@@ -321,16 +284,11 @@ public class RequestedFormat {
     /**
      * 
      * @param formatId
-     *     The format_id
+     *     The Formatid
      */
-    @JsonProperty("format_id")
+    @JsonProperty("Formatid")
     public void setFormatId(String formatId) {
         this.formatId = formatId;
-    }
-
-    public RequestedFormat withFormatId(String formatId) {
-        this.formatId = formatId;
-        return this;
     }
 
     /**
@@ -353,11 +311,6 @@ public class RequestedFormat {
         this.language = language;
     }
 
-    public RequestedFormat withLanguage(Object language) {
-        this.language = language;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -376,11 +329,6 @@ public class RequestedFormat {
     @JsonProperty("http_headers")
     public void setHttpHeaders(HttpHeaders httpHeaders) {
         this.httpHeaders = httpHeaders;
-    }
-
-    public RequestedFormat withHttpHeaders(HttpHeaders httpHeaders) {
-        this.httpHeaders = httpHeaders;
-        return this;
     }
 
     /**
@@ -403,11 +351,6 @@ public class RequestedFormat {
         this.url = url;
     }
 
-    public RequestedFormat withUrl(String url) {
-        this.url = url;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -428,18 +371,13 @@ public class RequestedFormat {
         this.vcodec = vcodec;
     }
 
-    public RequestedFormat withVcodec(String vcodec) {
-        this.vcodec = vcodec;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The width
      */
     @JsonProperty("width")
-    public long getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
@@ -449,13 +387,8 @@ public class RequestedFormat {
      *     The width
      */
     @JsonProperty("width")
-    public void setWidth(long width) {
+    public void setWidth(Integer width) {
         this.width = width;
-    }
-
-    public RequestedFormat withWidth(long width) {
-        this.width = width;
-        return this;
     }
 
     /**
@@ -478,18 +411,13 @@ public class RequestedFormat {
         this.ext = ext;
     }
 
-    public RequestedFormat withExt(String ext) {
-        this.ext = ext;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The filesize
      */
     @JsonProperty("filesize")
-    public long getFilesize() {
+    public Integer getFilesize() {
         return filesize;
     }
 
@@ -499,13 +427,8 @@ public class RequestedFormat {
      *     The filesize
      */
     @JsonProperty("filesize")
-    public void setFilesize(long filesize) {
+    public void setFilesize(Integer filesize) {
         this.filesize = filesize;
-    }
-
-    public RequestedFormat withFilesize(long filesize) {
-        this.filesize = filesize;
-        return this;
     }
 
     /**
@@ -514,7 +437,7 @@ public class RequestedFormat {
      *     The fps
      */
     @JsonProperty("fps")
-    public long getFps() {
+    public Integer getFps() {
         return fps;
     }
 
@@ -524,13 +447,8 @@ public class RequestedFormat {
      *     The fps
      */
     @JsonProperty("fps")
-    public void setFps(long fps) {
+    public void setFps(Integer fps) {
         this.fps = fps;
-    }
-
-    public RequestedFormat withFps(long fps) {
-        this.fps = fps;
-        return this;
     }
 
     /**
@@ -553,18 +471,13 @@ public class RequestedFormat {
         this.acodec = acodec;
     }
 
-    public RequestedFormat withAcodec(String acodec) {
-        this.acodec = acodec;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The abr
      */
     @JsonProperty("abr")
-    public long getAbr() {
+    public Integer getAbr() {
         return abr;
     }
 
@@ -574,13 +487,8 @@ public class RequestedFormat {
      *     The abr
      */
     @JsonProperty("abr")
-    public void setAbr(long abr) {
+    public void setAbr(Integer abr) {
         this.abr = abr;
-    }
-
-    public RequestedFormat withAbr(long abr) {
-        this.abr = abr;
-        return this;
     }
 
     /**
@@ -603,11 +511,6 @@ public class RequestedFormat {
         this.playerUrl = playerUrl;
     }
 
-    public RequestedFormat withPlayerUrl(Object playerUrl) {
-        this.playerUrl = playerUrl;
-        return this;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -621,11 +524,6 @@ public class RequestedFormat {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
-
-    public RequestedFormat withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
     }
 
     @Override

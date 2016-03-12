@@ -1,7 +1,7 @@
 package io.github.lumue.ydlwrapper.download;
 
-import io.github.lumue.ydlwrapper.metadata.FileMetadataAccessor;
-import io.github.lumue.ydlwrapper.metadata.single_info_json.SingleInfoJsonFileMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.YdlDownloadMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.single_info_json.SingleInfoJsonDownloadMetadataAccessor;
 import io.github.lumue.ydlwrapper.shared.StreamScanner;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJson;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJsonParser;
@@ -32,7 +32,7 @@ public class YdlDownloadTask {
 	private final YdlInfoJsonParser infoJsonParser=new YdlInfoJsonParser();
 	private final boolean writeInfoJson;
 	private final AtomicReference<YdlInfoJson> ydlDownloadTaskMetadata=new AtomicReference<>(null);
-	private FileMetadataAccessor fileMetadataAccessor;
+	private YdlDownloadMetadataAccessor ydlDownloadMetadataAccessor;
 
 	public enum YdlDownloadState{EXECUTING, ERROR, SUCCESS, PENDING}
 
@@ -45,7 +45,7 @@ public class YdlDownloadTask {
 	private final YdlCallback<YdlDownloadState> onStateChanged;
 	private final YdlCallback<YdlStatusMessage> onStdout;
 	private final YdlCallback<YdlStatusMessage> onStderr;
-	private final YdlCallback<File> onNewOutputFile;
+	private final YdlCallback<YdlFileDownload> onNewOutputFile;
 
 	private final ConcurrentLinkedDeque<YdlFileDownload> fileDownloads =new ConcurrentLinkedDeque<>();
 
@@ -56,7 +56,7 @@ public class YdlDownloadTask {
 			YdlCallback<YdlDownloadState> onStateChanged,
 			YdlCallback<YdlStatusMessage> onStdout,
 			YdlCallback<YdlStatusMessage> onStderr,
-			YdlCallback<File> onNewOutputFile,
+			YdlCallback<YdlFileDownload> onNewOutputFile,
 			boolean writeInfoJson) {
 		this.pathToYdl = Objects.requireNonNull(pathToYdl);
 		this.onStateChanged = Objects.requireNonNull(onStateChanged);
@@ -129,7 +129,7 @@ public class YdlDownloadTask {
 					.build()
 					.execute();
 			prepared.getAndSet(result==0);
-			this.fileMetadataAccessor =new SingleInfoJsonFileMetadataAccessor(ydlDownloadTaskMetadata.get());
+			this.ydlDownloadMetadataAccessor =new SingleInfoJsonDownloadMetadataAccessor(ydlDownloadTaskMetadata.get());
 		} catch (Exception e) {
 			throw new RuntimeException("error getting metadata",e);
 		}
@@ -155,7 +155,7 @@ public class YdlDownloadTask {
 		if(message.isNewOutputFileSignal()){
 			onNewDownloadFile(message);
 			String filename = message.parseFilename();
-			this.onNewOutputFile.handleCallback(this,new File(outputFolder.getAbsolutePath()+ filename));
+			this.onNewOutputFile.handleCallback(this,this.currentDownload.get());
 		}
 
 
@@ -166,8 +166,9 @@ public class YdlDownloadTask {
 	private void onNewDownloadFile(YdlStatusMessage message) {
 		String extension = message.parseExtension();
 		String filename = message.parseFilename();
-		Long filesize = fileMetadataAccessor.getFilesize(filename, extension);
-		new YdlFileDownload(filename, extension, filesize);
+		Long filesize = ydlDownloadMetadataAccessor.getFilesize(filename, extension);
+		YdlFileDownload download = new YdlFileDownload(filename, extension, filesize);
+		this.currentDownload.getAndSet(download);
 	}
 
 
@@ -192,7 +193,7 @@ public class YdlDownloadTask {
 		private String url;
 		private YdlCallback<YdlStatusMessage> onStdout=(a,b)->{};
 		private YdlCallback<YdlStatusMessage> onStderr=(a,b)->{};
-		private YdlCallback<File> onNewOutputFile=(a,b)->{};
+		private YdlCallback<YdlFileDownload> onNewOutputFile=(a,b)->{};
 		private String outputFolder=".";
 
 		private YdlCallback<YdlDownloadState> onStateChanged=(a,b)->{};
@@ -217,7 +218,7 @@ public class YdlDownloadTask {
 			return this;
 		}
 
-		public YdlDownloadTaskBuilder onNewOutputFile(YdlCallback<File> onNewOutputFile) {
+		public YdlDownloadTaskBuilder onNewOutputFile(YdlCallback<YdlFileDownload> onNewOutputFile) {
 			this.onNewOutputFile = onNewOutputFile;
 			return this;
 		}

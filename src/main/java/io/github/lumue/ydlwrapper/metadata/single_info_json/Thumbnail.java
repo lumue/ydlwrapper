@@ -66,11 +66,6 @@ public class Thumbnail {
         this.url = url;
     }
 
-    public Thumbnail withUrl(String url) {
-        this.url = url;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -91,11 +86,6 @@ public class Thumbnail {
         this.id = id;
     }
 
-    public Thumbnail withId(String id) {
-        this.id = id;
-        return this;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -109,11 +99,6 @@ public class Thumbnail {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
-
-    public Thumbnail withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
     }
 
     @Override

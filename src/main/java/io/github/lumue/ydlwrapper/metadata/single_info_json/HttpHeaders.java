@@ -81,11 +81,6 @@ public class HttpHeaders {
         this.AcceptCharset = AcceptCharset;
     }
 
-    public HttpHeaders withAcceptCharset(String AcceptCharset) {
-        this.AcceptCharset = AcceptCharset;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -104,11 +99,6 @@ public class HttpHeaders {
     @JsonProperty("Accept-Language")
     public void setAcceptLanguage(String AcceptLanguage) {
         this.AcceptLanguage = AcceptLanguage;
-    }
-
-    public HttpHeaders withAcceptLanguage(String AcceptLanguage) {
-        this.AcceptLanguage = AcceptLanguage;
-        return this;
     }
 
     /**
@@ -131,11 +121,6 @@ public class HttpHeaders {
         this.AcceptEncoding = AcceptEncoding;
     }
 
-    public HttpHeaders withAcceptEncoding(String AcceptEncoding) {
-        this.AcceptEncoding = AcceptEncoding;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -154,11 +139,6 @@ public class HttpHeaders {
     @JsonProperty("Accept")
     public void setAccept(String Accept) {
         this.Accept = Accept;
-    }
-
-    public HttpHeaders withAccept(String Accept) {
-        this.Accept = Accept;
-        return this;
     }
 
     /**
@@ -181,11 +161,6 @@ public class HttpHeaders {
         this.UserAgent = UserAgent;
     }
 
-    public HttpHeaders withUserAgent(String UserAgent) {
-        this.UserAgent = UserAgent;
-        return this;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -199,11 +174,6 @@ public class HttpHeaders {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
-
-    public HttpHeaders withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
     }
 
     @Override

@@ -61,6 +61,15 @@ public class YdlFileDownload {
 
 	public enum State{PENDING,RUNNING,PAUSED,FINISHED}
 
+	@Override
+	public String toString() {
+		return "YdlFileDownload{" +
+				"filename='" + filename + '\'' +
+				", format='" + format + '\'' +
+				", expectedSize=" + expectedSize +
+				'}';
+	}
+
 	YdlFileDownload(String filename, String format, Long expectedSize) {
 		this.filename = filename;
 		this.format = format;

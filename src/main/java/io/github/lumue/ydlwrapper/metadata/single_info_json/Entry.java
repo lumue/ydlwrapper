@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
-import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,7 +51,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     "start_time",
     "playlist_id",
     "uploader",
-    "format_id",
+    "Formatid",
     "uploader_id",
     "subtitles",
     "playlist_title",
@@ -79,18 +78,17 @@ public class Entry {
     @JsonProperty("creator")
     private Object creator;
     @JsonProperty("height")
-    private long height;
+    private Integer height;
     @JsonProperty("like_count")
-    private long likeCount;
+    private Integer likeCount;
     @JsonProperty("duration")
-    private long duration;
+    private Integer duration;
     @JsonProperty("id")
     private String id;
     @JsonProperty("requested_formats")
-    @Valid
     private List<RequestedFormat> requestedFormats = new ArrayList<RequestedFormat>();
     @JsonProperty("view_count")
-    private long viewCount;
+    private Integer viewCount;
     @JsonProperty("playlist")
     private String playlist;
     @JsonProperty("title")
@@ -100,24 +98,23 @@ public class Entry {
     @JsonProperty("ext")
     private String ext;
     @JsonProperty("playlist_index")
-    private long playlistIndex;
+    private Integer playlistIndex;
     @JsonProperty("dislike_count")
-    private long dislikeCount;
+    private Integer dislikeCount;
     @JsonProperty("average_rating")
-    private float averageRating;
+    private Float averageRating;
     @JsonProperty("abr")
-    private long abr;
+    private Integer abr;
     @JsonProperty("uploader_url")
     private String uploaderUrl;
     @JsonProperty("categories")
-    @Valid
     private List<String> categories = new ArrayList<String>();
     @JsonProperty("fps")
-    private long fps;
+    private Integer fps;
     @JsonProperty("stretched_ratio")
     private Object stretchedRatio;
     @JsonProperty("age_limit")
-    private long ageLimit;
+    private Integer ageLimit;
     @JsonProperty("annotations")
     private Object annotations;
     @JsonProperty("webpage_url_basename")
@@ -127,12 +124,10 @@ public class Entry {
     @JsonProperty("display_id")
     private String displayId;
     @JsonProperty("automatic_captions")
-    @Valid
     private AutomaticCaptions automaticCaptions;
     @JsonProperty("description")
     private String description;
     @JsonProperty("tags")
-    @Valid
     private List<String> tags = new ArrayList<String>();
     @JsonProperty("requested_subtitles")
     private Object requestedSubtitles;
@@ -142,17 +137,15 @@ public class Entry {
     private String playlistId;
     @JsonProperty("uploader")
     private String uploader;
-    @JsonProperty("format_id")
+    @JsonProperty("Formatid")
     private String formatId;
     @JsonProperty("uploader_id")
     private String uploaderId;
     @JsonProperty("subtitles")
-    @Valid
     private Subtitles subtitles;
     @JsonProperty("playlist_title")
     private String playlistTitle;
     @JsonProperty("thumbnails")
-    @Valid
     private List<Thumbnail> thumbnails = new ArrayList<Thumbnail>();
     @JsonProperty("license")
     private String license;
@@ -175,14 +168,13 @@ public class Entry {
     @JsonProperty("webpage_url")
     private String webpageUrl;
     @JsonProperty("formats")
-    @Valid
     private List<Format> formats = new ArrayList<Format>();
     @JsonProperty("resolution")
     private Object resolution;
     @JsonProperty("width")
-    private long width;
+    private Integer width;
     @JsonProperty("n_entries")
-    private long nEntries;
+    private Integer nEntries;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -247,7 +239,7 @@ public class Entry {
      * @param annotations
      * @param displayId
      */
-    public Entry(String uploadDate, Object creator, long height, long likeCount, long duration, String id, List<RequestedFormat> requestedFormats, long viewCount, String playlist, String title, String format, String ext, long playlistIndex, long dislikeCount, float averageRating, long abr, String uploaderUrl, List<String> categories, long fps, Object stretchedRatio, long ageLimit, Object annotations, String webpageUrlBasename, String acodec, String displayId, AutomaticCaptions automaticCaptions, String description, List<String> tags, Object requestedSubtitles, Object startTime, String playlistId, String uploader, String formatId, String uploaderId, Subtitles subtitles, String playlistTitle, List<Thumbnail> thumbnails, String license, Object altTitle, String extractorKey, String vcodec, String thumbnail, Object vbr, Object isLive, String extractor, Object endTime, String webpageUrl, List<Format> formats, Object resolution, long width, long nEntries) {
+    public Entry(String uploadDate, Object creator, Integer height, Integer likeCount, Integer duration, String id, List<RequestedFormat> requestedFormats, Integer viewCount, String playlist, String title, String format, String ext, Integer playlistIndex, Integer dislikeCount, Float averageRating, Integer abr, String uploaderUrl, List<String> categories, Integer fps, Object stretchedRatio, Integer ageLimit, Object annotations, String webpageUrlBasename, String acodec, String displayId, AutomaticCaptions automaticCaptions, String description, List<String> tags, Object requestedSubtitles, Object startTime, String playlistId, String uploader, String formatId, String uploaderId, Subtitles subtitles, String playlistTitle, List<Thumbnail> thumbnails, String license, Object altTitle, String extractorKey, String vcodec, String thumbnail, Object vbr, Object isLive, String extractor, Object endTime, String webpageUrl, List<Format> formats, Object resolution, Integer width, Integer nEntries) {
         this.uploadDate = uploadDate;
         this.creator = creator;
         this.height = height;
@@ -321,11 +313,6 @@ public class Entry {
         this.uploadDate = uploadDate;
     }
 
-    public Entry withUploadDate(String uploadDate) {
-        this.uploadDate = uploadDate;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -346,18 +333,13 @@ public class Entry {
         this.creator = creator;
     }
 
-    public Entry withCreator(Object creator) {
-        this.creator = creator;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The height
      */
     @JsonProperty("height")
-    public long getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
@@ -367,13 +349,8 @@ public class Entry {
      *     The height
      */
     @JsonProperty("height")
-    public void setHeight(long height) {
+    public void setHeight(Integer height) {
         this.height = height;
-    }
-
-    public Entry withHeight(long height) {
-        this.height = height;
-        return this;
     }
 
     /**
@@ -382,7 +359,7 @@ public class Entry {
      *     The likeCount
      */
     @JsonProperty("like_count")
-    public long getLikeCount() {
+    public Integer getLikeCount() {
         return likeCount;
     }
 
@@ -392,13 +369,8 @@ public class Entry {
      *     The like_count
      */
     @JsonProperty("like_count")
-    public void setLikeCount(long likeCount) {
+    public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
-    }
-
-    public Entry withLikeCount(long likeCount) {
-        this.likeCount = likeCount;
-        return this;
     }
 
     /**
@@ -407,7 +379,7 @@ public class Entry {
      *     The duration
      */
     @JsonProperty("duration")
-    public long getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
@@ -417,13 +389,8 @@ public class Entry {
      *     The duration
      */
     @JsonProperty("duration")
-    public void setDuration(long duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
-    }
-
-    public Entry withDuration(long duration) {
-        this.duration = duration;
-        return this;
     }
 
     /**
@@ -446,11 +413,6 @@ public class Entry {
         this.id = id;
     }
 
-    public Entry withId(String id) {
-        this.id = id;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -471,18 +433,13 @@ public class Entry {
         this.requestedFormats = requestedFormats;
     }
 
-    public Entry withRequestedFormats(List<RequestedFormat> requestedFormats) {
-        this.requestedFormats = requestedFormats;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The viewCount
      */
     @JsonProperty("view_count")
-    public long getViewCount() {
+    public Integer getViewCount() {
         return viewCount;
     }
 
@@ -492,13 +449,8 @@ public class Entry {
      *     The view_count
      */
     @JsonProperty("view_count")
-    public void setViewCount(long viewCount) {
+    public void setViewCount(Integer viewCount) {
         this.viewCount = viewCount;
-    }
-
-    public Entry withViewCount(long viewCount) {
-        this.viewCount = viewCount;
-        return this;
     }
 
     /**
@@ -521,11 +473,6 @@ public class Entry {
         this.playlist = playlist;
     }
 
-    public Entry withPlaylist(String playlist) {
-        this.playlist = playlist;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -544,11 +491,6 @@ public class Entry {
     @JsonProperty("title")
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Entry withTitle(String title) {
-        this.title = title;
-        return this;
     }
 
     /**
@@ -571,11 +513,6 @@ public class Entry {
         this.format = format;
     }
 
-    public Entry withFormat(String format) {
-        this.format = format;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -596,18 +533,13 @@ public class Entry {
         this.ext = ext;
     }
 
-    public Entry withExt(String ext) {
-        this.ext = ext;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The playlistIndex
      */
     @JsonProperty("playlist_index")
-    public long getPlaylistIndex() {
+    public Integer getPlaylistIndex() {
         return playlistIndex;
     }
 
@@ -617,13 +549,8 @@ public class Entry {
      *     The playlist_index
      */
     @JsonProperty("playlist_index")
-    public void setPlaylistIndex(long playlistIndex) {
+    public void setPlaylistIndex(Integer playlistIndex) {
         this.playlistIndex = playlistIndex;
-    }
-
-    public Entry withPlaylistIndex(long playlistIndex) {
-        this.playlistIndex = playlistIndex;
-        return this;
     }
 
     /**
@@ -632,7 +559,7 @@ public class Entry {
      *     The dislikeCount
      */
     @JsonProperty("dislike_count")
-    public long getDislikeCount() {
+    public Integer getDislikeCount() {
         return dislikeCount;
     }
 
@@ -642,13 +569,8 @@ public class Entry {
      *     The dislike_count
      */
     @JsonProperty("dislike_count")
-    public void setDislikeCount(long dislikeCount) {
+    public void setDislikeCount(Integer dislikeCount) {
         this.dislikeCount = dislikeCount;
-    }
-
-    public Entry withDislikeCount(long dislikeCount) {
-        this.dislikeCount = dislikeCount;
-        return this;
     }
 
     /**
@@ -657,7 +579,7 @@ public class Entry {
      *     The averageRating
      */
     @JsonProperty("average_rating")
-    public float getAverageRating() {
+    public Float getAverageRating() {
         return averageRating;
     }
 
@@ -667,13 +589,8 @@ public class Entry {
      *     The average_rating
      */
     @JsonProperty("average_rating")
-    public void setAverageRating(float averageRating) {
+    public void setAverageRating(Float averageRating) {
         this.averageRating = averageRating;
-    }
-
-    public Entry withAverageRating(float averageRating) {
-        this.averageRating = averageRating;
-        return this;
     }
 
     /**
@@ -682,7 +599,7 @@ public class Entry {
      *     The abr
      */
     @JsonProperty("abr")
-    public long getAbr() {
+    public Integer getAbr() {
         return abr;
     }
 
@@ -692,13 +609,8 @@ public class Entry {
      *     The abr
      */
     @JsonProperty("abr")
-    public void setAbr(long abr) {
+    public void setAbr(Integer abr) {
         this.abr = abr;
-    }
-
-    public Entry withAbr(long abr) {
-        this.abr = abr;
-        return this;
     }
 
     /**
@@ -721,11 +633,6 @@ public class Entry {
         this.uploaderUrl = uploaderUrl;
     }
 
-    public Entry withUploaderUrl(String uploaderUrl) {
-        this.uploaderUrl = uploaderUrl;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -746,18 +653,13 @@ public class Entry {
         this.categories = categories;
     }
 
-    public Entry withCategories(List<String> categories) {
-        this.categories = categories;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The fps
      */
     @JsonProperty("fps")
-    public long getFps() {
+    public Integer getFps() {
         return fps;
     }
 
@@ -767,13 +669,8 @@ public class Entry {
      *     The fps
      */
     @JsonProperty("fps")
-    public void setFps(long fps) {
+    public void setFps(Integer fps) {
         this.fps = fps;
-    }
-
-    public Entry withFps(long fps) {
-        this.fps = fps;
-        return this;
     }
 
     /**
@@ -796,18 +693,13 @@ public class Entry {
         this.stretchedRatio = stretchedRatio;
     }
 
-    public Entry withStretchedRatio(Object stretchedRatio) {
-        this.stretchedRatio = stretchedRatio;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The ageLimit
      */
     @JsonProperty("age_limit")
-    public long getAgeLimit() {
+    public Integer getAgeLimit() {
         return ageLimit;
     }
 
@@ -817,13 +709,8 @@ public class Entry {
      *     The age_limit
      */
     @JsonProperty("age_limit")
-    public void setAgeLimit(long ageLimit) {
+    public void setAgeLimit(Integer ageLimit) {
         this.ageLimit = ageLimit;
-    }
-
-    public Entry withAgeLimit(long ageLimit) {
-        this.ageLimit = ageLimit;
-        return this;
     }
 
     /**
@@ -846,11 +733,6 @@ public class Entry {
         this.annotations = annotations;
     }
 
-    public Entry withAnnotations(Object annotations) {
-        this.annotations = annotations;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -869,11 +751,6 @@ public class Entry {
     @JsonProperty("webpage_url_basename")
     public void setWebpageUrlBasename(String webpageUrlBasename) {
         this.webpageUrlBasename = webpageUrlBasename;
-    }
-
-    public Entry withWebpageUrlBasename(String webpageUrlBasename) {
-        this.webpageUrlBasename = webpageUrlBasename;
-        return this;
     }
 
     /**
@@ -896,11 +773,6 @@ public class Entry {
         this.acodec = acodec;
     }
 
-    public Entry withAcodec(String acodec) {
-        this.acodec = acodec;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -919,11 +791,6 @@ public class Entry {
     @JsonProperty("display_id")
     public void setDisplayId(String displayId) {
         this.displayId = displayId;
-    }
-
-    public Entry withDisplayId(String displayId) {
-        this.displayId = displayId;
-        return this;
     }
 
     /**
@@ -946,11 +813,6 @@ public class Entry {
         this.automaticCaptions = automaticCaptions;
     }
 
-    public Entry withAutomaticCaptions(AutomaticCaptions automaticCaptions) {
-        this.automaticCaptions = automaticCaptions;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -969,11 +831,6 @@ public class Entry {
     @JsonProperty("description")
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Entry withDescription(String description) {
-        this.description = description;
-        return this;
     }
 
     /**
@@ -996,11 +853,6 @@ public class Entry {
         this.tags = tags;
     }
 
-    public Entry withTags(List<String> tags) {
-        this.tags = tags;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1019,11 +871,6 @@ public class Entry {
     @JsonProperty("requested_subtitles")
     public void setRequestedSubtitles(Object requestedSubtitles) {
         this.requestedSubtitles = requestedSubtitles;
-    }
-
-    public Entry withRequestedSubtitles(Object requestedSubtitles) {
-        this.requestedSubtitles = requestedSubtitles;
-        return this;
     }
 
     /**
@@ -1046,11 +893,6 @@ public class Entry {
         this.startTime = startTime;
     }
 
-    public Entry withStartTime(Object startTime) {
-        this.startTime = startTime;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1069,11 +911,6 @@ public class Entry {
     @JsonProperty("playlist_id")
     public void setPlaylistId(String playlistId) {
         this.playlistId = playlistId;
-    }
-
-    public Entry withPlaylistId(String playlistId) {
-        this.playlistId = playlistId;
-        return this;
     }
 
     /**
@@ -1096,17 +933,12 @@ public class Entry {
         this.uploader = uploader;
     }
 
-    public Entry withUploader(String uploader) {
-        this.uploader = uploader;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The formatId
      */
-    @JsonProperty("format_id")
+    @JsonProperty("Formatid")
     public String getFormatId() {
         return formatId;
     }
@@ -1114,16 +946,11 @@ public class Entry {
     /**
      * 
      * @param formatId
-     *     The format_id
+     *     The Formatid
      */
-    @JsonProperty("format_id")
+    @JsonProperty("Formatid")
     public void setFormatId(String formatId) {
         this.formatId = formatId;
-    }
-
-    public Entry withFormatId(String formatId) {
-        this.formatId = formatId;
-        return this;
     }
 
     /**
@@ -1146,11 +973,6 @@ public class Entry {
         this.uploaderId = uploaderId;
     }
 
-    public Entry withUploaderId(String uploaderId) {
-        this.uploaderId = uploaderId;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1169,11 +991,6 @@ public class Entry {
     @JsonProperty("subtitles")
     public void setSubtitles(Subtitles subtitles) {
         this.subtitles = subtitles;
-    }
-
-    public Entry withSubtitles(Subtitles subtitles) {
-        this.subtitles = subtitles;
-        return this;
     }
 
     /**
@@ -1196,11 +1013,6 @@ public class Entry {
         this.playlistTitle = playlistTitle;
     }
 
-    public Entry withPlaylistTitle(String playlistTitle) {
-        this.playlistTitle = playlistTitle;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1219,11 +1031,6 @@ public class Entry {
     @JsonProperty("thumbnails")
     public void setThumbnails(List<Thumbnail> thumbnails) {
         this.thumbnails = thumbnails;
-    }
-
-    public Entry withThumbnails(List<Thumbnail> thumbnails) {
-        this.thumbnails = thumbnails;
-        return this;
     }
 
     /**
@@ -1246,11 +1053,6 @@ public class Entry {
         this.license = license;
     }
 
-    public Entry withLicense(String license) {
-        this.license = license;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1269,11 +1071,6 @@ public class Entry {
     @JsonProperty("alt_title")
     public void setAltTitle(Object altTitle) {
         this.altTitle = altTitle;
-    }
-
-    public Entry withAltTitle(Object altTitle) {
-        this.altTitle = altTitle;
-        return this;
     }
 
     /**
@@ -1296,11 +1093,6 @@ public class Entry {
         this.extractorKey = extractorKey;
     }
 
-    public Entry withExtractorKey(String extractorKey) {
-        this.extractorKey = extractorKey;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1319,11 +1111,6 @@ public class Entry {
     @JsonProperty("vcodec")
     public void setVcodec(String vcodec) {
         this.vcodec = vcodec;
-    }
-
-    public Entry withVcodec(String vcodec) {
-        this.vcodec = vcodec;
-        return this;
     }
 
     /**
@@ -1346,11 +1133,6 @@ public class Entry {
         this.thumbnail = thumbnail;
     }
 
-    public Entry withThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1369,11 +1151,6 @@ public class Entry {
     @JsonProperty("vbr")
     public void setVbr(Object vbr) {
         this.vbr = vbr;
-    }
-
-    public Entry withVbr(Object vbr) {
-        this.vbr = vbr;
-        return this;
     }
 
     /**
@@ -1396,11 +1173,6 @@ public class Entry {
         this.isLive = isLive;
     }
 
-    public Entry withIsLive(Object isLive) {
-        this.isLive = isLive;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1419,11 +1191,6 @@ public class Entry {
     @JsonProperty("extractor")
     public void setExtractor(String extractor) {
         this.extractor = extractor;
-    }
-
-    public Entry withExtractor(String extractor) {
-        this.extractor = extractor;
-        return this;
     }
 
     /**
@@ -1446,11 +1213,6 @@ public class Entry {
         this.endTime = endTime;
     }
 
-    public Entry withEndTime(Object endTime) {
-        this.endTime = endTime;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1469,11 +1231,6 @@ public class Entry {
     @JsonProperty("webpage_url")
     public void setWebpageUrl(String webpageUrl) {
         this.webpageUrl = webpageUrl;
-    }
-
-    public Entry withWebpageUrl(String webpageUrl) {
-        this.webpageUrl = webpageUrl;
-        return this;
     }
 
     /**
@@ -1496,11 +1253,6 @@ public class Entry {
         this.formats = formats;
     }
 
-    public Entry withFormats(List<Format> formats) {
-        this.formats = formats;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -1521,18 +1273,13 @@ public class Entry {
         this.resolution = resolution;
     }
 
-    public Entry withResolution(Object resolution) {
-        this.resolution = resolution;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The width
      */
     @JsonProperty("width")
-    public long getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
@@ -1542,13 +1289,8 @@ public class Entry {
      *     The width
      */
     @JsonProperty("width")
-    public void setWidth(long width) {
+    public void setWidth(Integer width) {
         this.width = width;
-    }
-
-    public Entry withWidth(long width) {
-        this.width = width;
-        return this;
     }
 
     /**
@@ -1557,7 +1299,7 @@ public class Entry {
      *     The nEntries
      */
     @JsonProperty("n_entries")
-    public long getNEntries() {
+    public Integer getNEntries() {
         return nEntries;
     }
 
@@ -1567,13 +1309,8 @@ public class Entry {
      *     The n_entries
      */
     @JsonProperty("n_entries")
-    public void setNEntries(long nEntries) {
+    public void setNEntries(Integer nEntries) {
         this.nEntries = nEntries;
-    }
-
-    public Entry withNEntries(long nEntries) {
-        this.nEntries = nEntries;
-        return this;
     }
 
     @Override
@@ -1589,11 +1326,6 @@ public class Entry {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
-
-    public Entry withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
     }
 
     @Override

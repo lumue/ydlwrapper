@@ -38,11 +38,6 @@ public class AutomaticCaptions {
         this.additionalProperties.put(name, value);
     }
 
-    public AutomaticCaptions withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
-
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(additionalProperties).toHashCode();
