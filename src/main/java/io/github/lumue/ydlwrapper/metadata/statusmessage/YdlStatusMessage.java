@@ -1,4 +1,4 @@
-package io.github.lumue.ydlwrapper.metadata;
+package io.github.lumue.ydlwrapper.metadata.statusmessage;
 
 import java.io.Serializable;
 import java.util.Objects;

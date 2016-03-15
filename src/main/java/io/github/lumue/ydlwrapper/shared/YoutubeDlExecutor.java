@@ -100,7 +100,7 @@ public class YoutubeDlExecutor {
 		p = Runtime.getRuntime().exec(command,null,outputFolder);
 
 		if(stderrConsumer!=null) {
-			AsyncConsumer<InputStream> stderrScanner = new AsyncConsumer<>(this.stderrConsumer);
+			Consumer<InputStream> stderrScanner = this.stderrConsumer;
 			stderrScanner.accept(p.getErrorStream());
 		}
 		if(stdoutConsumer!=null){

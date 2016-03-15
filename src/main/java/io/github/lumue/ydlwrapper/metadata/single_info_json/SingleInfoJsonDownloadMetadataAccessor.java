@@ -1,6 +1,6 @@
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
-import io.github.lumue.ydlwrapper.metadata.YdlDownloadMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.statusmessage.YdlDownloadMetadataAccessor;
 
 import java.util.List;
 import java.util.Objects;

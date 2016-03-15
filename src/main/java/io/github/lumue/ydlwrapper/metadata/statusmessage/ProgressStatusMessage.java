@@ -1,4 +1,4 @@
-package io.github.lumue.ydlwrapper.metadata;
+package io.github.lumue.ydlwrapper.metadata.statusmessage;
 
 /**
  * Created by lm on 12.03.16.

@@ -1,8 +1,8 @@
 package io.github.lumue.ydlwrapper.download;
 
-import io.github.lumue.ydlwrapper.metadata.NewDownloadStatusMessage;
-import io.github.lumue.ydlwrapper.metadata.YdlDownloadMetadataAccessor;
-import io.github.lumue.ydlwrapper.metadata.YdlStatusMessage;
+import io.github.lumue.ydlwrapper.metadata.statusmessage.NewDownloadStatusMessage;
+import io.github.lumue.ydlwrapper.metadata.statusmessage.YdlDownloadMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.statusmessage.YdlStatusMessage;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.SingleInfoJsonDownloadMetadataAccessor;
 import io.github.lumue.ydlwrapper.shared.StreamScanner;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJson;
@@ -166,8 +166,8 @@ public class YdlDownloadTask {
 	}
 
 	private void onNewDownloadFile(NewDownloadStatusMessage message) {
-		String extension = message.parseExtension();
-		String filename = message.parseFilename();
+		String extension = message.getExtension();
+		String filename = message.getFilename();
 		Long filesize = ydlDownloadMetadataAccessor.getFilesize(filename, extension).orElse(0L);
 		YdlFileDownload download = new YdlFileDownload(filename, extension, filesize);
 		this.currentDownload.getAndSet(download);
