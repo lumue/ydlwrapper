@@ -134,7 +134,7 @@ public class YdlDownloadTask {
 			int result = YoutubeDlExecutor.newBuilder(templateExecutor)
 					.withOptions(DUMP_SINGLE_JSON)
 					.withStdoutConsumer(inputStream -> {
-						YdlInfoJson ydlInfoJson = infoJsonParser.apply(inputStream);
+ 						YdlInfoJson ydlInfoJson = infoJsonParser.apply(inputStream);
 						ydlDownloadTaskMetadata.getAndSet(ydlInfoJson);
 					})
 					.build()

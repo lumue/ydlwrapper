@@ -1,6 +1,7 @@
 package io.github.lumue.ydlwrapper.metadata.statusmessage;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -17,9 +18,12 @@ public class YdlStatusMessage implements Serializable{
 	}
 
 	private final String line;
+	
+	private final LocalDateTime timestamp;
 
 	protected YdlStatusMessage(String line) {
 		this.line = line;
+		timestamp = LocalDateTime.now();
 	}
 
 	public static YdlStatusMessage createYdlStatusMessage(String line) {
