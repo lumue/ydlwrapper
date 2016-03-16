@@ -19,6 +19,7 @@ public class YdlFileDownload {
 	private LocalTime finished;
 	private LocalTime lastUpdate;
 	private State state=State.PENDING;
+	private final String absoluteOutFilename;
 
 	public YdlFileDownload updateDownloadedSize(Long downloadedSize) {
 		refreshLastUpdate();
@@ -60,6 +61,50 @@ public class YdlFileDownload {
 		return this;
 	}
 
+	public String getFilename() {
+		return filename;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public Long getExpectedSize() {
+		return expectedSize;
+	}
+
+	public Long getDownloadedSize() {
+		return downloadedSize;
+	}
+
+	public Long getBps() {
+		return bps;
+	}
+
+	public LocalTime getStarted() {
+		return started;
+	}
+
+	public LocalTime getFinished() {
+		return finished;
+	}
+
+	public LocalTime getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public String getAbsoluteOutFilename() {
+		return absoluteOutFilename;
+	}
+
 	public enum State{PENDING,RUNNING,PAUSED,FINISHED}
 
 	@Override
@@ -71,11 +116,12 @@ public class YdlFileDownload {
 				'}';
 	}
 
-	private YdlFileDownload(String filename, String extension, String format, Long expectedSize) {
+	private YdlFileDownload(String filename, String extension, String format, Long expectedSize, String absoluteOutFilename) {
 		this.filename = filename;
 		this.extension = extension;
 		this.format = format;
 		this.expectedSize = expectedSize;
+		this.absoluteOutFilename = absoluteOutFilename;
 	}
 
 	public static YdlFileDownloadBuilder builder(){
@@ -87,9 +133,15 @@ public class YdlFileDownload {
 		private String format;
 		private Long expectedSize;
 		private String extension;
+		private String absoluteOutFilename;
 
 		public YdlFileDownloadBuilder setFilename(String filename) {
 			this.filename = filename;
+			return this;
+		}
+
+		public YdlFileDownloadBuilder setAbsoluteOutFilename(String filename) {
+			this.absoluteOutFilename = filename;
 			return this;
 		}
 
@@ -109,7 +161,7 @@ public class YdlFileDownload {
 		}
 
 		public YdlFileDownload createYdlFileDownload() {
-			return new YdlFileDownload(filename, extension, format, expectedSize);
+			return new YdlFileDownload(filename, extension, format, expectedSize, absoluteOutFilename);
 		}
 	}
 

@@ -10,7 +10,9 @@ public class ProgressStatusMessage extends YdlStatusMessage {
 
 
 	protected static boolean isMessageTypeFor(String line) {
-		return false;
+		return line.contains("ETA");
 	}
+
+
 
 }

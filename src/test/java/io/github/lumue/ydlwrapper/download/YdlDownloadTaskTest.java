@@ -29,6 +29,9 @@ public class YdlDownloadTaskTest {
 				.setOutputFolder(OUTPUT_FOLDER)
 				.setWriteInfoJson(true)
 				.onNewOutputFile((a,b)-> System.out.println(b.toString()))
+				.onOutputFileChange(
+						(a,b)->System.out.print(b.toString())
+				)
 				.build();
 
 	}
