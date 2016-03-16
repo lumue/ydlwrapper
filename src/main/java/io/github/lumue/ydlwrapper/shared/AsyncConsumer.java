@@ -1,8 +1,14 @@
 package io.github.lumue.ydlwrapper.shared;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
 import java.util.Objects;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.function.Consumer;
 
 /**
@@ -11,10 +17,12 @@ import java.util.function.Consumer;
  *
  * Created by lm on 11.03.16.
  */
-public class AsyncConsumer<T> implements Consumer<T> {
+public class AsyncConsumer<T> implements Consumer<T>,Closeable {
 
+	private final static Logger LOGGER= LoggerFactory.getLogger(AsyncConsumer.class);
 
 	private final Consumer<T> consumer;
+	private ExecutorService executorService=Executors.newCachedThreadPool();
 
 	public AsyncConsumer(Consumer<T> consumer) {
 		Objects.requireNonNull(this.consumer = consumer);
@@ -22,7 +30,22 @@ public class AsyncConsumer<T> implements Consumer<T> {
 
 	@Override
 	public void accept(T t) {
-		final Executor executor = Executors.newSingleThreadExecutor();
-		executor.execute(() ->consumer.accept(t));
+		Future<?> result = acceptAsync(t);
+		try {
+			result.get();
+		} catch (InterruptedException e) {
+			LOGGER.warn("execution interrupted",e);
+		} catch (ExecutionException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void close() throws IOException {
+
+	}
+
+	public Future<?> acceptAsync(T t) {
+		return executorService.submit(() -> consumer.accept(t));
 	}
 }

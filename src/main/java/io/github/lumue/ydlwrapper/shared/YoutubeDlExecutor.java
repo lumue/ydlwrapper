@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
 /**
@@ -99,15 +101,23 @@ public class YoutubeDlExecutor {
 		String command=this.ydlLocation+Option.toString(options)+" --output %(title)s.f%(format_id)s.%(ext)s "+this.url;
 		p = Runtime.getRuntime().exec(command,null,outputFolder);
 
-//		if(stderrConsumer!=null) {
-//			Consumer<InputStream> stderrScanner = new AsyncConsumer<>(this.stderrConsumer);
-//			stderrScanner.accept(p.getErrorStream());
-//		}
-		if(stdoutConsumer!=null){
-			Consumer<InputStream> stdoutScanner = this.stdoutConsumer;
-			stdoutScanner.accept(p.getInputStream());
+		Future<?> stderrFuture = null;
+		Future<?> stdoutFuture = null;
+		if(stderrConsumer!=null) {
+			AsyncConsumer<InputStream> stderrScanner = new AsyncConsumer<>(this.stderrConsumer);
+			stderrFuture = stderrScanner.acceptAsync(p.getErrorStream());
 		}
-
+		if(stdoutConsumer!=null){
+			AsyncConsumer<InputStream> stdoutScanner = new AsyncConsumer<>(this.stdoutConsumer);
+			stdoutFuture = stdoutScanner.acceptAsync(p.getInputStream());
+		}
+		try {
+			stdoutFuture.get();
+			if(stderrFuture!=null)
+				stderrFuture.get();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return p.waitFor();
 	}
 
