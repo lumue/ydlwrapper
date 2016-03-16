@@ -1,7 +1,6 @@
 package io.github.lumue.ydlwrapper.metadata;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.core.IsEqual;
+import io.github.lumue.ydlwrapper.metadata.statusmessage.NewDownloadStatusMessage;
 import org.junit.Test;
 
 import java.util.function.Supplier;
@@ -22,19 +21,19 @@ public class NewDownloadStatusMessageTest {
 	@Test
 	public void parseFormatGivenValidMessage() throws Exception {
 		NewDownloadStatusMessage message = new NewDownloadStatusMessage(VALID_MESSAGE);
-		assertParseResult(message,EXPECTED_FORMAT,message::parseFormatId);
+		assertParseResult(message,EXPECTED_FORMAT,message::getFormatId);
 	}
 
 	@Test
 	public void parseFilenameGivenValidMessage() throws Exception {
 		NewDownloadStatusMessage message = new NewDownloadStatusMessage(VALID_MESSAGE);
-		assertParseResult(message,EXPECTED_FILENAME,message::parseFilename);
+		assertParseResult(message,EXPECTED_FILENAME,message::getFilename);
 	}
 
 	@Test
 	public void parseExtensionGivenValidMessage() throws Exception {
 		NewDownloadStatusMessage message = new NewDownloadStatusMessage(VALID_MESSAGE);
-		assertParseResult(message,EXPECTED_EXTENSION,message::parseExtension);
+		assertParseResult(message,EXPECTED_EXTENSION,message::getExtension);
 	}
 
 	private void assertParseResult(NewDownloadStatusMessage message,String expectedResult,Supplier<String> actualSupplier) {
