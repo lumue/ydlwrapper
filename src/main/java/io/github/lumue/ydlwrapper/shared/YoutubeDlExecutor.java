@@ -45,7 +45,7 @@ public class YoutubeDlExecutor {
 		builder.url = other.url;
 		builder.stdoutConsumer = other.stdoutConsumer;
 		builder.stderrConsumer = other.stderrConsumer;
-		builder.options.addAll(builder.options);
+		builder.options.addAll(other.options);
 		builder.outputFolder = other.outputFolder;
 
 		return builder;
@@ -83,8 +83,8 @@ public class YoutubeDlExecutor {
 			options.forEach(option -> sb.append(option).append(" "));
 			sb.append(" ");
 			return sb.toString();
-		};
-	};
+		}
+	}
 
 
 	/**
@@ -96,7 +96,7 @@ public class YoutubeDlExecutor {
 	 */
 	public int execute() throws IOException, InterruptedException {
 		Process p;
-		String command=this.ydlLocation+Option.toString(options)+this.url;
+		String command=this.ydlLocation+Option.toString(options)+" --output %(title)s.f%(format_id)s.%(ext)s "+this.url;
 		p = Runtime.getRuntime().exec(command,null,outputFolder);
 
 		if(stderrConsumer!=null) {
