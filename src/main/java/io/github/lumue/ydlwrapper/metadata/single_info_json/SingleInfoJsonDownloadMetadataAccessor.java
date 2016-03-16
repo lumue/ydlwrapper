@@ -12,7 +12,7 @@ public class SingleInfoJsonDownloadMetadataAccessor implements YdlDownloadMetada
 	private final YdlInfoJson ydlInfoJson;
 
 	public SingleInfoJsonDownloadMetadataAccessor(YdlInfoJson ydlInfoJson) {
-		this.ydlInfoJson=ydlInfoJson;
+		this.ydlInfoJson=Objects.requireNonNull(ydlInfoJson);
 	}
 
 	@Override

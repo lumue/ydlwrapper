@@ -99,10 +99,10 @@ public class YoutubeDlExecutor {
 		String command=this.ydlLocation+Option.toString(options)+" --output %(title)s.f%(format_id)s.%(ext)s "+this.url;
 		p = Runtime.getRuntime().exec(command,null,outputFolder);
 
-		if(stderrConsumer!=null) {
-			Consumer<InputStream> stderrScanner = new AsyncConsumer<>(this.stderrConsumer);
-			stderrScanner.accept(p.getErrorStream());
-		}
+//		if(stderrConsumer!=null) {
+//			Consumer<InputStream> stderrScanner = new AsyncConsumer<>(this.stderrConsumer);
+//			stderrScanner.accept(p.getErrorStream());
+//		}
 		if(stdoutConsumer!=null){
 			Consumer<InputStream> stdoutScanner = this.stdoutConsumer;
 			stdoutScanner.accept(p.getInputStream());

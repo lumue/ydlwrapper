@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +23,8 @@ public class YdlDownloadTaskTest {
 	private static final String OUTPUT_FOLDER = BASE_TEST_OUTPUT + YdlDownloadTaskTest.class.getSimpleName();
 	private YdlDownloadTask downloadTask;
 
+	private final static Logger LOGGER= LoggerFactory.getLogger(YdlDownloadTaskTest.class);
+
 	@Before
 	public void setUp() throws IOException {
 		prepareOutputFolder();
@@ -28,14 +32,20 @@ public class YdlDownloadTaskTest {
 				.setUrl("https://www.youtube.com/watch?v=BiG6_1LS_AI")
 				.setOutputFolder(OUTPUT_FOLDER)
 				.setWriteInfoJson(true)
-				.onNewOutputFile((a,b)-> System.out.println(b.toString()))
-				.onOutputFileChange(
-						(a,b)->System.out.print(b.toString())
-				)
+				.onNewOutputFile((a,b)->onNewOutputfileCaught(a,b))
+				.onOutputFileChange((a,b)->onOutputFileChange(a,b))
 				.build();
 
 	}
 
+	private void onOutputFileChange(YdlDownloadTask a, YdlFileDownload b) {
+		LOGGER.debug(""+b.getDownloadedSize()+" of "+b.getExpectedSize()+"");
+	}
+
+	private void onNewOutputfileCaught(YdlDownloadTask a, YdlFileDownload b){
+		LOGGER.debug(""+a+","+b+"");
+	}
+	
 	private void prepareOutputFolder() throws IOException {
 		File outputFolder=new File(OUTPUT_FOLDER);
 

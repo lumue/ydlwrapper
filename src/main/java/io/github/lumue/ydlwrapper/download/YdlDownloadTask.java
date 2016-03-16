@@ -87,6 +87,9 @@ public class YdlDownloadTask {
 		return url;
 	}
 
+	public YdlFileDownload getCurrentDownload() {
+		return currentDownload.get();
+	}
 
 	public synchronized void execute()  {
 
