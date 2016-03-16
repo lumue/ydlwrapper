@@ -284,8 +284,9 @@ public class YdlDownloadTask {
 			return this;
 		}
 
-		public void setOnStateChanged(YdlCallback<YdlDownloadState> onStateChanged) {
+		public YdlDownloadTaskBuilder onStateChanged(YdlCallback<YdlDownloadState> onStateChanged) {
 			this.onStateChanged = onStateChanged;
+			return this;
 		}
 
 		public YdlDownloadTaskBuilder setWriteInfoJson(boolean writeInfoJson) {
