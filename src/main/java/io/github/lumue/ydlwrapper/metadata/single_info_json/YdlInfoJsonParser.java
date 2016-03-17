@@ -1,10 +1,10 @@
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UncheckedIOException;
+import java.io.*;
 import java.util.function.Function;
 
 /**
@@ -25,11 +25,36 @@ public class YdlInfoJsonParser implements Function<InputStream,YdlInfoJson>{
 
 	@Override
 	public YdlInfoJson apply(InputStream stream)  {
-		try {
-			return objectMapper.readValue(stream,YdlInfoJson.class);
-		} catch (IOException e) {
-			throw new UncheckedIOException(e);
-		}
+
+			BufferedReader br=null;
+			try {
+				br = new BufferedReader(new InputStreamReader(stream));
+				return objectMapper.readValue(stream,YdlInfoJson.class);
+			} catch (Error|RuntimeException|IOException e) {
+				try {
+					if(br!=null)
+						br.close();
+				} catch (IOException ex) {
+					try {
+						e.addSuppressed(ex);
+					} catch (Throwable ignore) {}
+				}
+				throw new RuntimeException(e);
+			}
+	}
+
+	/**
+	 * Convert a Closeable to a Runnable by converting checked IOException
+	 * to UncheckedIOException
+	 */
+	private static Runnable asUncheckedRunnable(Closeable c) {
+		return () -> {
+			try {
+				c.close();
+			} catch (IOException e) {
+				throw new UncheckedIOException(e);
+			}
+		};
 	}
 
 }

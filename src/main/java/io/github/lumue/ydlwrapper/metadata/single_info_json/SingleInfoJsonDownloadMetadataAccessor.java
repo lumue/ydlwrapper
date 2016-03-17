@@ -1,8 +1,6 @@
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
 import io.github.lumue.ydlwrapper.metadata.statusmessage.YdlDownloadMetadataAccessor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +14,7 @@ public class SingleInfoJsonDownloadMetadataAccessor implements YdlDownloadMetada
 	private final YdlInfoJson ydlInfoJson;
 
 	public SingleInfoJsonDownloadMetadataAccessor(YdlInfoJson ydlInfoJson) {
-		this.ydlInfoJson=ydlInfoJson;
+		this.ydlInfoJson=Objects.requireNonNull(ydlInfoJson);
 	}
 
 	private final static Logger LOGGER= LoggerFactory.getLogger(SingleInfoJsonDownloadMetadataAccessor.class);

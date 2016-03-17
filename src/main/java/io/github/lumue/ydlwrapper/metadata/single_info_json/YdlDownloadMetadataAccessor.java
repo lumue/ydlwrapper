@@ -1,4 +1,4 @@
-package io.github.lumue.ydlwrapper.metadata.statusmessage;
+package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
 import java.util.Optional;
 
