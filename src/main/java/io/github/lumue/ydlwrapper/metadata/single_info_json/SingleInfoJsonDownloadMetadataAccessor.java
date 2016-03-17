@@ -1,6 +1,8 @@
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
 import io.github.lumue.ydlwrapper.metadata.statusmessage.YdlDownloadMetadataAccessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,15 +19,22 @@ public class SingleInfoJsonDownloadMetadataAccessor implements YdlDownloadMetada
 		this.ydlInfoJson=ydlInfoJson;
 	}
 
+	private final static Logger LOGGER= LoggerFactory.getLogger(SingleInfoJsonDownloadMetadataAccessor.class);
+
 	@Override
 	public Optional<Long> getFilesize(String filename, String formatId) {
 		Long filesize;
-		if(isPlaylist()){
-			filesize=getFilesizeFromPlaylist(filename,formatId);
-		}else if(isMergedFormat()){
-			filesize=getFilesizeFromMergedFormat(formatId);
-		} else
-			filesize=getFilesizeFromSingleFileDownload(formatId);
+		try {
+			if (isPlaylist()) {
+				filesize = getFilesizeFromPlaylist(filename, formatId);
+			} else if (isMergedFormat()) {
+				filesize = getFilesizeFromMergedFormat(formatId);
+			} else
+				filesize = getFilesizeFromSingleFileDownload(formatId);
+		}catch(Throwable t){
+			LOGGER.warn("could not get filesize ",t);
+			filesize=null;
+		}
 		return filesize!=null?Optional.of(filesize):Optional.empty();
 	}
 
