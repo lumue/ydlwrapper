@@ -2,7 +2,6 @@ package io.github.lumue.ydlwrapper.metadata;
 
 import io.github.lumue.ydlwrapper.download.YdlFileDownload;
 
-import java.io.File;
 import java.util.Optional;
 
 /**

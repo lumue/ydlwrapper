@@ -1,7 +1,10 @@
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
 
+import io.github.lumue.ydlwrapper.metadata.DocumentIdMetadataAccessor;
 import io.github.lumue.ydlwrapper.metadata.ExpectedFilesizeMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.ExtractorMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.TitleMetadataAccessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,15 +15,19 @@ import java.util.Optional;
 /**
  * Created by lm on 12.03.16.
  */
-public class SingleInfoJsonExpectedFilesizeMetadataAccessor implements ExpectedFilesizeMetadataAccessor {
+public class SingleInfoJsonMetadataAccessor
+		implements ExpectedFilesizeMetadataAccessor,
+		TitleMetadataAccessor,
+		DocumentIdMetadataAccessor,
+		ExtractorMetadataAccessor{
 
 	private final YdlInfoJson ydlInfoJson;
 
-	public SingleInfoJsonExpectedFilesizeMetadataAccessor(YdlInfoJson ydlInfoJson) {
+	public SingleInfoJsonMetadataAccessor(YdlInfoJson ydlInfoJson) {
 		this.ydlInfoJson=Objects.requireNonNull(ydlInfoJson);
 	}
 
-	private final static Logger LOGGER= LoggerFactory.getLogger(SingleInfoJsonExpectedFilesizeMetadataAccessor.class);
+	private final static Logger LOGGER= LoggerFactory.getLogger(SingleInfoJsonMetadataAccessor.class);
 
 	@Override
 	public Optional<Long> getFilesize(String filename, String formatId) {
@@ -103,6 +110,24 @@ public class SingleInfoJsonExpectedFilesizeMetadataAccessor implements ExpectedF
 			return filesize.longValue();
 		else
 			return null;
+	}
+
+	@Override
+	public Optional<String> getDocumentId() {
+		String id=ydlInfoJson.getId();
+		return Optional.ofNullable(id);
+	}
+
+	@Override
+	public Optional<String> getExtractor() {
+		String id=ydlInfoJson.getExtractor();
+		return Optional.ofNullable(id);
+	}
+
+	@Override
+	public Optional<String> getTitle() {
+		String id=ydlInfoJson.getTitle();
+		return Optional.ofNullable(id);
 	}
 
 	;

@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * Created by lm on 18.03.16.
  */
-public class FilesystemCurrentFilesizeAccessor implements CurrentFilesizeMetadataAccessor {
+public class FilesystemCurrentFilesizeAccessor implements CurrentFilesizeMetadataAccessor{
 
 	private final static Logger LOGGER= LoggerFactory.getLogger(FilesystemCurrentFilesizeAccessor.class);
 
