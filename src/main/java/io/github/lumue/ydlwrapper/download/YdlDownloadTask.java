@@ -1,10 +1,12 @@
 package io.github.lumue.ydlwrapper.download;
 
+import io.github.lumue.ydlwrapper.metadata.CurrentFilesizeMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.filesystem.FilesystemCurrentFilesizeAccessor;
 import io.github.lumue.ydlwrapper.metadata.statusmessage.NewDownloadStatusMessage;
 import io.github.lumue.ydlwrapper.metadata.statusmessage.ProgressStatusMessage;
-import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlDownloadMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.ExpectedFilesizeMetadataAccessor;
 import io.github.lumue.ydlwrapper.metadata.statusmessage.YdlStatusMessage;
-import io.github.lumue.ydlwrapper.metadata.single_info_json.SingleInfoJsonDownloadMetadataAccessor;
+import io.github.lumue.ydlwrapper.metadata.single_info_json.SingleInfoJsonExpectedFilesizeMetadataAccessor;
 import io.github.lumue.ydlwrapper.shared.StreamScanner;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJson;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJsonParser;
@@ -13,9 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -37,7 +38,8 @@ public class YdlDownloadTask {
 	private final YdlInfoJsonParser infoJsonParser=new YdlInfoJsonParser();
 	private final boolean writeInfoJson;
 	private final AtomicReference<YdlInfoJson> ydlDownloadTaskMetadata=new AtomicReference<>(null);
-	private YdlDownloadMetadataAccessor ydlDownloadMetadataAccessor;
+	private ExpectedFilesizeMetadataAccessor ydlDownloadMetadataAccessor;
+	private final CurrentFilesizeMetadataAccessor currentFilesizeMetadataAccessor=new FilesystemCurrentFilesizeAccessor();
 
 	public enum YdlDownloadState{EXECUTING, ERROR, SUCCESS, PENDING}
 
@@ -140,7 +142,7 @@ public class YdlDownloadTask {
 					.build()
 					.execute();
 			prepared.getAndSet(result==0);
-			this.ydlDownloadMetadataAccessor =new SingleInfoJsonDownloadMetadataAccessor(ydlDownloadTaskMetadata.get());
+			this.ydlDownloadMetadataAccessor =new SingleInfoJsonExpectedFilesizeMetadataAccessor(ydlDownloadTaskMetadata.get());
 		} catch (Exception e) {
 			throw new RuntimeException("error getting metadata",e);
 		}
@@ -183,19 +185,15 @@ public class YdlDownloadTask {
 		YdlFileDownload fileDownload = this.currentDownload.get();
 		if(fileDownload!=null)
 		{
-			File currentFile = new File(fileDownload.getAbsoluteOutFilename());
-			if(currentFile.exists())
-				try {
-					fileDownload.updateDownloadedSize(Files.size(currentFile.toPath()));
-					this.onOutputFileChange.handleCallback(this, fileDownload);
-				} catch (IOException e) {
-					LOGGER.error("could not determine filesize of current download",e);
-				}
+			currentFilesizeMetadataAccessor.getFilesize(fileDownload).ifPresent((size) -> {
+				fileDownload.updateDownloadedSize(size);
+				this.onOutputFileChange.handleCallback(this, fileDownload);
+			});
 		}
 	}
 
 	private String getAbsoluteFilename(String filename) {
-		return this.outputFolder.getAbsolutePath()+File.separator+filename+".part";
+		return this.outputFolder.getAbsolutePath()+File.separator+filename;
 	}
 
 	private void onNewDownloadFile(NewDownloadStatusMessage message) {

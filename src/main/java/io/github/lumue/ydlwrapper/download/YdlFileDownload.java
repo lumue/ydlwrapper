@@ -13,6 +13,7 @@ public class YdlFileDownload {
 	private final String format;
 	private final String extension;
 	private final Long expectedSize;
+	private final String absoluteTempoutFilename;
 	private Long downloadedSize;
 	private Long bps;
 	private LocalTime started;
@@ -105,6 +106,10 @@ public class YdlFileDownload {
 		return absoluteOutFilename;
 	}
 
+	public String getAbsoluteTempoutFilename() {
+		return absoluteTempoutFilename;
+	}
+
 	public enum State{PENDING,RUNNING,PAUSED,FINISHED}
 
 	@Override
@@ -116,12 +121,13 @@ public class YdlFileDownload {
 				'}';
 	}
 
-	private YdlFileDownload(String filename, String extension, String format, Long expectedSize, String absoluteOutFilename) {
+	private YdlFileDownload(String filename, String extension, String format, Long expectedSize, String absoluteOutFilename, String absoluteTempoutFilename) {
 		this.filename = filename;
 		this.extension = extension;
 		this.format = format;
 		this.expectedSize = expectedSize;
 		this.absoluteOutFilename = absoluteOutFilename;
+		this.absoluteTempoutFilename = absoluteTempoutFilename;
 	}
 
 	public static YdlFileDownloadBuilder builder(){
@@ -134,6 +140,7 @@ public class YdlFileDownload {
 		private Long expectedSize;
 		private String extension;
 		private String absoluteOutFilename;
+		private String absoluteTempoutFilename;
 
 		public YdlFileDownloadBuilder setFilename(String filename) {
 			this.filename = filename;
@@ -142,6 +149,7 @@ public class YdlFileDownload {
 
 		public YdlFileDownloadBuilder setAbsoluteOutFilename(String filename) {
 			this.absoluteOutFilename = filename;
+			this.absoluteTempoutFilename=filename+".part";
 			return this;
 		}
 
@@ -161,7 +169,7 @@ public class YdlFileDownload {
 		}
 
 		public YdlFileDownload createYdlFileDownload() {
-			return new YdlFileDownload(filename, extension, format, expectedSize, absoluteOutFilename);
+			return new YdlFileDownload(filename, extension, format, expectedSize, absoluteOutFilename,absoluteTempoutFilename);
 		}
 	}
 
