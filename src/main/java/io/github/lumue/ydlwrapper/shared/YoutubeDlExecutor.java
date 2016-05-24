@@ -111,8 +111,6 @@ public class YoutubeDlExecutor implements Callable<Integer>{
 	 * stderr and stdout streams will be consumed in extra threads.
 	 *
 	 * @return exit from youtube-dl
-	 * @throws IOException
-	 * @throws InterruptedException
 	 */
 	public Integer call() {
 
