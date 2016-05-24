@@ -13,16 +13,9 @@ publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			from components.java
-
-			artifact sourcesJar {
-				classifier "sources"
-			}
+			artifact sourcesJar
 		}
 	}
-}
-
-artifacts {
-	archives sourcesJar
 }
 
 group = 'com.github.lumue'
