@@ -6,6 +6,20 @@ repositories {
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+
+			artifact sourcesJar {
+				classifier "sources"
+			}
+		}
+	}
+}
 
 group = 'com.github.lumue'
 
@@ -72,18 +86,6 @@ task integrationTest(type: Test, dependsOn: [build,compileIntegrationTestJava,pr
 	outputs.upToDateWhen { false }
 }
 
-task sourceJar(type: Jar) {
-	from sourceSets.main.allJava
-}
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-
-			artifact sourceJar {
-				classifier "sources"
-			}
-		}
-	}
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.13'
 }
