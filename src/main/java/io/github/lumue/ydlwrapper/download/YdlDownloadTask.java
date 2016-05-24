@@ -287,7 +287,9 @@ public class YdlDownloadTask {
 	}
 
 	private void onCancel(){
-		this.getCurrentDownload().updateState(YdlFileDownload.State.CANCELED);
+		if(this.getCurrentDownload()!=null) {
+			this.getCurrentDownload().updateState(YdlFileDownload.State.CANCELED);
+		}
 		onCancel.handleCallback(this,this.getCurrentDownload());
 	}
 
