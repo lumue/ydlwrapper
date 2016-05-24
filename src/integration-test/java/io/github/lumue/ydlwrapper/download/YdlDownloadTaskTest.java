@@ -25,27 +25,28 @@ public class YdlDownloadTaskTest {
 
 	private final static Logger LOGGER= LoggerFactory.getLogger(YdlDownloadTaskTest.class);
 
+	private int outputFileChangedCount=0;
+
+	private int newOutputFileCount=0;
+
+	private int cancelCount=0;
 	@Before
 	public void setUp() throws IOException {
 		prepareOutputFolder();
+		outputFileChangedCount=0;
+		newOutputFileCount=0;
+		cancelCount=0;
 		downloadTask=YdlDownloadTask.builder()
 				.setUrl("https://www.youtube.com/watch?v=BiG6_1LS_AI")
 				.setOutputFolder(OUTPUT_FOLDER)
 				.setWriteInfoJson(true)
-				.onNewOutputFile((a,b)->onNewOutputfileCaught(a,b))
-				.onOutputFileChange((a,b)->onOutputFileChange(a,b))
+				.onNewOutputFile((a,b)->newOutputFileCount++)
+				.onOutputFileChange((a,b)->outputFileChangedCount++)
+				.onCancel((a,b) -> cancelCount++)
 				.build();
 
 	}
 
-	private void onOutputFileChange(YdlDownloadTask a, YdlFileDownload b) {
-		LOGGER.debug(""+b.getDownloadedSize()+" of "+b.getExpectedSize()+"");
-	}
-
-	private void onNewOutputfileCaught(YdlDownloadTask a, YdlFileDownload b){
-		LOGGER.debug(""+a+","+b+"");
-	}
-	
 	private void prepareOutputFolder() throws IOException {
 		File outputFolder=new File(OUTPUT_FOLDER);
 
@@ -66,6 +67,14 @@ public class YdlDownloadTaskTest {
 		downloadTask.execute();
 		Stream<Path> files = Files.list(new File(OUTPUT_FOLDER).toPath());
 		Assert.assertFalse(files==null || files.count()<1);
+	}
+
+	@Test
+	public void executeAndCancelImmediately() throws Exception {
+		downloadTask.executeAsync();
+		downloadTask.cancel();
+		Assert.assertEquals(YdlDownloadTask.YdlDownloadState.CANCELED,downloadTask.getDownloadState());
+		Assert.assertEquals(1,cancelCount);
 	}
 
 	@After

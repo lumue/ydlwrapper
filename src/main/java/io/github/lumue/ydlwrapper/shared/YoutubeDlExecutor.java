@@ -1,17 +1,25 @@
 package io.github.lumue.ydlwrapper.shared;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Created by lm on 11.03.16.
  */
-public class YoutubeDlExecutor {
+public class YoutubeDlExecutor implements Callable<Integer>{
+
+	private final static Logger LOGGER = LoggerFactory.getLogger(YoutubeDlExecutor.class);
 
 	private final String ydlLocation;
 
@@ -25,7 +33,15 @@ public class YoutubeDlExecutor {
 
 	private final File outputFolder;
 
-	
+	private final CompletedCallback completedCallback;
+
+	private AtomicInteger result = new AtomicInteger();
+
+
+	public interface CompletedCallback{
+		void onCompleted(int status);
+	}
+
 
 	private YoutubeDlExecutor(Builder builder) {
 		ydlLocation = builder.ydlLocation;
@@ -33,14 +49,15 @@ public class YoutubeDlExecutor {
 		stdoutConsumer = builder.stdoutConsumer;
 		stderrConsumer = builder.stderrConsumer;
 		outputFolder = builder.outputFolder;
-		options=builder.options;
+		options = builder.options;
+		completedCallback=builder.completedCallback;
 	}
 
 	public static Builder newBuilder() {
 		return new Builder();
 	}
 
-	public static Builder newBuilder( YoutubeDlExecutor other) {
+	public static Builder newBuilder(YoutubeDlExecutor other) {
 		Builder builder = new Builder();
 
 		builder.ydlLocation = other.ydlLocation;
@@ -54,34 +71,34 @@ public class YoutubeDlExecutor {
 	}
 
 
-	public enum Option{
-		DUMP_SINGLE_JSON{
+	public enum Option {
+		DUMP_SINGLE_JSON {
 			@Override
-			public String toString(){
+			public String toString() {
 				return "--dump-single-json";
 			}
 		},
-		WRITE_INFO_JSON{
+		WRITE_INFO_JSON {
 			@Override
-			public String toString(){
+			public String toString() {
 				return "--write-info-json";
 			}
 		},
-		NO_COLOR{
+		NO_COLOR {
 			@Override
-			public String toString(){
+			public String toString() {
 				return "--no-color";
 			}
 		},
-		NEW_LINE{
+		NEW_LINE {
 			@Override
-			public String toString(){
+			public String toString() {
 				return "--newline";
 			}
 		};
 
-		private static String toString(Collection<Option> options){
-			StringBuilder sb=new StringBuilder(" ");
+		private static String toString(Collection<Option> options) {
+			StringBuilder sb = new StringBuilder(" ");
 			options.forEach(option -> sb.append(option).append(" "));
 			sb.append(" ");
 			return sb.toString();
@@ -91,34 +108,53 @@ public class YoutubeDlExecutor {
 
 	/**
 	 * execute the youtube-dl binary with the configured options.
-	 * stderr and stdout streams will be consumed in extra threads.  
+	 * stderr and stdout streams will be consumed in extra threads.
+	 *
 	 * @return exit from youtube-dl
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public int execute() throws IOException, InterruptedException {
-		Process p;
-		String command=this.ydlLocation+Option.toString(options)+" --output %(title)s.f%(format_id)s.%(ext)s "+this.url;
-		p = Runtime.getRuntime().exec(command,null,outputFolder);
+	public Integer call() {
 
-		Future<?> stderrFuture = null;
-		Future<?> stdoutFuture = null;
-		if(stderrConsumer!=null) {
-			AsyncConsumer<InputStream> stderrScanner = new AsyncConsumer<>(this.stderrConsumer);
-			stderrFuture = stderrScanner.acceptAsync(p.getErrorStream());
-		}
-		if(stdoutConsumer!=null){
-			AsyncConsumer<InputStream> stdoutScanner = new AsyncConsumer<>(this.stdoutConsumer);
-			stdoutFuture = stdoutScanner.acceptAsync(p.getInputStream());
-		}
-		try {
-			stdoutFuture.get();
-			if(stderrFuture!=null)
-				stderrFuture.get();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-		return p.waitFor();
+		result.set(-1);
+
+		Process process=null;
+
+			try {
+
+				String command = YoutubeDlExecutor.this.ydlLocation + Option.toString(options) + " --output %(title)s.f%(format_id)s.%(ext)s " + YoutubeDlExecutor.this.url;
+
+				process = Runtime.getRuntime().exec(command, null, outputFolder);
+
+
+				Future<?> stderrFuture = null;
+				Future<?> stdoutFuture = null;
+				if (stderrConsumer != null) {
+					AsyncConsumer<InputStream> stderrScanner = new AsyncConsumer<>(YoutubeDlExecutor.this.stderrConsumer);
+					stderrFuture = stderrScanner.acceptAsync(process.getErrorStream());
+				}
+				if (stdoutConsumer != null) {
+					AsyncConsumer<InputStream> stdoutScanner = new AsyncConsumer<>(YoutubeDlExecutor.this.stdoutConsumer);
+					stdoutFuture = stdoutScanner.acceptAsync(process.getInputStream());
+				}
+
+				stdoutFuture.get();
+				if (stderrFuture != null)
+					stderrFuture.get();
+				result.set(process.waitFor());
+			}
+			catch (InterruptedException e) {
+				//thread was interrupted.
+				if(process!=null) { process.destroy(); }
+				//reset interrupted flag
+				Thread.currentThread().interrupt();
+			}catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+
+
+			return result.get();
+
 	}
 
 	public static final class Builder {
@@ -126,53 +162,59 @@ public class YoutubeDlExecutor {
 		private String url;
 		private Consumer<InputStream> stdoutConsumer;
 		private Consumer<InputStream> stderrConsumer;
-		private final Set<Option> options=new HashSet<>();
+		private final Set<Option> options = new HashSet<>();
 		private File outputFolder;
+		private CompletedCallback completedCallback= status -> {};
 
 		private Builder() {
 		}
 
 
-
-
-		public Builder withYdlLocation( String val) {
+		public Builder withYdlLocation(String val) {
 			ydlLocation = val;
 			return this;
 		}
 
-		
-		public Builder withUrl( String val) {
+
+		public Builder withUrl(String val) {
 			url = val;
 			return this;
 		}
 
-		
-		public Builder withStdoutConsumer( Consumer<InputStream> val) {
+
+		public Builder withStdoutConsumer(Consumer<InputStream> val) {
 			stdoutConsumer = val;
 			return this;
 		}
 
-		
-		public Builder withStderrConsumer( Consumer<InputStream> val) {
+
+		public Builder withStderrConsumer(Consumer<InputStream> val) {
 			stderrConsumer = val;
 			return this;
 		}
 
-		
-		public Builder withOptions( Option... val) {
+
+		public Builder withOptions(Option... val) {
 			options.addAll(Arrays.asList(val));
 			return this;
 		}
 
-		
-		public Builder withOutputFolder( File val) {
+
+		public Builder withOutputFolder(File val) {
 			outputFolder = val;
 			return this;
 		}
 
-		
+		public Builder onCompleted(CompletedCallback callback) {
+			completedCallback=callback;
+			return this;
+		}
+
+
 		public YoutubeDlExecutor build() {
 			return new YoutubeDlExecutor(this);
 		}
 	}
+
+
 }

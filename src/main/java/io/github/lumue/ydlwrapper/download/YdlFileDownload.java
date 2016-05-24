@@ -47,14 +47,10 @@ public class YdlFileDownload {
 	public YdlFileDownload updateFinished(LocalTime finished) {
 		refreshLastUpdate();
 		this.finished = finished;
+		updateState(State.FINISHED);
 		return this;
 	}
 
-	public YdlFileDownload updateLastUpdate(LocalTime lastUpdate) {
-		refreshLastUpdate();
-		this.lastUpdate = lastUpdate;
-		return this;
-	}
 
 	public YdlFileDownload updateState(State state) {
 		refreshLastUpdate();
@@ -110,7 +106,7 @@ public class YdlFileDownload {
 		return absoluteTempoutFilename;
 	}
 
-	public enum State{PENDING,RUNNING,PAUSED,FINISHED}
+	public enum State{PENDING,RUNNING,PAUSED,FINISHED,CANCELED}
 
 	@Override
 	public String toString() {
