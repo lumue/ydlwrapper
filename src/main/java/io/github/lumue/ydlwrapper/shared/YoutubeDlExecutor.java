@@ -150,7 +150,7 @@ public class YoutubeDlExecutor implements Callable<Integer>{
 				throw new RuntimeException(e);
 			}
 
-
+			completedCallback.onCompleted(result.get());
 			return result.get();
 
 	}
