@@ -5,6 +5,9 @@ repositories {
 }
 
 apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.github.lumue'
 
 sourceCompatibility = 1.8
 
