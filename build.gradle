@@ -21,6 +21,10 @@ publishing {
 	}
 }
 
+artifacts {
+	archives sourcesJar
+}
+
 group = 'com.github.lumue'
 
 sourceCompatibility = 1.8
