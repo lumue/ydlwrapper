@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static sun.security.krb5.Confounder.longValue;
+
 /**
  * Created by lm on 12.03.16.
  */
@@ -47,32 +49,34 @@ public class SingleInfoJsonMetadataAccessor
 	}
 
 	private Long getFilesizeFromMergedFormat(String formatId) {
-		return ydlInfoJson.getRequestedFormats().stream()
+		Integer filesize = ydlInfoJson.getRequestedFormats().stream()
 				.filter((requestedFormat -> formatId.equals(requestedFormat.getFormatId())))
 				.findFirst()
 				.orElseThrow(() -> new RuntimeException("format not found"))
-				.getFilesize()
-				.longValue();
+				.getFilesize();
+		return filesize!=null?filesize.longValue():null;
 	}
 
 	private Long getFilesizeFromPlaylist(String filename, String formatId) {
 		Entry entry=getPlaylistEntryByFilename(filename);
+		Integer filesize = null;
 
 		if(isMergedFormat(entry)){
-			return entry.getRequestedFormats().stream()
+			filesize = entry.getRequestedFormats().stream()
 					.filter((requestedFormat -> formatId.equals(requestedFormat.getFormatId())))
 					.findFirst()
 					.orElseThrow(() -> new RuntimeException("format not found"))
-					.getFilesize()
-					.longValue();
-		}
+					.getFilesize();
 
-		return entry.getFormats().stream()
-				.filter((requestedFormat -> formatId.equals(requestedFormat.getFormatId())))
-				.findFirst()
-				.orElseThrow(() -> new RuntimeException("format not found"))
-				.getFilesize()
-				.longValue();
+		}
+		else {
+			filesize = entry.getFormats().stream()
+					.filter((requestedFormat -> formatId.equals(requestedFormat.getFormatId())))
+					.findFirst()
+					.orElseThrow(() -> new RuntimeException("format not found"))
+					.getFilesize();
+		}
+		return filesize!=null?filesize.longValue():null;
 	}
 
 	private boolean isMergedFormat(Entry entry) {
@@ -130,5 +134,4 @@ public class SingleInfoJsonMetadataAccessor
 		return Optional.ofNullable(id);
 	}
 
-	;
 }
