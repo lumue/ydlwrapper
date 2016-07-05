@@ -241,6 +241,10 @@ public class YdlDownloadTask {
 				fileDownload.updateDownloadedSize(size);
 				this.onOutputFileChange.handleCallback(this, fileDownload);
 			});
+			if(fileDownload.getExpectedSize()==null || fileDownload.getExpectedSize()==0) {
+				fileDownload.updateExpectedSize(progressStatusMessage.getExpectedSize());
+				this.onOutputFileChange.handleCallback(this, fileDownload);
+			}
 		}
 	}
 

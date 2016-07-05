@@ -12,7 +12,7 @@ public class YdlFileDownload {
 	private final String filename;
 	private final String format;
 	private final String extension;
-	private final Long expectedSize;
+	private Long expectedSize;
 	private final String absoluteTempoutFilename;
 	private Long downloadedSize;
 	private Long bps;
@@ -35,6 +35,12 @@ public class YdlFileDownload {
 	public YdlFileDownload updateBps(Long bps) {
 		refreshLastUpdate();
 		this.bps = bps;
+		return this;
+	}
+
+	public YdlFileDownload updateExpectedSize(Long expectedSize) {
+		refreshLastUpdate();
+		this.expectedSize = expectedSize;
 		return this;
 	}
 

@@ -11,7 +11,7 @@ public class YdlStatusMessage implements Serializable{
 
 	protected static final String DOWNLOAD_STATUS_PREFIX = "[download]";
 
-	public static final String ETA_MARKER = "ETA";
+
 
 	public String getLine() {
 		return line;
@@ -28,6 +28,7 @@ public class YdlStatusMessage implements Serializable{
 
 	public static YdlStatusMessage createYdlStatusMessage(String line) {
 		Objects.requireNonNull(line,"input line must not be null");
+
 		if(NewDownloadStatusMessage.isMessageTypeFor(line))
 			return new NewDownloadStatusMessage(line);
 		else if(ProgressStatusMessage.isMessageTypeFor(line))
