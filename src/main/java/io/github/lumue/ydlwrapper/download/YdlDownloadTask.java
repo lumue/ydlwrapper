@@ -118,6 +118,7 @@ public class YdlDownloadTask {
 		LOGGER.info("cancelling download from url " + getUrl() + " to path " + outputFolder.getAbsolutePath());
 		if (executionFuture.get() == null || !downloadState.get().equals(YdlDownloadState.EXECUTING)) {
 			LOGGER.warn("tried to cancel, but no download was executing ");
+			return;
 		}
 		executionFuture.get().cancel(true);
 		executionFuture.set(null);
