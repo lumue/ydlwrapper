@@ -33,7 +33,7 @@ public class YdlDownloadTask {
 
 	private final YoutubeDlExecutor templateExecutor;
 
-	private AtomicReference<Future<Integer>> executionFuture=new AtomicReference<>();
+	private final AtomicReference<Future<Integer>> executionFuture=new AtomicReference<>();
 
 	private final Logger LOGGER = LoggerFactory.getLogger(YdlDownloadTask.class);
 
@@ -120,8 +120,7 @@ public class YdlDownloadTask {
 			LOGGER.warn("tried to cancel, but no download was executing ");
 			return;
 		}
-		executionFuture.get().cancel(true);
-		executionFuture.set(null);
+		executionFuture.getAndUpdate((f) -> {if(f!=null) f.cancel(true);return null;});
 		downloadState.compareAndSet(YdlDownloadState.EXECUTING, YdlDownloadState.CANCELED);
 		onCancel();
 		LOGGER.info("canceled download from url " + getUrl() + " to path " + outputFolder.getAbsolutePath());
