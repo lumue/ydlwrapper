@@ -202,7 +202,7 @@ public class YdlDownloadTask {
 		onPrepared.handleCallback(this, this.singleInfoJsonMetadataAccessor);
 	}
 
-	private boolean isPrepared() {
+	public boolean isPrepared() {
 		return prepared.get();
 	}
 
