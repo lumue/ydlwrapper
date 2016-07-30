@@ -29,6 +29,7 @@ import static io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor.Option.*;
  * <p>
  * Created by lm on 06.03.16.
  */
+@SuppressWarnings("WeakerAccess")
 public class YdlDownloadTask {
 
 	private final YoutubeDlExecutor templateExecutor;
@@ -144,9 +145,10 @@ public class YdlDownloadTask {
 		if (!isPrepared())
 			prepare();
 
-		if (!downloadState.compareAndSet(YdlDownloadState.PENDING, YdlDownloadState.EXECUTING)) {
+		if (downloadState.get().equals(YdlDownloadState.EXECUTING)) {
 			throw new YdlDownloadError.IllegalDownloadState("can not start download with download-state:" + getDownloadState());
 		}
+		downloadState.set(YdlDownloadState.EXECUTING);
 		onStateChanged();
 
 		try {
