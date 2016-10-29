@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,6 +42,7 @@ public class YdlDownloadTask {
 	private final YdlInfoJsonParser infoJsonParser = new YdlInfoJsonParser();
 	private final boolean writeInfoJson;
 	private final AtomicReference<YdlInfoJson> ydlDownloadTaskMetadata = new AtomicReference<>(null);
+	private final boolean forceMp4;
 	private SingleInfoJsonMetadataAccessor singleInfoJsonMetadataAccessor;
 	private final CurrentFilesizeMetadataAccessor currentFilesizeMetadataAccessor = new FilesystemCurrentFilesizeAccessor();
 
@@ -78,7 +78,7 @@ public class YdlDownloadTask {
 			String pathToYdl,
 			String url,
 			String outputFolder,
-			YdlCallback<YdlDownloadState> onStateChanged,
+			boolean forceMp4, YdlCallback<YdlDownloadState> onStateChanged,
 			YdlCallback<YdlStatusMessage> onStdout,
 			YdlCallback<YdlStatusMessage> onStderr,
 			YdlCallback<YdlFileDownload> onNewOutputFile,
@@ -97,11 +97,15 @@ public class YdlDownloadTask {
 		this.outputFolder = new File(Objects.requireNonNull(outputFolder));
 		this.writeInfoJson = writeInfoJson;
 		this.onCancel = onCancel;
-		templateExecutor = YoutubeDlExecutor.newBuilder()
+		this.forceMp4=forceMp4;
+		YoutubeDlExecutor.Builder builder = YoutubeDlExecutor.newBuilder()
 				.withYdlLocation(this.pathToYdl)
 				.withUrl(getUrl())
 				.withOutputFolder(this.outputFolder)
-				.withOptions(NEW_LINE, NO_COLOR)
+				.withOptions(NEW_LINE, NO_COLOR);
+		if(forceMp4)
+			builder.withOptions(FORCE_MP4);
+		templateExecutor = builder
 				.build();
 	}
 
@@ -312,6 +316,8 @@ public class YdlDownloadTask {
 		private String pathToYdl = "/usr/local/bin/youtube-dl";
 		private String url;
 		private String outputFolder = ".";
+		private boolean forceMp4=false;
+
 		private YdlCallback<YdlStatusMessage> onStdout = (a, b) -> {
 		};
 		private YdlCallback<YdlStatusMessage> onStderr = (a, b) -> {
@@ -329,7 +335,7 @@ public class YdlDownloadTask {
 		private boolean writeInfoJson;
 
 		public YdlDownloadTask build() {
-			return new YdlDownloadTask(pathToYdl, url, outputFolder, onStateChanged, onStdout, onStderr, onNewOutputFile, onOutputFileChange, onPrepared, writeInfoJson, onCancel);
+			return new YdlDownloadTask(pathToYdl, url, outputFolder,forceMp4, onStateChanged, onStdout, onStderr, onNewOutputFile, onOutputFileChange, onPrepared, writeInfoJson, onCancel);
 		}
 
 		public YdlDownloadTaskBuilder onOutputFileChange(YdlCallback<YdlFileDownload> onOutputFileChange) {
@@ -385,6 +391,11 @@ public class YdlDownloadTask {
 
 		public YdlDownloadTaskBuilder onCancel(YdlCallback<YdlFileDownload> callback) {
 			this.onCancel=callback;
+			return this;
+		}
+
+		public YdlDownloadTaskBuilder setForceMp4(boolean forceMp4) {
+			this.forceMp4 = forceMp4;
 			return this;
 		}
 	}

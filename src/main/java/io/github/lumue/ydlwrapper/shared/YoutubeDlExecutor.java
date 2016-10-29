@@ -72,6 +72,12 @@ public class YoutubeDlExecutor implements Callable<Integer>{
 
 
 	public enum Option {
+		FORCE_MP4{
+			@Override
+			public String toString() {
+				return "-f bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4";
+			}
+		},
 		DUMP_SINGLE_JSON {
 			@Override
 			public String toString() {

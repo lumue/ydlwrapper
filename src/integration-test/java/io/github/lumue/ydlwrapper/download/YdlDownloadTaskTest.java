@@ -43,6 +43,7 @@ public class YdlDownloadTaskTest {
 				.onNewOutputFile((a,b)->newOutputFileCount++)
 				.onOutputFileChange((a,b)->outputFileChangedCount++)
 				.onCancel((a,b) -> cancelCount++)
+				.setForceMp4(true)
 				.build();
 
 	}
