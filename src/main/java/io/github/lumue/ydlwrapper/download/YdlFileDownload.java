@@ -38,19 +38,19 @@ public class YdlFileDownload {
 		return this;
 	}
 
-	public YdlFileDownload updateExpectedSize(Long expectedSize) {
+	YdlFileDownload updateExpectedSize(Long expectedSize) {
 		refreshLastUpdate();
 		this.expectedSize = expectedSize;
 		return this;
 	}
 
-	public YdlFileDownload updateStarted(LocalTime started) {
+	YdlFileDownload updateStarted(LocalTime started) {
 		refreshLastUpdate();
 		this.started = started;
 		return this;
 	}
 
-	public YdlFileDownload updateFinished(LocalTime finished) {
+	YdlFileDownload updateFinished(LocalTime finished) {
 		refreshLastUpdate();
 		this.finished = finished;
 		updateState(State.FINISHED);
@@ -58,7 +58,7 @@ public class YdlFileDownload {
 	}
 
 
-	public YdlFileDownload updateState(State state) {
+	YdlFileDownload updateState(State state) {
 		refreshLastUpdate();
 		this.state = state;
 		return this;

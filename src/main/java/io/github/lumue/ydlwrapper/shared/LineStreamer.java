@@ -7,29 +7,21 @@ import java.util.stream.Stream;
 /**
  * Created by lm on 11.03.16.
  */
-public class LineStreamer {
+class LineStreamer {
 
 	private final InputStream stream;
 
-	public LineStreamer(InputStream stream) {
+	LineStreamer(InputStream stream) {
 		this.stream = stream;
 	}
 
-	public Stream<String> lines(){
-		BufferedReader br=null;
-		try {
-			br = new BufferedReader(new InputStreamReader(stream));
+	Stream<String> lines(){
+
+		try (final BufferedReader br = new BufferedReader(new InputStreamReader(stream))){
+
 			return br.lines().onClose(asUncheckedRunnable(br));
-		} catch (Error|RuntimeException e) {
-			try {
-				if(br!=null)
-					br.close();
-			} catch (IOException ex) {
-				try {
-					e.addSuppressed(ex);
-				} catch (Throwable ignore) {}
-			}
-			throw e;
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
 		}
 	}
 

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static sun.security.krb5.Confounder.longValue;
 
 /**
  * Created by lm on 12.03.16.
@@ -98,12 +97,12 @@ public class SingleInfoJsonMetadataAccessor
 		return type!=null&&type.equals("playlist")&&ydlInfoJson.getEntries()!=null;
 	}
 
-	public boolean isMergedFormat() {
+	private boolean isMergedFormat() {
 		List<RequestedFormat> requestedFormats = ydlInfoJson.getRequestedFormats();
 		return requestedFormats!=null&&!requestedFormats.isEmpty();
 	}
 
-	public Long getFilesizeFromSingleFileDownload(String formatId) {
+	private Long getFilesizeFromSingleFileDownload(String formatId) {
 		Integer filesize = ydlInfoJson.getFormats().stream()
 				.filter(requestedFormat -> formatId.equals(requestedFormat.getFormatId()))
 				.findFirst()
