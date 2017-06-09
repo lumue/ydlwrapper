@@ -11,7 +11,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Stream;
+
+import static io.github.lumue.ydlwrapper.download.YdlDownloadTask.YdlDownloadState.ERROR;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the {@link YdlDownloadTask}
@@ -23,7 +29,6 @@ public class YdlDownloadTaskTest {
 	private static final String OUTPUT_FOLDER = BASE_TEST_OUTPUT + YdlDownloadTaskTest.class.getSimpleName();
 	private YdlDownloadTask downloadTask;
 
-	private final static Logger LOGGER= LoggerFactory.getLogger(YdlDownloadTaskTest.class);
 
 	private int outputFileChangedCount=0;
 
@@ -37,7 +42,7 @@ public class YdlDownloadTaskTest {
 		newOutputFileCount=0;
 		cancelCount=0;
 		downloadTask=YdlDownloadTask.builder()
-				.setUrl("https://www.youtube.com/watch?v=BiG6_1LS_AI")
+				.setUrl("https://www.youtube.com/watch?v=nwP80FmSpOw")
 				.setOutputFolder(OUTPUT_FOLDER)
 				.setWriteInfoJson(true)
 				.onNewOutputFile((a,b)->newOutputFileCount++)
@@ -58,16 +63,24 @@ public class YdlDownloadTaskTest {
 			Files.createDirectory(outputFolder.toPath());
 		}
 
-		for (File file:outputFolder.listFiles()){
-			file.delete();
-		}
+		 Optional.ofNullable(outputFolder.listFiles()).ifPresent(
+				files -> Arrays.stream(files).forEach(File::delete)
+		);
+	}
+
+	@Test
+	public void prepare() throws Exception {
+		assertFalse(downloadTask.getYdlDownloadTaskMetadata().isPresent());
+		downloadTask.prepare();
+		assertTrue(downloadTask.getYdlDownloadTaskMetadata().isPresent());
 	}
 
 	@Test
 	public void execute() throws Exception {
 		downloadTask.execute();
+		assertFalse(ERROR.equals(downloadTask.getDownloadState()));
 		Stream<Path> files = Files.list(new File(OUTPUT_FOLDER).toPath());
-		Assert.assertFalse(files==null || files.count()<1);
+		assertFalse(files==null || files.count()<1);
 	}
 
 	@Test
