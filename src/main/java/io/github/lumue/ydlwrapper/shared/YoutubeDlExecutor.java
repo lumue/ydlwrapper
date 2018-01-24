@@ -120,13 +120,18 @@ public class YoutubeDlExecutor implements Callable<Integer>{
 	 */
 	public Integer call() {
 
+		String command = YoutubeDlExecutor.this.ydlLocation + Option.toString(options) + " --output %(title)s.f%(format_id)s.%(ext)s " + YoutubeDlExecutor.this.url;
+
+		return call(command);
+
+	}
+
+	private Integer call(String command) {
+		Process process=null;
 		result.set(-1);
 
-		Process process=null;
+		try {
 
-			try {
-
-				String command = YoutubeDlExecutor.this.ydlLocation + Option.toString(options) + " --output %(title)s.f%(format_id)s.%(ext)s " + YoutubeDlExecutor.this.url;
 
 				process = Runtime.getRuntime().exec(command, null, outputFolder);
 
@@ -156,9 +161,8 @@ public class YoutubeDlExecutor implements Callable<Integer>{
 				throw new RuntimeException(e);
 			}
 
-			completedCallback.onCompleted(result.get());
-			return result.get();
-
+		completedCallback.onCompleted(result.get());
+		return result.get();
 	}
 
 	public static final class Builder {
