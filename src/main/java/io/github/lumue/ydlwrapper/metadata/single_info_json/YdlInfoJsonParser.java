@@ -28,6 +28,13 @@ public class YdlInfoJsonParser {
 				throw new RuntimeException(e);
 			}
 	}
-
+	
+	public YdlInfoJson parse(String string)  {
+		try {
+			return objectMapper.readValue(string,YdlInfoJson.class);
+		} catch (Error|RuntimeException|IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }

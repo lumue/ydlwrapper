@@ -10,10 +10,13 @@ import io.github.lumue.ydlwrapper.shared.StreamScanner;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJson;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.YdlInfoJsonParser;
 import io.github.lumue.ydlwrapper.shared.YoutubeDlExecutor;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,7 +45,7 @@ public class YdlDownloadTask {
 	private final YdlInfoJsonParser infoJsonParser = new YdlInfoJsonParser();
 	private final boolean writeInfoJson;
 
-
+	private final AtomicReference<String> infoJsonAsText=new AtomicReference<>(null);
 	private final AtomicReference<YdlInfoJson> ydlDownloadTaskMetadata = new AtomicReference<>(null);
 	private SingleInfoJsonMetadataAccessor singleInfoJsonMetadataAccessor;
 	private final CurrentFilesizeMetadataAccessor currentFilesizeMetadataAccessor = new FilesystemCurrentFilesizeAccessor();
@@ -106,6 +109,10 @@ public class YdlDownloadTask {
 
 	public Optional<YdlInfoJson> getYdlDownloadTaskMetadata() {
 		return Optional.ofNullable(ydlDownloadTaskMetadata.get());
+	}
+	
+	public Optional<String> getYdlInfoJsonAsText() {
+		return Optional.ofNullable(infoJsonAsText.get());
 	}
 
 	public String getUrl() {
@@ -187,8 +194,16 @@ public class YdlDownloadTask {
 			int result = YoutubeDlExecutor.newBuilder(templateExecutor)
 					.withOptions(DUMP_SINGLE_JSON)
 					.withStdoutConsumer(inputStream -> {
-						YdlInfoJson ydlInfoJson = infoJsonParser.parse(inputStream);
-						ydlDownloadTaskMetadata.getAndSet(ydlInfoJson);
+						try {
+							String text = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
+							infoJsonAsText.getAndSet(text);
+							YdlInfoJson ydlInfoJson = infoJsonParser.parse(text);
+							ydlDownloadTaskMetadata.getAndSet(ydlInfoJson);
+						} catch (IOException e) {
+							LOGGER.error("prepare failed",e);
+							throw new RuntimeException("error getting metadata", e);
+						}
+						
 					})
 					.build()
 					.call();
