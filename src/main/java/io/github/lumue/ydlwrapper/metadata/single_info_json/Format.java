@@ -1,41 +1,36 @@
-
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "http_headers",
-    "tbr",
-    "protocol",
-    "format",
-    "url",
-    "filesize",
-    "vcodec",
-    "Formatnote",
-    "abr",
-    "player_url",
-    "ext",
-    "preference",
-    "Formatid",
-    "acodec",
-    "asr",
-    "height",
-    "language",
-    "width",
-    "fps",
-    "container",
-    "resolution"
+        "http_headers",
+        "tbr",
+        "protocol",
+        "format",
+        "url",
+        "filesize",
+        "vcodec",
+        "Formatnote",
+        "abr",
+        "player_url",
+        "ext",
+        "preference",
+        "Formatid",
+        "acodec",
+        "asr",
+        "height",
+        "language",
+        "width",
+        "fps",
+        "container",
+        "resolution"
 })
 public class Format {
 
@@ -86,13 +81,11 @@ public class Format {
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public Format() {
     }
 
     /**
-     * 
      * @param httpHeaders
      * @param protocol
      * @param fps
@@ -140,9 +133,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The httpHeaders
+     * @return The httpHeaders
      */
     @JsonProperty("http_headers")
     public HttpHeaders getHttpHeaders() {
@@ -150,9 +141,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param httpHeaders
-     *     The http_headers
+     * @param httpHeaders The http_headers
      */
     @JsonProperty("http_headers")
     public void setHttpHeaders(HttpHeaders httpHeaders) {
@@ -160,9 +149,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The tbr
+     * @return The tbr
      */
     @JsonProperty("tbr")
     public Integer getTbr() {
@@ -170,9 +157,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param tbr
-     *     The tbr
+     * @param tbr The tbr
      */
     @JsonProperty("tbr")
     public void setTbr(Integer tbr) {
@@ -180,9 +165,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The protocol
+     * @return The protocol
      */
     @JsonProperty("protocol")
     public String getProtocol() {
@@ -190,9 +173,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param protocol
-     *     The protocol
+     * @param protocol The protocol
      */
     @JsonProperty("protocol")
     public void setProtocol(String protocol) {
@@ -200,9 +181,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The format
+     * @return The format
      */
     @JsonProperty("format")
     public String getFormat() {
@@ -210,9 +189,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param format
-     *     The format
+     * @param format The format
      */
     @JsonProperty("format")
     public void setFormat(String format) {
@@ -220,9 +197,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The url
+     * @return The url
      */
     @JsonProperty("url")
     public String getUrl() {
@@ -230,9 +205,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param url
-     *     The url
+     * @param url The url
      */
     @JsonProperty("url")
     public void setUrl(String url) {
@@ -240,9 +213,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The filesize
+     * @return The filesize
      */
     @JsonProperty("filesize")
     public Integer getFilesize() {
@@ -250,9 +221,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param filesize
-     *     The filesize
+     * @param filesize The filesize
      */
     @JsonProperty("filesize")
     public void setFilesize(Integer filesize) {
@@ -260,9 +229,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The vcodec
+     * @return The vcodec
      */
     @JsonProperty("vcodec")
     public String getVcodec() {
@@ -270,9 +237,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param vcodec
-     *     The vcodec
+     * @param vcodec The vcodec
      */
     @JsonProperty("vcodec")
     public void setVcodec(String vcodec) {
@@ -280,9 +245,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The formatNote
+     * @return The formatNote
      */
     @JsonProperty("Formatnote")
     public String getFormatNote() {
@@ -290,9 +253,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param formatNote
-     *     The Formatnote
+     * @param formatNote The Formatnote
      */
     @JsonProperty("Formatnote")
     public void setFormatNote(String formatNote) {
@@ -300,9 +261,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The abr
+     * @return The abr
      */
     @JsonProperty("abr")
     public Integer getAbr() {
@@ -310,9 +269,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param abr
-     *     The abr
+     * @param abr The abr
      */
     @JsonProperty("abr")
     public void setAbr(Integer abr) {
@@ -320,9 +277,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The playerUrl
+     * @return The playerUrl
      */
     @JsonProperty("player_url")
     public Object getPlayerUrl() {
@@ -330,9 +285,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param playerUrl
-     *     The player_url
+     * @param playerUrl The player_url
      */
     @JsonProperty("player_url")
     public void setPlayerUrl(Object playerUrl) {
@@ -340,9 +293,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The ext
+     * @return The ext
      */
     @JsonProperty("ext")
     public String getExt() {
@@ -350,9 +301,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param ext
-     *     The ext
+     * @param ext The ext
      */
     @JsonProperty("ext")
     public void setExt(String ext) {
@@ -360,9 +309,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The preference
+     * @return The preference
      */
     @JsonProperty("preference")
     public Integer getPreference() {
@@ -370,9 +317,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param preference
-     *     The preference
+     * @param preference The preference
      */
     @JsonProperty("preference")
     public void setPreference(Integer preference) {
@@ -380,9 +325,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The formatId
+     * @return The formatId
      */
     @JsonProperty("format_id")
     public String getFormatId() {
@@ -390,9 +333,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param formatId
-     *     The Formatid
+     * @param formatId The Formatid
      */
     @JsonProperty("format_id")
     public void setFormatId(String formatId) {
@@ -400,9 +341,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The acodec
+     * @return The acodec
      */
     @JsonProperty("acodec")
     public String getAcodec() {
@@ -410,9 +349,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param acodec
-     *     The acodec
+     * @param acodec The acodec
      */
     @JsonProperty("acodec")
     public void setAcodec(String acodec) {
@@ -420,9 +357,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The asr
+     * @return The asr
      */
     @JsonProperty("asr")
     public Object getAsr() {
@@ -430,9 +365,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param asr
-     *     The asr
+     * @param asr The asr
      */
     @JsonProperty("asr")
     public void setAsr(Object asr) {
@@ -440,9 +373,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The height
+     * @return The height
      */
     @JsonProperty("height")
     public Integer getHeight() {
@@ -450,9 +381,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param height
-     *     The height
+     * @param height The height
      */
     @JsonProperty("height")
     public void setHeight(Integer height) {
@@ -460,9 +389,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The language
+     * @return The language
      */
     @JsonProperty("language")
     public Object getLanguage() {
@@ -470,9 +397,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param language
-     *     The language
+     * @param language The language
      */
     @JsonProperty("language")
     public void setLanguage(Object language) {
@@ -480,9 +405,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The width
+     * @return The width
      */
     @JsonProperty("width")
     public Integer getWidth() {
@@ -490,9 +413,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param width
-     *     The width
+     * @param width The width
      */
     @JsonProperty("width")
     public void setWidth(Integer width) {
@@ -500,9 +421,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The fps
+     * @return The fps
      */
     @JsonProperty("fps")
     public Integer getFps() {
@@ -510,9 +429,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param fps
-     *     The fps
+     * @param fps The fps
      */
     @JsonProperty("fps")
     public void setFps(Integer fps) {
@@ -520,9 +437,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The container
+     * @return The container
      */
     @JsonProperty("container")
     public String getContainer() {
@@ -530,9 +445,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param container
-     *     The container
+     * @param container The container
      */
     @JsonProperty("container")
     public void setContainer(String container) {
@@ -540,9 +453,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @return
-     *     The resolution
+     * @return The resolution
      */
     @JsonProperty("resolution")
     public String getResolution() {
@@ -550,9 +461,7 @@ public class Format {
     }
 
     /**
-     * 
-     * @param resolution
-     *     The resolution
+     * @param resolution The resolution
      */
     @JsonProperty("resolution")
     public void setResolution(String resolution) {

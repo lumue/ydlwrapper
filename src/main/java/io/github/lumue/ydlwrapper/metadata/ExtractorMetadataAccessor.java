@@ -8,11 +8,12 @@ import java.util.Optional;
  */
 @FunctionalInterface
 public interface ExtractorMetadataAccessor {
-	/**
-	 * get the download Title
-	 * @return
-	 */
-	Optional<String> getExtractor();
+    /**
+     * get the download Title
+     *
+     * @return
+     */
+    Optional<String> getExtractor();
 
 
 }

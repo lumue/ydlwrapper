@@ -9,11 +9,12 @@ import java.util.Optional;
  */
 @FunctionalInterface
 public interface TitleMetadataAccessor {
-	/**
-	 * get the download Title
-	 * @return
-	 */
-	Optional<String> getTitle();
+    /**
+     * get the download Title
+     *
+     * @return
+     */
+    Optional<String> getTitle();
 
 
 }

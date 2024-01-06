@@ -8,11 +8,12 @@ import java.util.Optional;
  */
 @FunctionalInterface
 public interface DocumentIdMetadataAccessor {
-	/**
-	 * get the download Title
-	 * @return
-	 */
-	Optional<String> getDocumentId();
+    /**
+     * get the download Title
+     *
+     * @return
+     */
+    Optional<String> getDocumentId();
 
 
 }

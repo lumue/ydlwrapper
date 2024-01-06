@@ -1,25 +1,20 @@
-
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "Accept-Charset",
-    "Accept-Language",
-    "Accept-Encoding",
-    "Accept",
-    "User-Agent"
+        "Accept-Charset",
+        "Accept-Language",
+        "Accept-Encoding",
+        "Accept",
+        "User-Agent"
 })
 public class HttpHeaders {
 
@@ -38,13 +33,11 @@ public class HttpHeaders {
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public HttpHeaders() {
     }
 
     /**
-     * 
      * @param AcceptLanguage
      * @param AcceptEncoding
      * @param UserAgent
@@ -60,9 +53,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @return
-     *     The AcceptCharset
+     * @return The AcceptCharset
      */
     @JsonProperty("Accept-Charset")
     public String getAcceptCharset() {
@@ -70,9 +61,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @param AcceptCharset
-     *     The Accept-Charset
+     * @param AcceptCharset The Accept-Charset
      */
     @JsonProperty("Accept-Charset")
     public void setAcceptCharset(String AcceptCharset) {
@@ -80,9 +69,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @return
-     *     The AcceptLanguage
+     * @return The AcceptLanguage
      */
     @JsonProperty("Accept-Language")
     public String getAcceptLanguage() {
@@ -90,9 +77,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @param AcceptLanguage
-     *     The Accept-Language
+     * @param AcceptLanguage The Accept-Language
      */
     @JsonProperty("Accept-Language")
     public void setAcceptLanguage(String AcceptLanguage) {
@@ -100,9 +85,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @return
-     *     The AcceptEncoding
+     * @return The AcceptEncoding
      */
     @JsonProperty("Accept-Encoding")
     public String getAcceptEncoding() {
@@ -110,9 +93,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @param AcceptEncoding
-     *     The Accept-Encoding
+     * @param AcceptEncoding The Accept-Encoding
      */
     @JsonProperty("Accept-Encoding")
     public void setAcceptEncoding(String AcceptEncoding) {
@@ -120,9 +101,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @return
-     *     The Accept
+     * @return The Accept
      */
     @JsonProperty("Accept")
     public String getAccept() {
@@ -130,9 +109,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @param Accept
-     *     The Accept
+     * @param Accept The Accept
      */
     @JsonProperty("Accept")
     public void setAccept(String Accept) {
@@ -140,9 +117,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @return
-     *     The UserAgent
+     * @return The UserAgent
      */
     @JsonProperty("User-Agent")
     public String getUserAgent() {
@@ -150,9 +125,7 @@ public class HttpHeaders {
     }
 
     /**
-     * 
-     * @param UserAgent
-     *     The User-Agent
+     * @param UserAgent The User-Agent
      */
     @JsonProperty("User-Agent")
     public void setUserAgent(String UserAgent) {

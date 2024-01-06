@@ -10,12 +10,13 @@ import java.util.Optional;
  */
 @FunctionalInterface
 public interface CurrentFilesizeMetadataAccessor {
-	/**
-	 * get the filesize if possible, or null
-	 * @param fileDownload
-	 * @return
-	 */
-	Optional<Long> getFilesize(YdlFileDownload fileDownload);
+    /**
+     * get the filesize if possible, or null
+     *
+     * @param fileDownload
+     * @return
+     */
+    Optional<Long> getFilesize(YdlFileDownload fileDownload);
 
 
 }

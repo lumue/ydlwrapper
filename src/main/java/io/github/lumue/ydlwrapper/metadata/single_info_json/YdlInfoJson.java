@@ -1,74 +1,69 @@
-
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
+
+import com.fasterxml.jackson.annotation.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "extractor",
-    "_type",
-    "title",
-    "extractor_key",
-    "webpage_url",
-    "entries",
-    "id",
-    "requested_formats",
-    "webpage_url_basename",
-    "upload_date",
-    "protocol",
-    "creator",
-    "Formatnote",
-    "height",
-    "like_count",
-    "duration",
-    "player_url",
-    "view_count",
-    "playlist",
-    "format",
-    "ext",
-    "playlist_index",
-    "dislike_count",
-    "average_rating",
-    "abr",
-    "uploader_url",
-    "categories",
-    "age_limit",
-    "annotations",
-    "acodec",
-    "display_id",
-    "automatic_captions",
-    "description",
-    "tags",
-    "requested_subtitles",
-    "start_time",
-    "uploader",
-    "Formatid",
-    "uploader_id",
-    "subtitles",
-    "thumbnails",
-    "license",
-    "alt_title",
-    "url",
-    "vcodec",
-    "http_headers",
-    "thumbnail",
-    "is_live",
-    "end_time",
-    "formats",
-    "resolution",
-    "width"
+        "extractor",
+        "_type",
+        "title",
+        "extractor_key",
+        "webpage_url",
+        "entries",
+        "id",
+        "requested_formats",
+        "webpage_url_basename",
+        "upload_date",
+        "protocol",
+        "creator",
+        "Formatnote",
+        "height",
+        "like_count",
+        "duration",
+        "player_url",
+        "view_count",
+        "playlist",
+        "format",
+        "ext",
+        "playlist_index",
+        "dislike_count",
+        "average_rating",
+        "abr",
+        "uploader_url",
+        "categories",
+        "age_limit",
+        "annotations",
+        "acodec",
+        "display_id",
+        "automatic_captions",
+        "description",
+        "tags",
+        "requested_subtitles",
+        "start_time",
+        "uploader",
+        "Formatid",
+        "uploader_id",
+        "subtitles",
+        "thumbnails",
+        "license",
+        "alt_title",
+        "url",
+        "vcodec",
+        "http_headers",
+        "thumbnail",
+        "is_live",
+        "end_time",
+        "formats",
+        "resolution",
+        "width"
 })
 public class YdlInfoJson {
 
@@ -181,13 +176,11 @@ public class YdlInfoJson {
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public YdlInfoJson() {
     }
 
     /**
-     * 
      * @param isLive
      * @param uploaderId
      * @param endTime
@@ -297,9 +290,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The extractor
+     * @return The extractor
      */
     @JsonProperty("extractor")
     public String getExtractor() {
@@ -307,9 +298,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param extractor
-     *     The extractor
+     * @param extractor The extractor
      */
     @JsonProperty("extractor")
     public void setExtractor(String extractor) {
@@ -317,9 +306,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The Type
+     * @return The Type
      */
     @JsonProperty("_type")
     public String getType() {
@@ -327,9 +314,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param Type
-     *     The _type
+     * @param Type The _type
      */
     @JsonProperty("_type")
     public void setType(String Type) {
@@ -337,9 +322,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The title
+     * @return The title
      */
     @JsonProperty("title")
     public String getTitle() {
@@ -347,9 +330,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param title
-     *     The title
+     * @param title The title
      */
     @JsonProperty("title")
     public void setTitle(String title) {
@@ -357,9 +338,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The extractorKey
+     * @return The extractorKey
      */
     @JsonProperty("extractor_key")
     public String getExtractorKey() {
@@ -367,9 +346,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param extractorKey
-     *     The extractor_key
+     * @param extractorKey The extractor_key
      */
     @JsonProperty("extractor_key")
     public void setExtractorKey(String extractorKey) {
@@ -377,9 +354,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The webpageUrl
+     * @return The webpageUrl
      */
     @JsonProperty("webpage_url")
     public String getWebpageUrl() {
@@ -387,9 +362,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param webpageUrl
-     *     The webpage_url
+     * @param webpageUrl The webpage_url
      */
     @JsonProperty("webpage_url")
     public void setWebpageUrl(String webpageUrl) {
@@ -397,9 +370,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The entries
+     * @return The entries
      */
     @JsonProperty("entries")
     public List<Entry> getEntries() {
@@ -407,9 +378,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param entries
-     *     The entries
+     * @param entries The entries
      */
     @JsonProperty("entries")
     public void setEntries(List<Entry> entries) {
@@ -417,9 +386,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The id
+     * @return The id
      */
     @JsonProperty("id")
     public String getId() {
@@ -427,9 +394,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * @param id The id
      */
     @JsonProperty("id")
     public void setId(String id) {
@@ -437,9 +402,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The requestedFormats
+     * @return The requestedFormats
      */
     @JsonProperty("requested_formats")
     public List<RequestedFormat> getRequestedFormats() {
@@ -447,9 +410,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param requestedFormats
-     *     The requested_formats
+     * @param requestedFormats The requested_formats
      */
     @JsonProperty("requested_formats")
     public void setRequestedFormats(List<RequestedFormat> requestedFormats) {
@@ -457,9 +418,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The webpageUrlBasename
+     * @return The webpageUrlBasename
      */
     @JsonProperty("webpage_url_basename")
     public String getWebpageUrlBasename() {
@@ -467,9 +426,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param webpageUrlBasename
-     *     The webpage_url_basename
+     * @param webpageUrlBasename The webpage_url_basename
      */
     @JsonProperty("webpage_url_basename")
     public void setWebpageUrlBasename(String webpageUrlBasename) {
@@ -477,9 +434,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The uploadDate
+     * @return The uploadDate
      */
     @JsonProperty("upload_date")
     public String getUploadDate() {
@@ -487,9 +442,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param uploadDate
-     *     The upload_date
+     * @param uploadDate The upload_date
      */
     @JsonProperty("upload_date")
     public void setUploadDate(String uploadDate) {
@@ -497,9 +450,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The protocol
+     * @return The protocol
      */
     @JsonProperty("protocol")
     public String getProtocol() {
@@ -507,9 +458,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param protocol
-     *     The protocol
+     * @param protocol The protocol
      */
     @JsonProperty("protocol")
     public void setProtocol(String protocol) {
@@ -517,9 +466,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The creator
+     * @return The creator
      */
     @JsonProperty("creator")
     public Object getCreator() {
@@ -527,9 +474,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param creator
-     *     The creator
+     * @param creator The creator
      */
     @JsonProperty("creator")
     public void setCreator(Object creator) {
@@ -537,9 +482,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The formatNote
+     * @return The formatNote
      */
     @JsonProperty("Formatnote")
     public String getFormatNote() {
@@ -547,9 +490,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param formatNote
-     *     The Formatnote
+     * @param formatNote The Formatnote
      */
     @JsonProperty("Formatnote")
     public void setFormatNote(String formatNote) {
@@ -557,9 +498,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The height
+     * @return The height
      */
     @JsonProperty("height")
     public Integer getHeight() {
@@ -567,9 +506,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param height
-     *     The height
+     * @param height The height
      */
     @JsonProperty("height")
     public void setHeight(Integer height) {
@@ -577,9 +514,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The likeCount
+     * @return The likeCount
      */
     @JsonProperty("like_count")
     public Integer getLikeCount() {
@@ -587,9 +522,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param likeCount
-     *     The like_count
+     * @param likeCount The like_count
      */
     @JsonProperty("like_count")
     public void setLikeCount(Integer likeCount) {
@@ -597,9 +530,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The duration
+     * @return The duration
      */
     @JsonProperty("duration")
     public Integer getDuration() {
@@ -607,9 +538,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param duration
-     *     The duration
+     * @param duration The duration
      */
     @JsonProperty("duration")
     public void setDuration(Integer duration) {
@@ -617,9 +546,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The playerUrl
+     * @return The playerUrl
      */
     @JsonProperty("player_url")
     public Object getPlayerUrl() {
@@ -627,9 +554,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param playerUrl
-     *     The player_url
+     * @param playerUrl The player_url
      */
     @JsonProperty("player_url")
     public void setPlayerUrl(Object playerUrl) {
@@ -637,9 +562,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The viewCount
+     * @return The viewCount
      */
     @JsonProperty("view_count")
     public Integer getViewCount() {
@@ -647,9 +570,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param viewCount
-     *     The view_count
+     * @param viewCount The view_count
      */
     @JsonProperty("view_count")
     public void setViewCount(Integer viewCount) {
@@ -657,9 +578,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The playlist
+     * @return The playlist
      */
     @JsonProperty("playlist")
     public Object getPlaylist() {
@@ -667,9 +586,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param playlist
-     *     The playlist
+     * @param playlist The playlist
      */
     @JsonProperty("playlist")
     public void setPlaylist(Object playlist) {
@@ -677,9 +594,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The format
+     * @return The format
      */
     @JsonProperty("format")
     public String getFormat() {
@@ -687,9 +602,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param format
-     *     The format
+     * @param format The format
      */
     @JsonProperty("format")
     public void setFormat(String format) {
@@ -697,9 +610,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The ext
+     * @return The ext
      */
     @JsonProperty("ext")
     public String getExt() {
@@ -707,9 +618,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param ext
-     *     The ext
+     * @param ext The ext
      */
     @JsonProperty("ext")
     public void setExt(String ext) {
@@ -717,9 +626,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The playlistIndex
+     * @return The playlistIndex
      */
     @JsonProperty("playlist_index")
     public Object getPlaylistIndex() {
@@ -727,9 +634,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param playlistIndex
-     *     The playlist_index
+     * @param playlistIndex The playlist_index
      */
     @JsonProperty("playlist_index")
     public void setPlaylistIndex(Object playlistIndex) {
@@ -737,9 +642,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The dislikeCount
+     * @return The dislikeCount
      */
     @JsonProperty("dislike_count")
     public Integer getDislikeCount() {
@@ -747,9 +650,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param dislikeCount
-     *     The dislike_count
+     * @param dislikeCount The dislike_count
      */
     @JsonProperty("dislike_count")
     public void setDislikeCount(Integer dislikeCount) {
@@ -757,9 +658,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The averageRating
+     * @return The averageRating
      */
     @JsonProperty("average_rating")
     public Float getAverageRating() {
@@ -767,9 +666,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param averageRating
-     *     The average_rating
+     * @param averageRating The average_rating
      */
     @JsonProperty("average_rating")
     public void setAverageRating(Float averageRating) {
@@ -777,9 +674,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The abr
+     * @return The abr
      */
     @JsonProperty("abr")
     public Integer getAbr() {
@@ -787,9 +682,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param abr
-     *     The abr
+     * @param abr The abr
      */
     @JsonProperty("abr")
     public void setAbr(Integer abr) {
@@ -797,9 +690,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The uploaderUrl
+     * @return The uploaderUrl
      */
     @JsonProperty("uploader_url")
     public String getUploaderUrl() {
@@ -807,9 +698,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param uploaderUrl
-     *     The uploader_url
+     * @param uploaderUrl The uploader_url
      */
     @JsonProperty("uploader_url")
     public void setUploaderUrl(String uploaderUrl) {
@@ -817,9 +706,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The categories
+     * @return The categories
      */
     @JsonProperty("categories")
     public List<String> getCategories() {
@@ -827,9 +714,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param categories
-     *     The categories
+     * @param categories The categories
      */
     @JsonProperty("categories")
     public void setCategories(List<String> categories) {
@@ -837,9 +722,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The ageLimit
+     * @return The ageLimit
      */
     @JsonProperty("age_limit")
     public Integer getAgeLimit() {
@@ -847,9 +730,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param ageLimit
-     *     The age_limit
+     * @param ageLimit The age_limit
      */
     @JsonProperty("age_limit")
     public void setAgeLimit(Integer ageLimit) {
@@ -857,9 +738,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The annotations
+     * @return The annotations
      */
     @JsonProperty("annotations")
     public Object getAnnotations() {
@@ -867,9 +746,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param annotations
-     *     The annotations
+     * @param annotations The annotations
      */
     @JsonProperty("annotations")
     public void setAnnotations(Object annotations) {
@@ -877,9 +754,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The acodec
+     * @return The acodec
      */
     @JsonProperty("acodec")
     public String getAcodec() {
@@ -887,9 +762,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param acodec
-     *     The acodec
+     * @param acodec The acodec
      */
     @JsonProperty("acodec")
     public void setAcodec(String acodec) {
@@ -897,9 +770,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The displayId
+     * @return The displayId
      */
     @JsonProperty("display_id")
     public String getDisplayId() {
@@ -907,9 +778,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param displayId
-     *     The display_id
+     * @param displayId The display_id
      */
     @JsonProperty("display_id")
     public void setDisplayId(String displayId) {
@@ -917,9 +786,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The automaticCaptions
+     * @return The automaticCaptions
      */
     @JsonProperty("automatic_captions")
     public AutomaticCaptions getAutomaticCaptions() {
@@ -927,9 +794,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param automaticCaptions
-     *     The automatic_captions
+     * @param automaticCaptions The automatic_captions
      */
     @JsonProperty("automatic_captions")
     public void setAutomaticCaptions(AutomaticCaptions automaticCaptions) {
@@ -937,9 +802,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The description
+     * @return The description
      */
     @JsonProperty("description")
     public String getDescription() {
@@ -947,9 +810,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param description
-     *     The description
+     * @param description The description
      */
     @JsonProperty("description")
     public void setDescription(String description) {
@@ -957,9 +818,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The tags
+     * @return The tags
      */
     @JsonProperty("tags")
     public List<String> getTags() {
@@ -967,9 +826,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param tags
-     *     The tags
+     * @param tags The tags
      */
     @JsonProperty("tags")
     public void setTags(List<String> tags) {
@@ -977,9 +834,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The requestedSubtitles
+     * @return The requestedSubtitles
      */
     @JsonProperty("requested_subtitles")
     public Object getRequestedSubtitles() {
@@ -987,9 +842,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param requestedSubtitles
-     *     The requested_subtitles
+     * @param requestedSubtitles The requested_subtitles
      */
     @JsonProperty("requested_subtitles")
     public void setRequestedSubtitles(Object requestedSubtitles) {
@@ -997,9 +850,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The startTime
+     * @return The startTime
      */
     @JsonProperty("start_time")
     public Object getStartTime() {
@@ -1007,9 +858,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param startTime
-     *     The start_time
+     * @param startTime The start_time
      */
     @JsonProperty("start_time")
     public void setStartTime(Object startTime) {
@@ -1017,9 +866,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The uploader
+     * @return The uploader
      */
     @JsonProperty("uploader")
     public String getUploader() {
@@ -1027,9 +874,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param uploader
-     *     The uploader
+     * @param uploader The uploader
      */
     @JsonProperty("uploader")
     public void setUploader(String uploader) {
@@ -1037,9 +882,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The formatId
+     * @return The formatId
      */
     @JsonProperty("format_id")
     public String getFormatId() {
@@ -1047,9 +890,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param formatId
-     *     The Formatid
+     * @param formatId The Formatid
      */
     @JsonProperty("format_id")
     public void setFormatId(String formatId) {
@@ -1057,9 +898,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The uploaderId
+     * @return The uploaderId
      */
     @JsonProperty("uploader_id")
     public String getUploaderId() {
@@ -1067,9 +906,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param uploaderId
-     *     The uploader_id
+     * @param uploaderId The uploader_id
      */
     @JsonProperty("uploader_id")
     public void setUploaderId(String uploaderId) {
@@ -1077,9 +914,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The subtitles
+     * @return The subtitles
      */
     @JsonProperty("subtitles")
     public Subtitles getSubtitles() {
@@ -1087,9 +922,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param subtitles
-     *     The subtitles
+     * @param subtitles The subtitles
      */
     @JsonProperty("subtitles")
     public void setSubtitles(Subtitles subtitles) {
@@ -1097,9 +930,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The thumbnails
+     * @return The thumbnails
      */
     @JsonProperty("thumbnails")
     public List<Thumbnail> getThumbnails() {
@@ -1107,9 +938,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param thumbnails
-     *     The thumbnails
+     * @param thumbnails The thumbnails
      */
     @JsonProperty("thumbnails")
     public void setThumbnails(List<Thumbnail> thumbnails) {
@@ -1117,9 +946,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The license
+     * @return The license
      */
     @JsonProperty("license")
     public String getLicense() {
@@ -1127,9 +954,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param license
-     *     The license
+     * @param license The license
      */
     @JsonProperty("license")
     public void setLicense(String license) {
@@ -1137,9 +962,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The altTitle
+     * @return The altTitle
      */
     @JsonProperty("alt_title")
     public Object getAltTitle() {
@@ -1147,9 +970,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param altTitle
-     *     The alt_title
+     * @param altTitle The alt_title
      */
     @JsonProperty("alt_title")
     public void setAltTitle(Object altTitle) {
@@ -1157,9 +978,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The url
+     * @return The url
      */
     @JsonProperty("url")
     public String getUrl() {
@@ -1167,9 +986,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param url
-     *     The url
+     * @param url The url
      */
     @JsonProperty("url")
     public void setUrl(String url) {
@@ -1177,9 +994,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The vcodec
+     * @return The vcodec
      */
     @JsonProperty("vcodec")
     public String getVcodec() {
@@ -1187,9 +1002,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param vcodec
-     *     The vcodec
+     * @param vcodec The vcodec
      */
     @JsonProperty("vcodec")
     public void setVcodec(String vcodec) {
@@ -1197,9 +1010,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The httpHeaders
+     * @return The httpHeaders
      */
     @JsonProperty("http_headers")
     public HttpHeaders getHttpHeaders() {
@@ -1207,9 +1018,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param httpHeaders
-     *     The http_headers
+     * @param httpHeaders The http_headers
      */
     @JsonProperty("http_headers")
     public void setHttpHeaders(HttpHeaders httpHeaders) {
@@ -1217,9 +1026,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The thumbnail
+     * @return The thumbnail
      */
     @JsonProperty("thumbnail")
     public String getThumbnail() {
@@ -1227,9 +1034,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param thumbnail
-     *     The thumbnail
+     * @param thumbnail The thumbnail
      */
     @JsonProperty("thumbnail")
     public void setThumbnail(String thumbnail) {
@@ -1237,9 +1042,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The isLive
+     * @return The isLive
      */
     @JsonProperty("is_live")
     public Object getIsLive() {
@@ -1247,9 +1050,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param isLive
-     *     The is_live
+     * @param isLive The is_live
      */
     @JsonProperty("is_live")
     public void setIsLive(Object isLive) {
@@ -1257,9 +1058,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The endTime
+     * @return The endTime
      */
     @JsonProperty("end_time")
     public Object getEndTime() {
@@ -1267,9 +1066,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param endTime
-     *     The end_time
+     * @param endTime The end_time
      */
     @JsonProperty("end_time")
     public void setEndTime(Object endTime) {
@@ -1277,9 +1074,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The formats
+     * @return The formats
      */
     @JsonProperty("formats")
     public List<Format> getFormats() {
@@ -1287,9 +1082,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param formats
-     *     The formats
+     * @param formats The formats
      */
     @JsonProperty("formats")
     public void setFormats(List<Format> formats) {
@@ -1297,9 +1090,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The resolution
+     * @return The resolution
      */
     @JsonProperty("resolution")
     public String getResolution() {
@@ -1307,9 +1098,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param resolution
-     *     The resolution
+     * @param resolution The resolution
      */
     @JsonProperty("resolution")
     public void setResolution(String resolution) {
@@ -1317,9 +1106,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @return
-     *     The width
+     * @return The width
      */
     @JsonProperty("width")
     public Integer getWidth() {
@@ -1327,9 +1114,7 @@ public class YdlInfoJson {
     }
 
     /**
-     * 
-     * @param width
-     *     The width
+     * @param width The width
      */
     @JsonProperty("width")
     public void setWidth(Integer width) {

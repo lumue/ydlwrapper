@@ -1,73 +1,68 @@
-
 package io.github.lumue.ydlwrapper.metadata.single_info_json;
+
+import com.fasterxml.jackson.annotation.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "upload_date",
-    "creator",
-    "height",
-    "like_count",
-    "duration",
-    "id",
-    "requested_formats",
-    "view_count",
-    "playlist",
-    "title",
-    "format",
-    "ext",
-    "playlist_index",
-    "dislike_count",
-    "average_rating",
-    "abr",
-    "uploader_url",
-    "categories",
-    "fps",
-    "stretched_ratio",
-    "age_limit",
-    "annotations",
-    "webpage_url_basename",
-    "acodec",
-    "display_id",
-    "automatic_captions",
-    "description",
-    "tags",
-    "requested_subtitles",
-    "start_time",
-    "playlist_id",
-    "uploader",
-    "Formatid",
-    "uploader_id",
-    "subtitles",
-    "playlist_title",
-    "thumbnails",
-    "license",
-    "alt_title",
-    "extractor_key",
-    "vcodec",
-    "thumbnail",
-    "vbr",
-    "is_live",
-    "extractor",
-    "end_time",
-    "webpage_url",
-    "formats",
-    "resolution",
-    "width",
-    "n_entries"
+        "upload_date",
+        "creator",
+        "height",
+        "like_count",
+        "duration",
+        "id",
+        "requested_formats",
+        "view_count",
+        "playlist",
+        "title",
+        "format",
+        "ext",
+        "playlist_index",
+        "dislike_count",
+        "average_rating",
+        "abr",
+        "uploader_url",
+        "categories",
+        "fps",
+        "stretched_ratio",
+        "age_limit",
+        "annotations",
+        "webpage_url_basename",
+        "acodec",
+        "display_id",
+        "automatic_captions",
+        "description",
+        "tags",
+        "requested_subtitles",
+        "start_time",
+        "playlist_id",
+        "uploader",
+        "Formatid",
+        "uploader_id",
+        "subtitles",
+        "playlist_title",
+        "thumbnails",
+        "license",
+        "alt_title",
+        "extractor_key",
+        "vcodec",
+        "thumbnail",
+        "vbr",
+        "is_live",
+        "extractor",
+        "end_time",
+        "webpage_url",
+        "formats",
+        "resolution",
+        "width",
+        "n_entries"
 })
 public class Entry {
 
@@ -178,13 +173,11 @@ public class Entry {
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public Entry() {
     }
 
     /**
-     * 
      * @param isLive
      * @param uploaderId
      * @param endTime
@@ -292,9 +285,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The uploadDate
+     * @return The uploadDate
      */
     @JsonProperty("upload_date")
     public String getUploadDate() {
@@ -302,9 +293,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param uploadDate
-     *     The upload_date
+     * @param uploadDate The upload_date
      */
     @JsonProperty("upload_date")
     public void setUploadDate(String uploadDate) {
@@ -312,9 +301,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The creator
+     * @return The creator
      */
     @JsonProperty("creator")
     public Object getCreator() {
@@ -322,9 +309,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param creator
-     *     The creator
+     * @param creator The creator
      */
     @JsonProperty("creator")
     public void setCreator(Object creator) {
@@ -332,9 +317,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The height
+     * @return The height
      */
     @JsonProperty("height")
     public Integer getHeight() {
@@ -342,9 +325,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param height
-     *     The height
+     * @param height The height
      */
     @JsonProperty("height")
     public void setHeight(Integer height) {
@@ -352,9 +333,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The likeCount
+     * @return The likeCount
      */
     @JsonProperty("like_count")
     public Integer getLikeCount() {
@@ -362,9 +341,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param likeCount
-     *     The like_count
+     * @param likeCount The like_count
      */
     @JsonProperty("like_count")
     public void setLikeCount(Integer likeCount) {
@@ -372,9 +349,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The duration
+     * @return The duration
      */
     @JsonProperty("duration")
     public Integer getDuration() {
@@ -382,9 +357,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param duration
-     *     The duration
+     * @param duration The duration
      */
     @JsonProperty("duration")
     public void setDuration(Integer duration) {
@@ -392,9 +365,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The id
+     * @return The id
      */
     @JsonProperty("id")
     public String getId() {
@@ -402,9 +373,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * @param id The id
      */
     @JsonProperty("id")
     public void setId(String id) {
@@ -412,9 +381,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The requestedFormats
+     * @return The requestedFormats
      */
     @JsonProperty("requested_formats")
     public List<RequestedFormat> getRequestedFormats() {
@@ -422,9 +389,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param requestedFormats
-     *     The requested_formats
+     * @param requestedFormats The requested_formats
      */
     @JsonProperty("requested_formats")
     public void setRequestedFormats(List<RequestedFormat> requestedFormats) {
@@ -432,9 +397,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The viewCount
+     * @return The viewCount
      */
     @JsonProperty("view_count")
     public Integer getViewCount() {
@@ -442,9 +405,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param viewCount
-     *     The view_count
+     * @param viewCount The view_count
      */
     @JsonProperty("view_count")
     public void setViewCount(Integer viewCount) {
@@ -452,9 +413,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The playlist
+     * @return The playlist
      */
     @JsonProperty("playlist")
     public String getPlaylist() {
@@ -462,9 +421,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param playlist
-     *     The playlist
+     * @param playlist The playlist
      */
     @JsonProperty("playlist")
     public void setPlaylist(String playlist) {
@@ -472,9 +429,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The title
+     * @return The title
      */
     @JsonProperty("title")
     public String getTitle() {
@@ -482,9 +437,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param title
-     *     The title
+     * @param title The title
      */
     @JsonProperty("title")
     public void setTitle(String title) {
@@ -492,9 +445,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The format
+     * @return The format
      */
     @JsonProperty("format")
     public String getFormat() {
@@ -502,9 +453,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param format
-     *     The format
+     * @param format The format
      */
     @JsonProperty("format")
     public void setFormat(String format) {
@@ -512,9 +461,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The ext
+     * @return The ext
      */
     @JsonProperty("ext")
     public String getExt() {
@@ -522,9 +469,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param ext
-     *     The ext
+     * @param ext The ext
      */
     @JsonProperty("ext")
     public void setExt(String ext) {
@@ -532,9 +477,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The playlistIndex
+     * @return The playlistIndex
      */
     @JsonProperty("playlist_index")
     public Integer getPlaylistIndex() {
@@ -542,9 +485,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param playlistIndex
-     *     The playlist_index
+     * @param playlistIndex The playlist_index
      */
     @JsonProperty("playlist_index")
     public void setPlaylistIndex(Integer playlistIndex) {
@@ -552,9 +493,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The dislikeCount
+     * @return The dislikeCount
      */
     @JsonProperty("dislike_count")
     public Integer getDislikeCount() {
@@ -562,9 +501,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param dislikeCount
-     *     The dislike_count
+     * @param dislikeCount The dislike_count
      */
     @JsonProperty("dislike_count")
     public void setDislikeCount(Integer dislikeCount) {
@@ -572,9 +509,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The averageRating
+     * @return The averageRating
      */
     @JsonProperty("average_rating")
     public Float getAverageRating() {
@@ -582,9 +517,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param averageRating
-     *     The average_rating
+     * @param averageRating The average_rating
      */
     @JsonProperty("average_rating")
     public void setAverageRating(Float averageRating) {
@@ -592,9 +525,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The abr
+     * @return The abr
      */
     @JsonProperty("abr")
     public Integer getAbr() {
@@ -602,9 +533,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param abr
-     *     The abr
+     * @param abr The abr
      */
     @JsonProperty("abr")
     public void setAbr(Integer abr) {
@@ -612,9 +541,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The uploaderUrl
+     * @return The uploaderUrl
      */
     @JsonProperty("uploader_url")
     public String getUploaderUrl() {
@@ -622,9 +549,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param uploaderUrl
-     *     The uploader_url
+     * @param uploaderUrl The uploader_url
      */
     @JsonProperty("uploader_url")
     public void setUploaderUrl(String uploaderUrl) {
@@ -632,9 +557,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The categories
+     * @return The categories
      */
     @JsonProperty("categories")
     public List<String> getCategories() {
@@ -642,9 +565,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param categories
-     *     The categories
+     * @param categories The categories
      */
     @JsonProperty("categories")
     public void setCategories(List<String> categories) {
@@ -652,9 +573,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The fps
+     * @return The fps
      */
     @JsonProperty("fps")
     public Integer getFps() {
@@ -662,9 +581,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param fps
-     *     The fps
+     * @param fps The fps
      */
     @JsonProperty("fps")
     public void setFps(Integer fps) {
@@ -672,9 +589,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The stretchedRatio
+     * @return The stretchedRatio
      */
     @JsonProperty("stretched_ratio")
     public Object getStretchedRatio() {
@@ -682,9 +597,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param stretchedRatio
-     *     The stretched_ratio
+     * @param stretchedRatio The stretched_ratio
      */
     @JsonProperty("stretched_ratio")
     public void setStretchedRatio(Object stretchedRatio) {
@@ -692,9 +605,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The ageLimit
+     * @return The ageLimit
      */
     @JsonProperty("age_limit")
     public Integer getAgeLimit() {
@@ -702,9 +613,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param ageLimit
-     *     The age_limit
+     * @param ageLimit The age_limit
      */
     @JsonProperty("age_limit")
     public void setAgeLimit(Integer ageLimit) {
@@ -712,9 +621,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The annotations
+     * @return The annotations
      */
     @JsonProperty("annotations")
     public Object getAnnotations() {
@@ -722,9 +629,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param annotations
-     *     The annotations
+     * @param annotations The annotations
      */
     @JsonProperty("annotations")
     public void setAnnotations(Object annotations) {
@@ -732,9 +637,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The webpageUrlBasename
+     * @return The webpageUrlBasename
      */
     @JsonProperty("webpage_url_basename")
     public String getWebpageUrlBasename() {
@@ -742,9 +645,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param webpageUrlBasename
-     *     The webpage_url_basename
+     * @param webpageUrlBasename The webpage_url_basename
      */
     @JsonProperty("webpage_url_basename")
     public void setWebpageUrlBasename(String webpageUrlBasename) {
@@ -752,9 +653,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The acodec
+     * @return The acodec
      */
     @JsonProperty("acodec")
     public String getAcodec() {
@@ -762,9 +661,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param acodec
-     *     The acodec
+     * @param acodec The acodec
      */
     @JsonProperty("acodec")
     public void setAcodec(String acodec) {
@@ -772,9 +669,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The displayId
+     * @return The displayId
      */
     @JsonProperty("display_id")
     public String getDisplayId() {
@@ -782,9 +677,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param displayId
-     *     The display_id
+     * @param displayId The display_id
      */
     @JsonProperty("display_id")
     public void setDisplayId(String displayId) {
@@ -792,9 +685,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The automaticCaptions
+     * @return The automaticCaptions
      */
     @JsonProperty("automatic_captions")
     public AutomaticCaptions getAutomaticCaptions() {
@@ -802,9 +693,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param automaticCaptions
-     *     The automatic_captions
+     * @param automaticCaptions The automatic_captions
      */
     @JsonProperty("automatic_captions")
     public void setAutomaticCaptions(AutomaticCaptions automaticCaptions) {
@@ -812,9 +701,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The description
+     * @return The description
      */
     @JsonProperty("description")
     public String getDescription() {
@@ -822,9 +709,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param description
-     *     The description
+     * @param description The description
      */
     @JsonProperty("description")
     public void setDescription(String description) {
@@ -832,9 +717,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The tags
+     * @return The tags
      */
     @JsonProperty("tags")
     public List<String> getTags() {
@@ -842,9 +725,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param tags
-     *     The tags
+     * @param tags The tags
      */
     @JsonProperty("tags")
     public void setTags(List<String> tags) {
@@ -852,9 +733,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The requestedSubtitles
+     * @return The requestedSubtitles
      */
     @JsonProperty("requested_subtitles")
     public Object getRequestedSubtitles() {
@@ -862,9 +741,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param requestedSubtitles
-     *     The requested_subtitles
+     * @param requestedSubtitles The requested_subtitles
      */
     @JsonProperty("requested_subtitles")
     public void setRequestedSubtitles(Object requestedSubtitles) {
@@ -872,9 +749,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The startTime
+     * @return The startTime
      */
     @JsonProperty("start_time")
     public Object getStartTime() {
@@ -882,9 +757,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param startTime
-     *     The start_time
+     * @param startTime The start_time
      */
     @JsonProperty("start_time")
     public void setStartTime(Object startTime) {
@@ -892,9 +765,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The playlistId
+     * @return The playlistId
      */
     @JsonProperty("playlist_id")
     public String getPlaylistId() {
@@ -902,9 +773,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param playlistId
-     *     The playlist_id
+     * @param playlistId The playlist_id
      */
     @JsonProperty("playlist_id")
     public void setPlaylistId(String playlistId) {
@@ -912,9 +781,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The uploader
+     * @return The uploader
      */
     @JsonProperty("uploader")
     public String getUploader() {
@@ -922,9 +789,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param uploader
-     *     The uploader
+     * @param uploader The uploader
      */
     @JsonProperty("uploader")
     public void setUploader(String uploader) {
@@ -932,9 +797,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The formatId
+     * @return The formatId
      */
     @JsonProperty("format_id")
     public String getFormatId() {
@@ -942,9 +805,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param formatId
-     *     The Formatid
+     * @param formatId The Formatid
      */
     @JsonProperty("format_id")
     public void setFormatId(String formatId) {
@@ -952,9 +813,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The uploaderId
+     * @return The uploaderId
      */
     @JsonProperty("uploader_id")
     public String getUploaderId() {
@@ -962,9 +821,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param uploaderId
-     *     The uploader_id
+     * @param uploaderId The uploader_id
      */
     @JsonProperty("uploader_id")
     public void setUploaderId(String uploaderId) {
@@ -972,9 +829,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The subtitles
+     * @return The subtitles
      */
     @JsonProperty("subtitles")
     public Subtitles getSubtitles() {
@@ -982,9 +837,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param subtitles
-     *     The subtitles
+     * @param subtitles The subtitles
      */
     @JsonProperty("subtitles")
     public void setSubtitles(Subtitles subtitles) {
@@ -992,9 +845,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The playlistTitle
+     * @return The playlistTitle
      */
     @JsonProperty("playlist_title")
     public String getPlaylistTitle() {
@@ -1002,9 +853,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param playlistTitle
-     *     The playlist_title
+     * @param playlistTitle The playlist_title
      */
     @JsonProperty("playlist_title")
     public void setPlaylistTitle(String playlistTitle) {
@@ -1012,9 +861,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The thumbnails
+     * @return The thumbnails
      */
     @JsonProperty("thumbnails")
     public List<Thumbnail> getThumbnails() {
@@ -1022,9 +869,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param thumbnails
-     *     The thumbnails
+     * @param thumbnails The thumbnails
      */
     @JsonProperty("thumbnails")
     public void setThumbnails(List<Thumbnail> thumbnails) {
@@ -1032,9 +877,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The license
+     * @return The license
      */
     @JsonProperty("license")
     public String getLicense() {
@@ -1042,9 +885,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param license
-     *     The license
+     * @param license The license
      */
     @JsonProperty("license")
     public void setLicense(String license) {
@@ -1052,9 +893,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The altTitle
+     * @return The altTitle
      */
     @JsonProperty("alt_title")
     public Object getAltTitle() {
@@ -1062,9 +901,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param altTitle
-     *     The alt_title
+     * @param altTitle The alt_title
      */
     @JsonProperty("alt_title")
     public void setAltTitle(Object altTitle) {
@@ -1072,9 +909,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The extractorKey
+     * @return The extractorKey
      */
     @JsonProperty("extractor_key")
     public String getExtractorKey() {
@@ -1082,9 +917,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param extractorKey
-     *     The extractor_key
+     * @param extractorKey The extractor_key
      */
     @JsonProperty("extractor_key")
     public void setExtractorKey(String extractorKey) {
@@ -1092,9 +925,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The vcodec
+     * @return The vcodec
      */
     @JsonProperty("vcodec")
     public String getVcodec() {
@@ -1102,9 +933,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param vcodec
-     *     The vcodec
+     * @param vcodec The vcodec
      */
     @JsonProperty("vcodec")
     public void setVcodec(String vcodec) {
@@ -1112,9 +941,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The thumbnail
+     * @return The thumbnail
      */
     @JsonProperty("thumbnail")
     public String getThumbnail() {
@@ -1122,9 +949,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param thumbnail
-     *     The thumbnail
+     * @param thumbnail The thumbnail
      */
     @JsonProperty("thumbnail")
     public void setThumbnail(String thumbnail) {
@@ -1132,9 +957,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The vbr
+     * @return The vbr
      */
     @JsonProperty("vbr")
     public Object getVbr() {
@@ -1142,9 +965,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param vbr
-     *     The vbr
+     * @param vbr The vbr
      */
     @JsonProperty("vbr")
     public void setVbr(Object vbr) {
@@ -1152,9 +973,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The isLive
+     * @return The isLive
      */
     @JsonProperty("is_live")
     public Object getIsLive() {
@@ -1162,9 +981,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param isLive
-     *     The is_live
+     * @param isLive The is_live
      */
     @JsonProperty("is_live")
     public void setIsLive(Object isLive) {
@@ -1172,9 +989,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The extractor
+     * @return The extractor
      */
     @JsonProperty("extractor")
     public String getExtractor() {
@@ -1182,9 +997,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param extractor
-     *     The extractor
+     * @param extractor The extractor
      */
     @JsonProperty("extractor")
     public void setExtractor(String extractor) {
@@ -1192,9 +1005,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The endTime
+     * @return The endTime
      */
     @JsonProperty("end_time")
     public Object getEndTime() {
@@ -1202,9 +1013,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param endTime
-     *     The end_time
+     * @param endTime The end_time
      */
     @JsonProperty("end_time")
     public void setEndTime(Object endTime) {
@@ -1212,9 +1021,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The webpageUrl
+     * @return The webpageUrl
      */
     @JsonProperty("webpage_url")
     public String getWebpageUrl() {
@@ -1222,9 +1029,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param webpageUrl
-     *     The webpage_url
+     * @param webpageUrl The webpage_url
      */
     @JsonProperty("webpage_url")
     public void setWebpageUrl(String webpageUrl) {
@@ -1232,9 +1037,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The formats
+     * @return The formats
      */
     @JsonProperty("formats")
     public List<Format> getFormats() {
@@ -1242,9 +1045,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param formats
-     *     The formats
+     * @param formats The formats
      */
     @JsonProperty("formats")
     public void setFormats(List<Format> formats) {
@@ -1252,9 +1053,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The resolution
+     * @return The resolution
      */
     @JsonProperty("resolution")
     public Object getResolution() {
@@ -1262,9 +1061,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param resolution
-     *     The resolution
+     * @param resolution The resolution
      */
     @JsonProperty("resolution")
     public void setResolution(Object resolution) {
@@ -1272,9 +1069,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The width
+     * @return The width
      */
     @JsonProperty("width")
     public Integer getWidth() {
@@ -1282,9 +1077,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param width
-     *     The width
+     * @param width The width
      */
     @JsonProperty("width")
     public void setWidth(Integer width) {
@@ -1292,9 +1085,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @return
-     *     The nEntries
+     * @return The nEntries
      */
     @JsonProperty("n_entries")
     public Integer getNEntries() {
@@ -1302,9 +1093,7 @@ public class Entry {
     }
 
     /**
-     * 
-     * @param nEntries
-     *     The n_entries
+     * @param nEntries The n_entries
      */
     @JsonProperty("n_entries")
     public void setNEntries(Integer nEntries) {

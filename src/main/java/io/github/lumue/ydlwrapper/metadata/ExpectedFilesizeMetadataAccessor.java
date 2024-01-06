@@ -6,7 +6,7 @@ import java.util.Optional;
  * Created by lm on 12.03.16.
  */
 public interface ExpectedFilesizeMetadataAccessor {
-	Optional<Long> getFilesize(String filename, String formatExtension);
+    Optional<Long> getFilesize(String filename, String formatExtension);
 
-	boolean isPlaylist();
+    boolean isPlaylist();
 }
