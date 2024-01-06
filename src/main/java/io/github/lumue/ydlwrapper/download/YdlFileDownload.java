@@ -120,6 +120,7 @@ public class YdlFileDownload {
 				"filename='" + filename + '\'' +
 				", format='" + format + '\'' +
 				", expectedSize=" + expectedSize +
+				", downloadedSize=" + downloadedSize +
 				'}';
 	}
 

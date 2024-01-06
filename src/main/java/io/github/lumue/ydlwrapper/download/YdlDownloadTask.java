@@ -255,10 +255,10 @@ public class YdlDownloadTask {
 	private void onProgress(ProgressStatusMessage progressStatusMessage) {
 		YdlFileDownload fileDownload = this.currentDownload.get();
 		if (fileDownload != null) {
-			currentFilesizeMetadataAccessor.getFilesize(fileDownload).ifPresent((size) -> {
-				fileDownload.updateDownloadedSize(size);
-				this.onOutputFileChange.handleCallback(this, fileDownload);
-			});
+			fileDownload.updateDownloadedSize(
+					currentFilesizeMetadataAccessor.getFilesize(fileDownload).orElse(0L)
+			);
+			this.onOutputFileChange.handleCallback(this, fileDownload);
 			if (fileDownload.getExpectedSize() == null || fileDownload.getExpectedSize() == 0) {
 				fileDownload.updateExpectedSize(progressStatusMessage.getExpectedSize());
 				this.onOutputFileChange.handleCallback(this, fileDownload);
@@ -416,5 +416,15 @@ public class YdlDownloadTask {
 	@FunctionalInterface
 	public interface YdlCallback<T> {
 		void handleCallback(YdlDownloadTask task, T object);
+	}
+
+	@Override
+	public String toString() {
+		return "YdlDownloadTask{" +
+				", url='" + url + '\'' +
+				", outputFolder=" + outputFolder +
+				", downloadState=" + downloadState +
+				", currentDownload=" + currentDownload +
+				'}';
 	}
 }

@@ -1,6 +1,5 @@
 package io.github.lumue.ydlwrapper.download;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,9 +14,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static io.github.lumue.ydlwrapper.download.YdlDownloadTask.YdlDownloadState.ERROR;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Test the {@link YdlDownloadTask}
@@ -25,29 +22,26 @@ import static org.junit.Assert.assertTrue;
  */
 public class YdlDownloadTaskTest {
 
+	private static final Logger LOGGER= LoggerFactory.getLogger(YdlDownloadTaskTest.class);
+
 	private static final String BASE_TEST_OUTPUT = "build/testoutput/";
 	private static final String OUTPUT_FOLDER = BASE_TEST_OUTPUT + YdlDownloadTaskTest.class.getSimpleName();
 	private YdlDownloadTask downloadTask;
 
 
-	private int outputFileChangedCount=0;
-
-	private int newOutputFileCount=0;
 
 	private int cancelCount=0;
 	@Before
 	public void setUp() throws IOException {
 		prepareOutputFolder();
-		outputFileChangedCount=0;
-		newOutputFileCount=0;
 		cancelCount=0;
 		downloadTask=YdlDownloadTask.builder()
 				.setUrl("https://www.youtube.com/watch?v=nwP80FmSpOw")
 				.setOutputFolder(OUTPUT_FOLDER)
 				.setWriteInfoJson(true)
-				.onNewOutputFile((a,b)->newOutputFileCount++)
-				.onOutputFileChange((a,b)->outputFileChangedCount++)
+				.onOutputFileChange((a,b)-> LOGGER.debug("output file changed callback ({},{})",a,b))
 				.onCancel((a,b) -> cancelCount++)
+				.onStateChanged((a,b)-> LOGGER.debug("state changed callback ({},{})",a,b))
 				.setForceMp4(true)
 				.build();
 
@@ -58,7 +52,7 @@ public class YdlDownloadTaskTest {
 
 		if(!outputFolder.isDirectory()){
 			if(outputFolder.exists())
-				outputFolder.delete();
+				Files.delete(outputFolder.toPath());
 			Files.createDirectory(new File(BASE_TEST_OUTPUT).toPath());
 			Files.createDirectory(outputFolder.toPath());
 		}
@@ -69,30 +63,32 @@ public class YdlDownloadTaskTest {
 	}
 
 	@Test
-	public void prepare() throws Exception {
+	public void prepare()  {
 		assertFalse(downloadTask.getYdlDownloadTaskMetadata().isPresent());
 		downloadTask.prepare();
 		assertTrue(downloadTask.getYdlDownloadTaskMetadata().isPresent());
 	}
 
 	@Test
-	public void execute() throws Exception {
+	public void execute() throws IOException {
+
 		downloadTask.execute();
-		assertFalse(ERROR.equals(downloadTask.getDownloadState()));
-		Stream<Path> files = Files.list(new File(OUTPUT_FOLDER).toPath());
-		assertFalse(files==null || files.count()<1);
+
+		assertEquals(YdlDownloadTask.YdlDownloadState.SUCCESS, downloadTask.getDownloadState());
+
+		try(Stream<Path> files = Files.list(new File(OUTPUT_FOLDER).toPath())) {
+            assertTrue(files.findAny().isPresent());
+		}
+
+
 	}
 
 	@Test
-	public void executeAndCancelImmediately() throws Exception {
+	public void executeAndCancelImmediately() {
 		downloadTask.executeAsync();
 		downloadTask.cancel();
 		Assert.assertEquals(YdlDownloadTask.YdlDownloadState.CANCELED,downloadTask.getDownloadState());
 		Assert.assertEquals(1,cancelCount);
 	}
 
-	@After
-	public  void tearDown(){
-
-	}
 }
