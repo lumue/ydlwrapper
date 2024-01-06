@@ -53,15 +53,15 @@ dependencies {
 
     val validationApiVersion = "1.1.0.Final"
     val slf4jVersion = "2.0.10"
-    val hamcrestAllVersion = "1.3"
-    val commonsLang3Version = "3.4"
+    val hamcrestVersion = "2.2"
+    val commonsLang3Version = "3.14.0"
     val commonsIoVersion = "2.15.1"
     val jacksonVersion = "2.16.1"
     val junitVersion = "4.13.1"
 
     implementation("javax.validation:validation-api:${validationApiVersion}")
     implementation("org.slf4j:slf4j-api:${slf4jVersion}")
-    implementation("org.hamcrest:hamcrest-all:${hamcrestAllVersion}")
+    implementation("org.hamcrest:hamcrest:${hamcrestVersion}")
     implementation("org.apache.commons:commons-lang3:${commonsLang3Version}")
     implementation("commons-io:commons-io:${commonsIoVersion}")
     implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
