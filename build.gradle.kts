@@ -1,5 +1,6 @@
 plugins {
     java
+    `maven-publish`
 }
 
 java {
@@ -10,7 +11,9 @@ java {
 
 repositories {
     mavenCentral()
+
 }
+
 
 
 sourceSets {
@@ -74,4 +77,16 @@ dependencies {
 
     intTestRuntimeOnly("org.slf4j:slf4j-reload4j:${slf4jVersion}")
 
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "io.github.lumue"
+            artifactId = "ydlwrapper"
+            version = "master-SNAPSHOT"
+
+            from(components["java"])
+        }
+    }
 }
