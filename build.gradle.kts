@@ -84,7 +84,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "io.github.lumue"
             artifactId = "ydlwrapper"
-            version = "1.0"
+            version = "master-SNAPSHOT"
 
             from(components["java"])
         }
