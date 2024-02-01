@@ -31,6 +31,7 @@ public class ProgressStatusMessage extends YdlStatusMessage {
     private final static Function<String, Long> SIZE_PARSER = (line -> {
         String sizeString = line
                 .substring(line.indexOf("of ") + 3, line.indexOf(" at "))
+                .replace('~',' ')
                 .trim();
         return BYTE_PARSER.apply(sizeString);
     });
