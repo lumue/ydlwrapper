@@ -259,11 +259,9 @@ public class YdlDownloadTask {
             fileDownload.updateDownloadedSize(
                     currentFilesizeMetadataAccessor.getFilesize(fileDownload).orElse(0L)
             );
+            fileDownload.updateExpectedSize(progressStatusMessage.getExpectedSize());
             this.onOutputFileChange.handleCallback(this, fileDownload);
-            if (fileDownload.getExpectedSize() == null || fileDownload.getExpectedSize() == 0) {
-                fileDownload.updateExpectedSize(progressStatusMessage.getExpectedSize());
-                this.onOutputFileChange.handleCallback(this, fileDownload);
-            }
+
         }
     }
 
