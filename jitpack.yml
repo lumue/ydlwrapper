@@ -1,5 +1,5 @@
 jdk:
-  - openjdk20
+  - openjdk17
 
 before_install:
   - sdk install java 21.0.1-open
