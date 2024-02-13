@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static java.lang.Long.parseLong;
+
 
 /**
  * Created by lm on 12.03.16.
@@ -48,17 +50,18 @@ public class SingleInfoJsonMetadataAccessor
     }
 
     private Long getFilesizeFromMergedFormat(String formatId) {
-        Integer filesize = ydlInfoJson.getRequestedFormats().stream()
+        String filesize = ydlInfoJson.getRequestedFormats().stream()
                 .filter((requestedFormat -> formatId.equals(requestedFormat.getFormatId())))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("format not found"))
                 .getFilesize();
-        return filesize != null ? filesize.longValue() : null;
+
+        return filesize != null ? parseLong(filesize) : null;
     }
 
     private Long getFilesizeFromPlaylist(String filename, String formatId) {
         Entry entry = getPlaylistEntryByFilename(filename);
-        Integer filesize = null;
+        String filesize = null;
 
         if (isMergedFormat(entry)) {
             filesize = entry.getRequestedFormats().stream()
@@ -74,7 +77,7 @@ public class SingleInfoJsonMetadataAccessor
                     .orElseThrow(() -> new RuntimeException("format not found"))
                     .getFilesize();
         }
-        return filesize != null ? filesize.longValue() : null;
+        return filesize != null ? parseLong(filesize) : null;
     }
 
     private boolean isMergedFormat(Entry entry) {
@@ -102,14 +105,14 @@ public class SingleInfoJsonMetadataAccessor
     }
 
     private Long getFilesizeFromSingleFileDownload(String formatId) {
-        Integer filesize = ydlInfoJson.getFormats().stream()
+        String filesize = ydlInfoJson.getFormats().stream()
                 .filter(requestedFormat -> formatId.equals(requestedFormat.getFormatId()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("format not found"))
                 .getFilesize();
 
         if (filesize != null)
-            return filesize.longValue();
+            return parseLong(filesize);
         else
             return null;
     }

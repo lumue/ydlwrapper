@@ -36,7 +36,7 @@ public class YdlDownloadTaskTest {
         prepareOutputFolder();
         cancelCount = 0;
         downloadTask = YdlDownloadTask.builder()
-                .setUrl("https://www.youtube.com/watch?v=nwP80FmSpOw")
+                .setUrl("https://www.pornhub.com/view_video.php?viewkey=648f3ad647a4b")
                 .setOutputFolder(OUTPUT_FOLDER)
                 .setWriteInfoJson(true)
                 .onOutputFileChange((a, b) -> LOGGER.debug("output file changed callback ({},{})", a, b))
