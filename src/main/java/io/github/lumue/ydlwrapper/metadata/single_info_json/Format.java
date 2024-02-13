@@ -37,7 +37,7 @@ public class Format {
     @JsonProperty("http_headers")
     private HttpHeaders httpHeaders;
     @JsonProperty("tbr")
-    private Integer tbr;
+    private String tbr;
     @JsonProperty("protocol")
     private String protocol;
     @JsonProperty("format")
@@ -45,19 +45,19 @@ public class Format {
     @JsonProperty("url")
     private String url;
     @JsonProperty("filesize")
-    private Integer filesize;
+    private String filesize;
     @JsonProperty("vcodec")
     private String vcodec;
     @JsonProperty("Formatnote")
     private String formatNote;
     @JsonProperty("abr")
-    private Integer abr;
+    private String abr;
     @JsonProperty("player_url")
     private Object playerUrl;
     @JsonProperty("ext")
     private String ext;
     @JsonProperty("preference")
-    private Integer preference;
+    private String preference;
     @JsonProperty("format_id")
     private String formatId;
     @JsonProperty("acodec")
@@ -65,13 +65,13 @@ public class Format {
     @JsonProperty("asr")
     private Object asr;
     @JsonProperty("height")
-    private Integer height;
+    private String height;
     @JsonProperty("language")
     private Object language;
     @JsonProperty("width")
-    private Integer width;
+    private String width;
     @JsonProperty("fps")
-    private Integer fps;
+    private String fps;
     @JsonProperty("container")
     private String container;
     @JsonProperty("resolution")
@@ -108,7 +108,7 @@ public class Format {
      * @param tbr
      * @param playerUrl
      */
-    public Format(HttpHeaders httpHeaders, Integer tbr, String protocol, String format, String url, Integer filesize, String vcodec, String formatNote, Integer abr, Object playerUrl, String ext, Integer preference, String formatId, String acodec, Object asr, Integer height, Object language, Integer width, Integer fps, String container, String resolution) {
+    public Format(HttpHeaders httpHeaders, String tbr, String protocol, String format, String url, String filesize, String vcodec, String formatNote, String abr, Object playerUrl, String ext, String preference, String formatId, String acodec, Object asr, String height, Object language, String width, String fps, String container, String resolution) {
         this.httpHeaders = httpHeaders;
         this.tbr = tbr;
         this.protocol = protocol;
@@ -152,7 +152,7 @@ public class Format {
      * @return The tbr
      */
     @JsonProperty("tbr")
-    public Integer getTbr() {
+    public String getTbr() {
         return tbr;
     }
 
@@ -160,7 +160,7 @@ public class Format {
      * @param tbr The tbr
      */
     @JsonProperty("tbr")
-    public void setTbr(Integer tbr) {
+    public void setTbr(String tbr) {
         this.tbr = tbr;
     }
 
@@ -216,7 +216,7 @@ public class Format {
      * @return The filesize
      */
     @JsonProperty("filesize")
-    public Integer getFilesize() {
+    public String getFilesize() {
         return filesize;
     }
 
@@ -224,7 +224,7 @@ public class Format {
      * @param filesize The filesize
      */
     @JsonProperty("filesize")
-    public void setFilesize(Integer filesize) {
+    public void setFilesize(String filesize) {
         this.filesize = filesize;
     }
 
@@ -264,7 +264,7 @@ public class Format {
      * @return The abr
      */
     @JsonProperty("abr")
-    public Integer getAbr() {
+    public String getAbr() {
         return abr;
     }
 
@@ -272,7 +272,7 @@ public class Format {
      * @param abr The abr
      */
     @JsonProperty("abr")
-    public void setAbr(Integer abr) {
+    public void setAbr(String abr) {
         this.abr = abr;
     }
 
@@ -312,7 +312,7 @@ public class Format {
      * @return The preference
      */
     @JsonProperty("preference")
-    public Integer getPreference() {
+    public String getPreference() {
         return preference;
     }
 
@@ -320,7 +320,7 @@ public class Format {
      * @param preference The preference
      */
     @JsonProperty("preference")
-    public void setPreference(Integer preference) {
+    public void setPreference(String preference) {
         this.preference = preference;
     }
 
@@ -376,7 +376,7 @@ public class Format {
      * @return The height
      */
     @JsonProperty("height")
-    public Integer getHeight() {
+    public String getHeight() {
         return height;
     }
 
@@ -384,7 +384,7 @@ public class Format {
      * @param height The height
      */
     @JsonProperty("height")
-    public void setHeight(Integer height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
@@ -408,7 +408,7 @@ public class Format {
      * @return The width
      */
     @JsonProperty("width")
-    public Integer getWidth() {
+    public String getWidth() {
         return width;
     }
 
@@ -416,7 +416,7 @@ public class Format {
      * @param width The width
      */
     @JsonProperty("width")
-    public void setWidth(Integer width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
@@ -424,7 +424,7 @@ public class Format {
      * @return The fps
      */
     @JsonProperty("fps")
-    public Integer getFps() {
+    public String getFps() {
         return fps;
     }
 
@@ -432,7 +432,7 @@ public class Format {
      * @param fps The fps
      */
     @JsonProperty("fps")
-    public void setFps(Integer fps) {
+    public void setFps(String fps) {
         this.fps = fps;
     }
 
