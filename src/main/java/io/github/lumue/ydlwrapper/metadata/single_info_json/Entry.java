@@ -71,17 +71,17 @@ public class Entry {
     @JsonProperty("creator")
     private Object creator;
     @JsonProperty("height")
-    private Integer height;
+    private String height;
     @JsonProperty("like_count")
-    private Integer likeCount;
+    private String likeCount;
     @JsonProperty("duration")
-    private Integer duration;
+    private String duration;
     @JsonProperty("id")
     private String id;
     @JsonProperty("requested_formats")
     private List<RequestedFormat> requestedFormats = new ArrayList<RequestedFormat>();
     @JsonProperty("view_count")
-    private Integer viewCount;
+    private String viewCount;
     @JsonProperty("playlist")
     private String playlist;
     @JsonProperty("title")
@@ -91,23 +91,23 @@ public class Entry {
     @JsonProperty("ext")
     private String ext;
     @JsonProperty("playlist_index")
-    private Integer playlistIndex;
+    private String playlistIndex;
     @JsonProperty("dislike_count")
-    private Integer dislikeCount;
+    private String dislikeCount;
     @JsonProperty("average_rating")
-    private Float averageRating;
+    private String averageRating;
     @JsonProperty("abr")
-    private Integer abr;
+    private String abr;
     @JsonProperty("uploader_url")
     private String uploaderUrl;
     @JsonProperty("categories")
     private List<String> categories = new ArrayList<String>();
     @JsonProperty("fps")
-    private Integer fps;
+    private String fps;
     @JsonProperty("stretched_ratio")
     private Object stretchedRatio;
     @JsonProperty("age_limit")
-    private Integer ageLimit;
+    private String ageLimit;
     @JsonProperty("annotations")
     private Object annotations;
     @JsonProperty("webpage_url_basename")
@@ -165,9 +165,9 @@ public class Entry {
     @JsonProperty("resolution")
     private Object resolution;
     @JsonProperty("width")
-    private Integer width;
+    private String width;
     @JsonProperty("n_entries")
-    private Integer nEntries;
+    private String nEntries;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -230,7 +230,7 @@ public class Entry {
      * @param annotations
      * @param displayId
      */
-    public Entry(String uploadDate, Object creator, Integer height, Integer likeCount, Integer duration, String id, List<RequestedFormat> requestedFormats, Integer viewCount, String playlist, String title, String format, String ext, Integer playlistIndex, Integer dislikeCount, Float averageRating, Integer abr, String uploaderUrl, List<String> categories, Integer fps, Object stretchedRatio, Integer ageLimit, Object annotations, String webpageUrlBasename, String acodec, String displayId, AutomaticCaptions automaticCaptions, String description, List<String> tags, Object requestedSubtitles, Object startTime, String playlistId, String uploader, String formatId, String uploaderId, Subtitles subtitles, String playlistTitle, List<Thumbnail> thumbnails, String license, Object altTitle, String extractorKey, String vcodec, String thumbnail, Object vbr, Object isLive, String extractor, Object endTime, String webpageUrl, List<Format> formats, Object resolution, Integer width, Integer nEntries) {
+    public Entry(String uploadDate, Object creator, String height, String likeCount, String duration, String id, List<RequestedFormat> requestedFormats, String viewCount, String playlist, String title, String format, String ext, String playlistIndex, String dislikeCount, String averageRating, String abr, String uploaderUrl, List<String> categories, String fps, Object stretchedRatio, String ageLimit, Object annotations, String webpageUrlBasename, String acodec, String displayId, AutomaticCaptions automaticCaptions, String description, List<String> tags, Object requestedSubtitles, Object startTime, String playlistId, String uploader, String formatId, String uploaderId, Subtitles subtitles, String playlistTitle, List<Thumbnail> thumbnails, String license, Object altTitle, String extractorKey, String vcodec, String thumbnail, Object vbr, Object isLive, String extractor, Object endTime, String webpageUrl, List<Format> formats, Object resolution, String width, String nEntries) {
         this.uploadDate = uploadDate;
         this.creator = creator;
         this.height = height;
@@ -320,7 +320,7 @@ public class Entry {
      * @return The height
      */
     @JsonProperty("height")
-    public Integer getHeight() {
+    public String getHeight() {
         return height;
     }
 
@@ -328,7 +328,7 @@ public class Entry {
      * @param height The height
      */
     @JsonProperty("height")
-    public void setHeight(Integer height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
@@ -336,7 +336,7 @@ public class Entry {
      * @return The likeCount
      */
     @JsonProperty("like_count")
-    public Integer getLikeCount() {
+    public String getLikeCount() {
         return likeCount;
     }
 
@@ -344,7 +344,7 @@ public class Entry {
      * @param likeCount The like_count
      */
     @JsonProperty("like_count")
-    public void setLikeCount(Integer likeCount) {
+    public void setLikeCount(String likeCount) {
         this.likeCount = likeCount;
     }
 
@@ -352,7 +352,7 @@ public class Entry {
      * @return The duration
      */
     @JsonProperty("duration")
-    public Integer getDuration() {
+    public String getDuration() {
         return duration;
     }
 
@@ -360,7 +360,7 @@ public class Entry {
      * @param duration The duration
      */
     @JsonProperty("duration")
-    public void setDuration(Integer duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -400,7 +400,7 @@ public class Entry {
      * @return The viewCount
      */
     @JsonProperty("view_count")
-    public Integer getViewCount() {
+    public String getViewCount() {
         return viewCount;
     }
 
@@ -408,7 +408,7 @@ public class Entry {
      * @param viewCount The view_count
      */
     @JsonProperty("view_count")
-    public void setViewCount(Integer viewCount) {
+    public void setViewCount(String viewCount) {
         this.viewCount = viewCount;
     }
 
@@ -480,7 +480,7 @@ public class Entry {
      * @return The playlistIndex
      */
     @JsonProperty("playlist_index")
-    public Integer getPlaylistIndex() {
+    public String getPlaylistIndex() {
         return playlistIndex;
     }
 
@@ -488,7 +488,7 @@ public class Entry {
      * @param playlistIndex The playlist_index
      */
     @JsonProperty("playlist_index")
-    public void setPlaylistIndex(Integer playlistIndex) {
+    public void setPlaylistIndex(String playlistIndex) {
         this.playlistIndex = playlistIndex;
     }
 
@@ -496,7 +496,7 @@ public class Entry {
      * @return The dislikeCount
      */
     @JsonProperty("dislike_count")
-    public Integer getDislikeCount() {
+    public String getDislikeCount() {
         return dislikeCount;
     }
 
@@ -504,7 +504,7 @@ public class Entry {
      * @param dislikeCount The dislike_count
      */
     @JsonProperty("dislike_count")
-    public void setDislikeCount(Integer dislikeCount) {
+    public void setDislikeCount(String dislikeCount) {
         this.dislikeCount = dislikeCount;
     }
 
@@ -512,7 +512,7 @@ public class Entry {
      * @return The averageRating
      */
     @JsonProperty("average_rating")
-    public Float getAverageRating() {
+    public String getAverageRating() {
         return averageRating;
     }
 
@@ -520,7 +520,7 @@ public class Entry {
      * @param averageRating The average_rating
      */
     @JsonProperty("average_rating")
-    public void setAverageRating(Float averageRating) {
+    public void setAverageRating(String averageRating) {
         this.averageRating = averageRating;
     }
 
@@ -528,7 +528,7 @@ public class Entry {
      * @return The abr
      */
     @JsonProperty("abr")
-    public Integer getAbr() {
+    public String getAbr() {
         return abr;
     }
 
@@ -536,7 +536,7 @@ public class Entry {
      * @param abr The abr
      */
     @JsonProperty("abr")
-    public void setAbr(Integer abr) {
+    public void setAbr(String abr) {
         this.abr = abr;
     }
 
@@ -576,7 +576,7 @@ public class Entry {
      * @return The fps
      */
     @JsonProperty("fps")
-    public Integer getFps() {
+    public String getFps() {
         return fps;
     }
 
@@ -584,7 +584,7 @@ public class Entry {
      * @param fps The fps
      */
     @JsonProperty("fps")
-    public void setFps(Integer fps) {
+    public void setFps(String fps) {
         this.fps = fps;
     }
 
@@ -608,7 +608,7 @@ public class Entry {
      * @return The ageLimit
      */
     @JsonProperty("age_limit")
-    public Integer getAgeLimit() {
+    public String getAgeLimit() {
         return ageLimit;
     }
 
@@ -616,7 +616,7 @@ public class Entry {
      * @param ageLimit The age_limit
      */
     @JsonProperty("age_limit")
-    public void setAgeLimit(Integer ageLimit) {
+    public void setAgeLimit(String ageLimit) {
         this.ageLimit = ageLimit;
     }
 
@@ -1072,7 +1072,7 @@ public class Entry {
      * @return The width
      */
     @JsonProperty("width")
-    public Integer getWidth() {
+    public String getWidth() {
         return width;
     }
 
@@ -1080,7 +1080,7 @@ public class Entry {
      * @param width The width
      */
     @JsonProperty("width")
-    public void setWidth(Integer width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
@@ -1088,7 +1088,7 @@ public class Entry {
      * @return The nEntries
      */
     @JsonProperty("n_entries")
-    public Integer getNEntries() {
+    public String getNEntries() {
         return nEntries;
     }
 
@@ -1096,7 +1096,7 @@ public class Entry {
      * @param nEntries The n_entries
      */
     @JsonProperty("n_entries")
-    public void setNEntries(Integer nEntries) {
+    public void setNEntries(String nEntries) {
         this.nEntries = nEntries;
     }
 

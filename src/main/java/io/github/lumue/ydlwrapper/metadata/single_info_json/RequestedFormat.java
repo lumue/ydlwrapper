@@ -35,7 +35,7 @@ public class RequestedFormat {
     @JsonProperty("asr")
     private Object asr;
     @JsonProperty("tbr")
-    private Float tbr;
+    private String tbr;
     @JsonProperty("protocol")
     private String protocol;
     @JsonProperty("format")
@@ -43,9 +43,9 @@ public class RequestedFormat {
     @JsonProperty("Formatnote")
     private String formatNote;
     @JsonProperty("height")
-    private Integer height;
+    private String height;
     @JsonProperty("preference")
-    private Integer preference;
+    private String preference;
     @JsonProperty("format_id")
     private String formatId;
     @JsonProperty("language")
@@ -57,17 +57,17 @@ public class RequestedFormat {
     @JsonProperty("vcodec")
     private String vcodec;
     @JsonProperty("width")
-    private Integer width;
+    private String width;
     @JsonProperty("ext")
     private String ext;
     @JsonProperty("filesize")
-    private Integer filesize;
+    private String filesize;
     @JsonProperty("fps")
-    private Integer fps;
+    private String fps;
     @JsonProperty("acodec")
     private String acodec;
     @JsonProperty("abr")
-    private Integer abr;
+    private String abr;
     @JsonProperty("player_url")
     private Object playerUrl;
     @JsonIgnore
@@ -100,7 +100,7 @@ public class RequestedFormat {
      * @param tbr
      * @param playerUrl
      */
-    public RequestedFormat(Object asr, Float tbr, String protocol, String format, String formatNote, Integer height, Integer preference, String formatId, Object language, HttpHeaders httpHeaders, String url, String vcodec, Integer width, String ext, Integer filesize, Integer fps, String acodec, Integer abr, Object playerUrl) {
+    public RequestedFormat(Object asr, String tbr, String protocol, String format, String formatNote, String height, String preference, String formatId, Object language, HttpHeaders httpHeaders, String url, String vcodec, String width, String ext, String filesize, String fps, String acodec, String abr, Object playerUrl) {
         this.asr = asr;
         this.tbr = tbr;
         this.protocol = protocol;
@@ -142,7 +142,7 @@ public class RequestedFormat {
      * @return The tbr
      */
     @JsonProperty("tbr")
-    public Float getTbr() {
+    public String getTbr() {
         return tbr;
     }
 
@@ -150,7 +150,7 @@ public class RequestedFormat {
      * @param tbr The tbr
      */
     @JsonProperty("tbr")
-    public void setTbr(Float tbr) {
+    public void setTbr(String tbr) {
         this.tbr = tbr;
     }
 
@@ -206,7 +206,7 @@ public class RequestedFormat {
      * @return The height
      */
     @JsonProperty("height")
-    public Integer getHeight() {
+    public String getHeight() {
         return height;
     }
 
@@ -214,7 +214,7 @@ public class RequestedFormat {
      * @param height The height
      */
     @JsonProperty("height")
-    public void setHeight(Integer height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
@@ -222,7 +222,7 @@ public class RequestedFormat {
      * @return The preference
      */
     @JsonProperty("preference")
-    public Integer getPreference() {
+    public String getPreference() {
         return preference;
     }
 
@@ -230,7 +230,7 @@ public class RequestedFormat {
      * @param preference The preference
      */
     @JsonProperty("preference")
-    public void setPreference(Integer preference) {
+    public void setPreference(String preference) {
         this.preference = preference;
     }
 
@@ -318,7 +318,7 @@ public class RequestedFormat {
      * @return The width
      */
     @JsonProperty("width")
-    public Integer getWidth() {
+    public String getWidth() {
         return width;
     }
 
@@ -326,7 +326,7 @@ public class RequestedFormat {
      * @param width The width
      */
     @JsonProperty("width")
-    public void setWidth(Integer width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
@@ -350,7 +350,7 @@ public class RequestedFormat {
      * @return The filesize
      */
     @JsonProperty("filesize")
-    public Integer getFilesize() {
+    public String getFilesize() {
         return filesize;
     }
 
@@ -358,7 +358,7 @@ public class RequestedFormat {
      * @param filesize The filesize
      */
     @JsonProperty("filesize")
-    public void setFilesize(Integer filesize) {
+    public void setFilesize(String filesize) {
         this.filesize = filesize;
     }
 
@@ -366,7 +366,7 @@ public class RequestedFormat {
      * @return The fps
      */
     @JsonProperty("fps")
-    public Integer getFps() {
+    public String getFps() {
         return fps;
     }
 
@@ -374,7 +374,7 @@ public class RequestedFormat {
      * @param fps The fps
      */
     @JsonProperty("fps")
-    public void setFps(Integer fps) {
+    public void setFps(String fps) {
         this.fps = fps;
     }
 
@@ -398,7 +398,7 @@ public class RequestedFormat {
      * @return The abr
      */
     @JsonProperty("abr")
-    public Integer getAbr() {
+    public String getAbr() {
         return abr;
     }
 
@@ -406,7 +406,7 @@ public class RequestedFormat {
      * @param abr The abr
      */
     @JsonProperty("abr")
-    public void setAbr(Integer abr) {
+    public void setAbr(String abr) {
         this.abr = abr;
     }
 

@@ -94,15 +94,15 @@ public class YdlInfoJson {
     @JsonProperty("Formatnote")
     private String formatNote;
     @JsonProperty("height")
-    private Integer height;
+    private String height;
     @JsonProperty("like_count")
-    private Integer likeCount;
+    private String likeCount;
     @JsonProperty("duration")
-    private Integer duration;
+    private String duration;
     @JsonProperty("player_url")
     private Object playerUrl;
     @JsonProperty("view_count")
-    private Integer viewCount;
+    private String viewCount;
     @JsonProperty("playlist")
     private Object playlist;
     @JsonProperty("format")
@@ -112,17 +112,17 @@ public class YdlInfoJson {
     @JsonProperty("playlist_index")
     private Object playlistIndex;
     @JsonProperty("dislike_count")
-    private Integer dislikeCount;
+    private String dislikeCount;
     @JsonProperty("average_rating")
-    private Float averageRating;
+    private String averageRating;
     @JsonProperty("abr")
-    private Integer abr;
+    private String abr;
     @JsonProperty("uploader_url")
     private String uploaderUrl;
     @JsonProperty("categories")
     private List<String> categories = new ArrayList<String>();
     @JsonProperty("age_limit")
-    private Integer ageLimit;
+    private String ageLimit;
     @JsonProperty("annotations")
     private Object annotations;
     @JsonProperty("acodec")
@@ -170,7 +170,7 @@ public class YdlInfoJson {
     @JsonProperty("resolution")
     private String resolution;
     @JsonProperty("width")
-    private Integer width;
+    private String width;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -234,7 +234,7 @@ public class YdlInfoJson {
      * @param annotations
      * @param displayId
      */
-    public YdlInfoJson(String extractor, String Type, String title, String extractorKey, String webpageUrl, List<Entry> entries, String id, List<RequestedFormat> requestedFormats, String webpageUrlBasename, String uploadDate, String protocol, Object creator, String formatNote, Integer height, Integer likeCount, Integer duration, Object playerUrl, Integer viewCount, Object playlist, String format, String ext, Object playlistIndex, Integer dislikeCount, Float averageRating, Integer abr, String uploaderUrl, List<String> categories, Integer ageLimit, Object annotations, String acodec, String displayId, AutomaticCaptions automaticCaptions, String description, List<String> tags, Object requestedSubtitles, Object startTime, String uploader, String formatId, String uploaderId, Subtitles subtitles, List<Thumbnail> thumbnails, String license, Object altTitle, String url, String vcodec, HttpHeaders httpHeaders, String thumbnail, Object isLive, Object endTime, List<Format> formats, String resolution, Integer width) {
+    public YdlInfoJson(String extractor, String Type, String title, String extractorKey, String webpageUrl, List<Entry> entries, String id, List<RequestedFormat> requestedFormats, String webpageUrlBasename, String uploadDate, String protocol, Object creator, String formatNote, String height, String likeCount, String duration, Object playerUrl, String viewCount, Object playlist, String format, String ext, Object playlistIndex, String dislikeCount, String averageRating, String abr, String uploaderUrl, List<String> categories, String ageLimit, Object annotations, String acodec, String displayId, AutomaticCaptions automaticCaptions, String description, List<String> tags, Object requestedSubtitles, Object startTime, String uploader, String formatId, String uploaderId, Subtitles subtitles, List<Thumbnail> thumbnails, String license, Object altTitle, String url, String vcodec, HttpHeaders httpHeaders, String thumbnail, Object isLive, Object endTime, List<Format> formats, String resolution, String width) {
         this.extractor = extractor;
         this.Type = Type;
         this.title = title;
@@ -501,7 +501,7 @@ public class YdlInfoJson {
      * @return The height
      */
     @JsonProperty("height")
-    public Integer getHeight() {
+    public String getHeight() {
         return height;
     }
 
@@ -509,7 +509,7 @@ public class YdlInfoJson {
      * @param height The height
      */
     @JsonProperty("height")
-    public void setHeight(Integer height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
@@ -517,7 +517,7 @@ public class YdlInfoJson {
      * @return The likeCount
      */
     @JsonProperty("like_count")
-    public Integer getLikeCount() {
+    public String getLikeCount() {
         return likeCount;
     }
 
@@ -525,7 +525,7 @@ public class YdlInfoJson {
      * @param likeCount The like_count
      */
     @JsonProperty("like_count")
-    public void setLikeCount(Integer likeCount) {
+    public void setLikeCount(String likeCount) {
         this.likeCount = likeCount;
     }
 
@@ -533,7 +533,7 @@ public class YdlInfoJson {
      * @return The duration
      */
     @JsonProperty("duration")
-    public Integer getDuration() {
+    public String getDuration() {
         return duration;
     }
 
@@ -541,7 +541,7 @@ public class YdlInfoJson {
      * @param duration The duration
      */
     @JsonProperty("duration")
-    public void setDuration(Integer duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -565,7 +565,7 @@ public class YdlInfoJson {
      * @return The viewCount
      */
     @JsonProperty("view_count")
-    public Integer getViewCount() {
+    public String getViewCount() {
         return viewCount;
     }
 
@@ -573,7 +573,7 @@ public class YdlInfoJson {
      * @param viewCount The view_count
      */
     @JsonProperty("view_count")
-    public void setViewCount(Integer viewCount) {
+    public void setViewCount(String viewCount) {
         this.viewCount = viewCount;
     }
 
@@ -645,7 +645,7 @@ public class YdlInfoJson {
      * @return The dislikeCount
      */
     @JsonProperty("dislike_count")
-    public Integer getDislikeCount() {
+    public String getDislikeCount() {
         return dislikeCount;
     }
 
@@ -653,7 +653,7 @@ public class YdlInfoJson {
      * @param dislikeCount The dislike_count
      */
     @JsonProperty("dislike_count")
-    public void setDislikeCount(Integer dislikeCount) {
+    public void setDislikeCount(String dislikeCount) {
         this.dislikeCount = dislikeCount;
     }
 
@@ -661,7 +661,7 @@ public class YdlInfoJson {
      * @return The averageRating
      */
     @JsonProperty("average_rating")
-    public Float getAverageRating() {
+    public String getAverageRating() {
         return averageRating;
     }
 
@@ -669,7 +669,7 @@ public class YdlInfoJson {
      * @param averageRating The average_rating
      */
     @JsonProperty("average_rating")
-    public void setAverageRating(Float averageRating) {
+    public void setAverageRating(String averageRating) {
         this.averageRating = averageRating;
     }
 
@@ -677,7 +677,7 @@ public class YdlInfoJson {
      * @return The abr
      */
     @JsonProperty("abr")
-    public Integer getAbr() {
+    public String getAbr() {
         return abr;
     }
 
@@ -685,7 +685,7 @@ public class YdlInfoJson {
      * @param abr The abr
      */
     @JsonProperty("abr")
-    public void setAbr(Integer abr) {
+    public void setAbr(String abr) {
         this.abr = abr;
     }
 
@@ -725,7 +725,7 @@ public class YdlInfoJson {
      * @return The ageLimit
      */
     @JsonProperty("age_limit")
-    public Integer getAgeLimit() {
+    public String getAgeLimit() {
         return ageLimit;
     }
 
@@ -733,7 +733,7 @@ public class YdlInfoJson {
      * @param ageLimit The age_limit
      */
     @JsonProperty("age_limit")
-    public void setAgeLimit(Integer ageLimit) {
+    public void setAgeLimit(String ageLimit) {
         this.ageLimit = ageLimit;
     }
 
@@ -1109,7 +1109,7 @@ public class YdlInfoJson {
      * @return The width
      */
     @JsonProperty("width")
-    public Integer getWidth() {
+    public String getWidth() {
         return width;
     }
 
@@ -1117,7 +1117,7 @@ public class YdlInfoJson {
      * @param width The width
      */
     @JsonProperty("width")
-    public void setWidth(Integer width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
