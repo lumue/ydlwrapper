@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -106,13 +107,17 @@ public class YoutubedlValidateTaskJob extends ValidateTaskJob {
 		}
 		return new DownloadFormat(type,
 				format.getFormatId(),
-				format.getFilesize() != null ? format.getFilesize().longValue() : getFilesizeFromUrl(format.getUrl()),
+				format.getFilesize() != null ? asLong(format.getFilesize()) : getFilesizeFromUrl(format.getUrl()),
 				format.getUrl(),
 				toMap(format.getHttpHeaders()),
 				codec,
 				format.getExt());
 	}
-	
+
+	private static long asLong(String input) {
+		return new BigDecimal(input).longValue();
+	}
+
 	private static Map<String, String> toMap(HttpHeaders httpHeaders) {
 		final HashMap<String, String> map = new HashMap<>();
 		map.put("Accept", httpHeaders.getAccept());
@@ -143,7 +148,7 @@ public class YoutubedlValidateTaskJob extends ValidateTaskJob {
 		
 		return new DownloadFormat(type,
 				format.getFormatId(),
-				format.getFilesize() != null ? format.getFilesize().longValue() : getFilesizeFromUrl(format.getUrl()),
+				format.getFilesize() != null ?asLong(format.getFilesize()) : getFilesizeFromUrl(format.getUrl()),
 				format.getUrl(),
 				toMap(format.getHttpHeaders()),
 				codec,
