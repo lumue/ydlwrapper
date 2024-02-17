@@ -87,14 +87,14 @@ public class DownloadService {
 		validateTaskRunner.submitTask(task);
 	}
 	
-	@Scheduled(cron = "15 */10 * * * *")
+	@Scheduled(cron = "0 15 */3 * * *")
 	public void refreshValidations(){
 		LOGGER.info("refreshing all validations");
 		downloadTaskRepository.stream().forEach(this::validateTask);
 	}
 	
 	
-	@Scheduled(cron = "15 * * * * *")
+	@Scheduled(fixedDelay = 10*60*1000)
 	public void retryFailedValidations(){
 		LOGGER.info("refreshing all validations");
 		downloadTaskRepository.stream()
