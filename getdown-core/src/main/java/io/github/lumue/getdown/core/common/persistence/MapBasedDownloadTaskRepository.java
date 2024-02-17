@@ -1,7 +1,6 @@
 package io.github.lumue.getdown.core.common.persistence;
 
 import io.github.lumue.getdown.core.download.task.DownloadTask;
-
 import io.github.lumue.getdown.core.download.task.DownloadTaskRepository;
 
 import java.util.Map;

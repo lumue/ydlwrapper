@@ -1,10 +1,10 @@
 package io.github.lumue.getdown.webapp.webapi;
 
+import io.github.lumue.getdown.core.download.job.DownloadJob;
+import io.github.lumue.getdown.core.download.job.DownloadProgress;
+
 import java.io.Serializable;
 import java.util.Optional;
-
-import io.github.lumue.getdown.core.download.job.DownloadProgress;
-import io.github.lumue.getdown.core.download.job.DownloadJob;
 
 public interface DownloadJobView extends Serializable {
 	

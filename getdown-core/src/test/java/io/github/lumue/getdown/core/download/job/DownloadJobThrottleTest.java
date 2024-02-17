@@ -1,10 +1,10 @@
 package io.github.lumue.getdown.core.download.job;
 
+import org.junit.Test;
+
 import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 
 public class DownloadJobThrottleTest {
 

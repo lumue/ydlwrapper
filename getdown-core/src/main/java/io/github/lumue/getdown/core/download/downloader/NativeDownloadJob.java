@@ -2,20 +2,18 @@ package io.github.lumue.getdown.core.download.downloader;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.lumue.getdown.core.common.util.Observable;
 import io.github.lumue.getdown.core.common.util.Observer;
-import io.github.lumue.getdown.core.download.job.*;
-import io.github.lumue.getdown.core.download.task.DownloadFormat;
+import io.github.lumue.getdown.core.download.job.AbstractDownloadJob;
+import io.github.lumue.getdown.core.download.job.DownloadJob;
+import io.github.lumue.getdown.core.download.job.DownloadProgress;
+import io.github.lumue.getdown.core.download.job.Progression;
 import io.github.lumue.getdown.core.download.task.DownloadTask;
 import org.apache.commons.io.FileUtils;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class NativeDownloadJob extends AbstractDownloadJob {
 	

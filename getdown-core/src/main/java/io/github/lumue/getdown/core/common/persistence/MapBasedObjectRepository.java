@@ -1,9 +1,10 @@
 package io.github.lumue.getdown.core.common.persistence;
 
 
-import io.github.lumue.getdown.core.download.job.DownloadJob;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**

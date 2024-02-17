@@ -1,7 +1,5 @@
 package io.github.lumue.getdown.core.common.persistence;
 
-import io.github.lumue.getdown.core.download.job.DownloadJob;
-
 import java.util.Collection;
 import java.util.stream.Stream;
 

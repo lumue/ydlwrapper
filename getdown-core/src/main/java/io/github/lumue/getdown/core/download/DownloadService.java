@@ -1,12 +1,5 @@
 package io.github.lumue.getdown.core.download;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Objects;
-import java.util.stream.Stream;
-
 import io.github.lumue.getdown.core.download.downloader.YoutubedlDownloadJob;
 import io.github.lumue.getdown.core.download.files.WorkPathManager;
 import io.github.lumue.getdown.core.download.job.AsyncJobRunner;
@@ -23,8 +16,14 @@ import reactor.bus.Event;
 import reactor.bus.EventBus;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Objects;
+import java.util.stream.Stream;
 
-import static io.github.lumue.getdown.core.download.job.DownloadJob.DownloadJobState.*;
+import static io.github.lumue.getdown.core.download.job.DownloadJob.DownloadJobState.RUNNING;
 
 /**
  * manage the execution of downloads
@@ -66,9 +65,6 @@ public class DownloadService {
 	}
 
 
-	public DownloadTask addDownloadTask(DownloadTask u) {
-		return createDownloadTask(u.copy());
-	}
 
 	public DownloadTask addDownloadTask(final String url) {
 		String processedUrl=preprocessUrl(url);

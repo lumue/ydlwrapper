@@ -1,8 +1,6 @@
 package io.github.lumue.getdown.core.common.persistence.jdkserializable;
 
 import io.github.lumue.getdown.core.common.persistence.ObjectBuilder;
-import io.github.lumue.getdown.core.download.job.DownloadJob;
-
 import io.github.lumue.getdown.core.download.task.DownloadTask;
 import io.github.lumue.getdown.core.download.task.DownloadTaskRepository;
 

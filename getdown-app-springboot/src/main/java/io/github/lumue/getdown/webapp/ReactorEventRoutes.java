@@ -1,8 +1,8 @@
 package io.github.lumue.getdown.webapp;
 
+import io.github.lumue.getdown.core.download.job.ThrottlingDownloadJobEventTap;
 import io.github.lumue.getdown.webapp.restapi.DownloadJobController;
 import io.github.lumue.getdown.webapp.restapi.DownloadTaskController;
-import io.github.lumue.getdown.core.download.job.ThrottlingDownloadJobEventTap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;

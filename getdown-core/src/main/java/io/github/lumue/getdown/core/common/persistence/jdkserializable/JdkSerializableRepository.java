@@ -1,10 +1,12 @@
 package io.github.lumue.getdown.core.common.persistence.jdkserializable;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
+import io.github.lumue.getdown.core.common.persistence.HasIdentity;
+import io.github.lumue.getdown.core.common.persistence.ObjectBuilder;
+import io.github.lumue.getdown.core.common.persistence.ObjectRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,12 +18,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import io.github.lumue.getdown.core.common.persistence.HasIdentity;
-import io.github.lumue.getdown.core.common.persistence.ObjectBuilder;
-import io.github.lumue.getdown.core.common.persistence.ObjectRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 

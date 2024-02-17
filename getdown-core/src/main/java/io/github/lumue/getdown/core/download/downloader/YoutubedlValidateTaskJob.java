@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class YoutubedlValidateTaskJob extends ValidateTaskJob {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(YoutubedlValidateTaskJob.class);
-	private transient AtomicReference<YdlDownloadTask> ydlTaskReference = new AtomicReference<>(null);
+	private final transient AtomicReference<YdlDownloadTask> ydlTaskReference = new AtomicReference<>(null);
 	private boolean forceMp4OnYoutube = true;
 	
 	private String pathToYdl = "/usr/local/bin/youtube-dl";

@@ -1,17 +1,14 @@
 package io.github.lumue.getdown.webapp.webapi;
 
-import java.util.stream.Collectors;
-
-
+import io.github.lumue.getdown.core.download.DownloadService;
+import io.github.lumue.getdown.core.download.job.DownloadJob;
 import io.github.lumue.getdown.core.download.task.DownloadTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import io.github.lumue.getdown.core.download.job.DownloadJob;
-import io.github.lumue.getdown.core.download.DownloadService;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/download")

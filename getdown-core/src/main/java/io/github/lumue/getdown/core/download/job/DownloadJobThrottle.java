@@ -1,10 +1,10 @@
 package io.github.lumue.getdown.core.download.job;
 
+import io.github.lumue.getdown.core.download.job.DownloadJob.DownloadJobState;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
-
-import io.github.lumue.getdown.core.download.job.DownloadJob.DownloadJobState;
 
 /**
  * return true for a given {@link DownloadJob} only if

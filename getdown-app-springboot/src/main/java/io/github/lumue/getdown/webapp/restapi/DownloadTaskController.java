@@ -13,9 +13,9 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import reactor.bus.Event;
+import reactor.fn.Consumer;
 
 import java.util.List;
-import reactor.fn.Consumer;
 import java.util.stream.Collectors;
 
 /**
