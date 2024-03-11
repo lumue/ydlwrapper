@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -15,7 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 
 /**
@@ -122,7 +120,7 @@ public class YoutubeDlExecutor implements Callable<Integer> {
     public Integer call() {
 
         String command = YoutubeDlExecutor.this.ydlLocation +
-                " "+options.stream().collect(Collectors.joining(" ")) +
+                " "+ String.join(" ", options) +
                 " --output %(title)s.f%(format_id)s.%(ext)s "+
                 YoutubeDlExecutor.this.url;
 
@@ -139,21 +137,24 @@ public class YoutubeDlExecutor implements Callable<Integer> {
 
             process = Runtime.getRuntime().exec(command, null, outputFolder);
 
-
+            AsyncConsumer<InputStream> stderrScanner=null,stdoutScanner=null;
             Future<?> stderrFuture = null;
             Future<?> stdoutFuture = null;
             if (stderrConsumer != null) {
-                AsyncConsumer<InputStream> stderrScanner = new AsyncConsumer<>(YoutubeDlExecutor.this.stderrConsumer);
+                stderrScanner = new AsyncConsumer<>(YoutubeDlExecutor.this.stderrConsumer);
                 stderrFuture = stderrScanner.acceptAsync(process.getErrorStream());
             }
             if (stdoutConsumer != null) {
-                AsyncConsumer<InputStream> stdoutScanner = new AsyncConsumer<>(YoutubeDlExecutor.this.stdoutConsumer);
+                stdoutScanner = new AsyncConsumer<>(YoutubeDlExecutor.this.stdoutConsumer);
                 stdoutFuture = stdoutScanner.acceptAsync(process.getInputStream());
             }
 
             stdoutFuture.get();
-            if (stderrFuture != null)
+            stdoutScanner.close();
+            if (stderrFuture != null) {
                 stderrFuture.get();
+                stdoutScanner.close();
+            }
             result.set(process.waitFor());
         } catch (InterruptedException e) {
             //thread was interrupted.
@@ -165,7 +166,6 @@ public class YoutubeDlExecutor implements Callable<Integer> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         completedCallback.onCompleted(result.get());
         return result.get();
     }
