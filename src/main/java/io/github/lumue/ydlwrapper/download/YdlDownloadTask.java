@@ -107,7 +107,7 @@ public class YdlDownloadTask {
                 .withYdlLocation(requireNonNull(pathToYdl))
                 .withUrl(getUrl())
                 .withOutputFolder(this.outputFolder)
-                .withOptions(options)
+                .withOptions(this.options)
                 .withOptions(NEW_LINE, NO_COLOR);
         if (forceMp4)
             builder.withOptions(FORCE_MP4);
