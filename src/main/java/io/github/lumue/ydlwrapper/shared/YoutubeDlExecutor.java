@@ -13,6 +13,10 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 
 /**
  * Created by lm on 11.03.16.
@@ -29,7 +33,7 @@ public class YoutubeDlExecutor implements Callable<Integer> {
 
     private final Consumer<InputStream> stderrConsumer;
 
-    private final Set<Option> options;
+    private final Set<String> options;
 
     private final File outputFolder;
 
@@ -72,6 +76,10 @@ public class YoutubeDlExecutor implements Callable<Integer> {
 
 
     public enum Option {
+
+
+
+        
         FORCE_MP4 {
             @Override
             public String toString() {
@@ -101,13 +109,6 @@ public class YoutubeDlExecutor implements Callable<Integer> {
             public String toString() {
                 return "--newline";
             }
-        };
-
-        private static String toString(Collection<Option> options) {
-            StringBuilder sb = new StringBuilder(" ");
-            options.forEach(option -> sb.append(option).append(" "));
-            sb.append(" ");
-            return sb.toString();
         }
     }
 
@@ -120,7 +121,10 @@ public class YoutubeDlExecutor implements Callable<Integer> {
      */
     public Integer call() {
 
-        String command = YoutubeDlExecutor.this.ydlLocation + Option.toString(options) + " --output %(title)s.f%(format_id)s.%(ext)s " + YoutubeDlExecutor.this.url;
+        String command = YoutubeDlExecutor.this.ydlLocation +
+                " "+options.stream().collect(Collectors.joining(" ")) +
+                " --output %(title)s.f%(format_id)s.%(ext)s "+
+                YoutubeDlExecutor.this.url;
 
         return call(command);
 
@@ -171,7 +175,7 @@ public class YoutubeDlExecutor implements Callable<Integer> {
         private String url;
         private Consumer<InputStream> stdoutConsumer;
         private Consumer<InputStream> stderrConsumer;
-        private final Set<Option> options = new HashSet<>();
+        private final Set<String> options = new HashSet<>();
         private File outputFolder;
         private CompletedCallback completedCallback = status -> {
         };
@@ -205,6 +209,15 @@ public class YoutubeDlExecutor implements Callable<Integer> {
 
 
         public Builder withOptions(Option... val) {
+            options.addAll(
+                    stream(val)
+                    .map(Enum::toString)
+                    .collect(Collectors.toSet())
+            );
+            return this;
+        }
+
+        public Builder withOptions(String... val) {
             options.addAll(Arrays.asList(val));
             return this;
         }
