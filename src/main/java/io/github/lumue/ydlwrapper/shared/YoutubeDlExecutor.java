@@ -149,8 +149,10 @@ public class YoutubeDlExecutor implements Callable<Integer> {
                 stdoutFuture = stdoutScanner.acceptAsync(process.getInputStream());
             }
 
-            stdoutFuture.get();
-            stdoutScanner.close();
+            if (stdoutFuture!=null) {
+                stdoutFuture.get();
+                stdoutScanner.close();
+            }
             if (stderrFuture != null) {
                 stderrFuture.get();
                 stdoutScanner.close();
