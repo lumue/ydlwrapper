@@ -22,8 +22,9 @@ RUN apk upgrade --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --
 ADD *.jar /app.jar
 
 EXPOSE 8001
+EXPOSE 9090
 
 VOLUME ["/getdown"]
 VOLUME ["/downloads"]
 
-ENTRYPOINT ["java","-Xms20M","-Xmx100M","-Dgetdown.path.home=/getdown","-Dgetdown.path.media=/downloads", "-Xdebug", "-Xrunjdwp:transport=dt_socket,address=7002,server=y,suspend=n","-Dcom.sun.management.jmxremote.port=7003","-Djava.rmi.server.hostname=0.0.0.0","-Dcom.sun.management.jmxremote.local.only=false","-Dcom.sun.management.jmxremote.rmi.port=7003","-Dcom.sun.management.jmxremote.authenticate=false","-Dcom.sun.management.jmxremote.ssl=false" ,"-jar","/app.jar"]
+ENTRYPOINT ["java","-Xms20M","-Xmx100M","-Dgetdown.path.home=/getdown","-Dgetdown.path.media=/downloads", "-Xdebug", "-Dcom.sun.management.jmxremote.port=9090", "-Dcom.sun.management.jmxremote.rmi.port=9090","-Djava.rmi.server.hostname=10.108.3.112","-Dcom.sun.management.jmxremote","-Dcom.sun.management.jmxremote.authenticate=false","-Dcom.sun.management.jmxremote.ssl=false","-Dcom.sun.management.jmxremote.local.only=false" ,"-jar","/app.jar"]
