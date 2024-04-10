@@ -50,7 +50,6 @@ public class NativeDownloadJob extends AbstractDownloadJob {
 	@Override
 	public void prepare() {
 		preparing();
-		new YoutubedlValidateTaskJob(getDownloadTask()).run();
 		prepared();
 	}
 	
@@ -125,14 +124,14 @@ public class NativeDownloadJob extends AbstractDownloadJob {
 		return DownloadJobState.PREPARED.equals(getState());
 	}
 	
-	public static NativeDownloadJobBuilder builder(DownloadTask downloadTask) {
-		return new NativeDownloadJobBuilder(downloadTask);
+	public static NativeDownloadJobJobBuilder builder(DownloadTask downloadTask) {
+		return new NativeDownloadJobJobBuilder(downloadTask);
 	}
 	
-	public static class NativeDownloadJobBuilder
-			extends DownloadBuilder {
+	public static class NativeDownloadJobJobBuilder
+			extends AbstractDownloadJobBuilder {
 		
-		public NativeDownloadJobBuilder(DownloadTask downloadTask) {
+		public NativeDownloadJobJobBuilder(DownloadTask downloadTask) {
 			super(downloadTask);
 		}
 		

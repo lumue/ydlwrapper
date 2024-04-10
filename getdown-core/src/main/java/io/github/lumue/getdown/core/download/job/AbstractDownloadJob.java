@@ -3,7 +3,6 @@ package io.github.lumue.getdown.core.download.job;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.lumue.getdown.core.common.persistence.ObjectBuilder;
 import io.github.lumue.getdown.core.common.util.Observable;
 import io.github.lumue.getdown.core.common.util.ObservableTemplate;
 import io.github.lumue.getdown.core.common.util.Observer;
@@ -19,8 +18,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static io.github.lumue.getdown.core.download.job.DownloadState.FINISHED;
 
@@ -372,7 +370,7 @@ public abstract class AbstractDownloadJob implements  java.io.Serializable, Down
 	}
 	
 	
-	public abstract static class DownloadBuilder implements ObjectBuilder<DownloadJob> {
+	public abstract static class AbstractDownloadJobBuilder implements DownloadJobBuilder {
 		protected String url;
 		protected String host;
 		protected String name;
@@ -380,36 +378,46 @@ public abstract class AbstractDownloadJob implements  java.io.Serializable, Down
 		protected Long index=System.currentTimeMillis();
 		protected String targetPath;
 		protected DownloadTask downloadTask;
+
+		protected Set<String> options=new HashSet<>();
 		
-		public DownloadBuilder(DownloadTask downloadTask) {
+		public AbstractDownloadJobBuilder(DownloadTask downloadTask) {
 			this.downloadTask=downloadTask;
 			this.name=downloadTask.getName();
 			this.targetPath=downloadTask.getTargetLocation();
 			this.url=downloadTask.getSourceUrl();
+
 		}
 		
-		public DownloadBuilder withIndex(long index){
+		@Override
+		public AbstractDownloadJobBuilder withIndex(long index){
 			this.index=index;
 			return this;
 		}
 
 		protected String downloadPath;
 
+		@Override
+		public AbstractDownloadJobBuilder withOptions(Collection<String> options){
+			this.options.addAll(options);
+			return this;
+		}
 
-
-		public DownloadBuilder withName(String name) {
+		@Override
+		public AbstractDownloadJobBuilder withName(String name) {
 			this.name = name;
 			return this;
 		}
 
-		public DownloadBuilder withUrl(String url) {
+		@Override
+		public AbstractDownloadJobBuilder withUrl(String url) {
 			this.url = url;
 			this.host=URI.create(url).getHost();
 			return this;
 		}
 
 		@Override
-		public DownloadBuilder withHandle(String keyValue) {
+		public AbstractDownloadJobBuilder withHandle(String keyValue) {
 			this.handle=keyValue;
 			return this;
 		}
@@ -419,12 +427,14 @@ public abstract class AbstractDownloadJob implements  java.io.Serializable, Down
 			return !StringUtils.isEmpty(handle);
 		}
 
-		public DownloadBuilder withDownloadPath(String downloadPath) {
+		@Override
+		public AbstractDownloadJobBuilder withDownloadPath(String downloadPath) {
 			this.downloadPath=downloadPath;
 			return this;
 		}
 
-		public DownloadBuilder withTargetPath(String targetPath) {
+		@Override
+		public AbstractDownloadJobBuilder withTargetPath(String targetPath) {
 			this.targetPath=targetPath;
 			return this;
 		}

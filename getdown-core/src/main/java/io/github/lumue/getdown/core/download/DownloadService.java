@@ -1,25 +1,22 @@
 package io.github.lumue.getdown.core.download;
 
-import io.github.lumue.getdown.core.download.downloader.YoutubedlDownloadJob;
+import io.github.lumue.getdown.core.common.util.Observer;
 import io.github.lumue.getdown.core.download.files.WorkPathManager;
-import io.github.lumue.getdown.core.download.job.AsyncJobRunner;
-import io.github.lumue.getdown.core.download.job.DownloadJob;
-import io.github.lumue.getdown.core.download.job.UrlProcessor;
+import io.github.lumue.getdown.core.download.job.*;
 import io.github.lumue.getdown.core.download.task.AsyncValidateTaskRunner;
 import io.github.lumue.getdown.core.download.task.DownloadTask;
 import io.github.lumue.getdown.core.download.task.DownloadTaskRepository;
-import io.github.lumue.getdown.core.download.task.TaskState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import reactor.bus.Event;
 import reactor.bus.EventBus;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -49,11 +46,20 @@ public class DownloadService {
 	
 	private final AsyncValidateTaskRunner validateTaskRunner;
 
+	private final Collection<DownloadJobFactory> downloadJobFactories;
+	private final Collection<ValidateTaskJobFactory> validateJobFactories;
+
+
+
 	public DownloadService(DownloadTaskRepository downloadTaskRepository,
-	                       AsyncJobRunner downloadJobRunner,
-	                       AsyncValidateTaskRunner validateTaskRunner,
-	                       String downloadPath,
-	                       EventBus eventbus, UrlProcessor urlProcessor, WorkPathManager workPathManager) {
+                           AsyncJobRunner downloadJobRunner,
+                           AsyncValidateTaskRunner validateTaskRunner,
+                           String downloadPath,
+                           EventBus eventbus,
+                           UrlProcessor urlProcessor,
+                           WorkPathManager workPathManager,
+                           Collection<DownloadJobFactory> downloadJobBuilders,
+						   Collection<ValidateTaskJobFactory> validateJobFactories) {
 		super();
 		this.downloadTaskRepository=downloadTaskRepository;
 		this.downloadJobRunner = downloadJobRunner;
@@ -62,7 +68,9 @@ public class DownloadService {
 		this.urlProcessor = urlProcessor;
 		this.workPathManager = workPathManager;
 		this.validateTaskRunner=validateTaskRunner;
-	}
+        this.downloadJobFactories = new ArrayList<>(downloadJobBuilders);
+        this.validateJobFactories = new ArrayList<>(validateJobFactories);
+    }
 
 
 
@@ -79,27 +87,24 @@ public class DownloadService {
 	}
 	
 	public void validateTask(DownloadTask task){
-		task=downloadTaskRepository.get(task.getHandle());
-		validateTaskRunner.submitTask(task);
+
+		ValidateTaskJob job =  validateJobFactories.stream()
+				.findFirst()
+				.orElseThrow()
+				.create(task);
+
+		job.addObserver((Observer<ValidateTaskJob>) observable -> {
+			eventbus.notify("tasks-state", Event.wrap(Objects.requireNonNull(observable.getTask())));
+			downloadTaskRepository.update(observable.getTask());
+		});
+
+		validateTaskRunner.submitJob(job);
 	}
 	
-	@Scheduled(cron = "0 15 */3 * * *")
-	public void refreshValidations(){
-		LOGGER.info("refreshing all validations");
-		downloadTaskRepository.stream().forEach(this::validateTask);
-	}
-	
-	
-	@Scheduled(fixedDelay = 10*60*1000)
-	public void retryFailedValidations(){
-		LOGGER.info("refreshing all validations");
-		downloadTaskRepository.stream()
-				.filter(t->!TaskState.VALIDATED.equals(t.getState()))
-				.forEach(this::validateTask);
-	}
+
 
 	public DownloadTask removeDownloadTask(final DownloadTask task) {
-		LOGGER.info("removing task "+task);
+        LOGGER.info("removing task {}", task);
 		downloadTaskRepository.remove(task.getHandle());
 		eventbus.notify("tasks-removed", Event.wrap(Objects.requireNonNull(task)));
 		return task;
@@ -114,7 +119,7 @@ public class DownloadService {
 			throw new RuntimeException(e);
 		}
 		eventbus.notify("tasks-created", Event.wrap(Objects.requireNonNull(task)));
-		LOGGER.info("task "+task+" created");
+        LOGGER.info("task {} created", task);
 		return task;
 	}
 
@@ -124,31 +129,29 @@ public class DownloadService {
 
 
 	public DownloadJob startDownload(final String handle) {
-		DownloadJob job = createDownloadJob(handle);
-		downloadJobRunner.submitJob(job);
-		eventbus.notify("downloads", Event.wrap(Objects.requireNonNull(job)));
-		return job;
-	}
+		DownloadTask downloadTask = downloadTaskRepository.get(handle);
+		
+		DownloadJob job =  downloadJobFactories.stream()
+				.findFirst()
+				.orElseThrow()
+						.create(downloadTask);
 
-	private DownloadJob createDownloadJob(String handle) {
-		DownloadTask task = downloadTaskRepository.get(handle);
-
-		DownloadJob job = YoutubedlDownloadJob.builder(task)
-				.withUrl(task.getSourceUrl())
-				.withDownloadPath(workPathManager.getPath(handle).toString())
-				.withTargetPath(downloadPath+ File.separator+task.getTargetLocation())
-				.withHandle(task.getHandle())
-				.build();
-		job.addObserver( o ->
+		job.addObserver(o ->
 				eventbus.notify("downloads-progress", Event.wrap(Objects.requireNonNull(o))
 				));
+		
+		downloadJobRunner.submitJob(job);
+		
+		eventbus.notify("downloads", Event.wrap(Objects.requireNonNull(job)));
+		
 		return job;
 	}
+
 
 	public void cancelDownload(final String handle){
 		DownloadJob job = getDownload(handle);
 		if(job==null){
-			LOGGER.warn("no job with handle "+handle+" found. nothing to cancel");
+            LOGGER.warn("no job with handle {} found. nothing to cancel", handle);
 			return;
 		}
 
@@ -158,11 +161,11 @@ public class DownloadService {
 	public void removeDownload(String downloadJobHandle) {
 		DownloadJob downloadJob = getDownload(downloadJobHandle);
 		if(downloadJob==null){
-			LOGGER.warn("no job with handle "+downloadJobHandle+" found. nothing to remove");
+            LOGGER.warn("no job with handle {} found. nothing to remove", downloadJobHandle);
 			return;
 		}
 
-		LOGGER.debug("removing download "+downloadJob);
+        LOGGER.debug("removing download {}", downloadJob);
 		if(RUNNING.equals(downloadJob.getState())){
 			cancelDownload(downloadJobHandle);
 		}

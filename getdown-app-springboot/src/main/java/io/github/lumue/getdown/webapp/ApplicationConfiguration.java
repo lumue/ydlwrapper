@@ -1,13 +1,16 @@
 package io.github.lumue.getdown.webapp;
 
 import io.github.lumue.getdown.core.common.persistence.jdkserializable.JdkSerializableDownloadTaskRepository;
+import io.github.lumue.getdown.core.download.DownloadJobFactory;
 import io.github.lumue.getdown.core.download.DownloadService;
+import io.github.lumue.getdown.core.download.ValidateTaskJobFactory;
 import io.github.lumue.getdown.core.download.files.WorkPathManager;
 import io.github.lumue.getdown.core.download.job.AsyncJobRunner;
 import io.github.lumue.getdown.core.download.job.ChainingUrlProcessor;
 import io.github.lumue.getdown.core.download.job.UrlProcessor;
 import io.github.lumue.getdown.core.download.task.AsyncValidateTaskRunner;
 import io.github.lumue.getdown.core.download.task.DownloadTaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +21,7 @@ import reactor.core.dispatch.ThreadPoolExecutorDispatcher;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,8 +45,8 @@ public class ApplicationConfiguration {
 	}
 	
 	@Bean
-	public AsyncValidateTaskRunner validateTaskRunner(@Value("${getdown.jobrunner.threads.prepare}") Integer threadsPrepare, EventBus eventBus,DownloadTaskRepository taskRepository){
-		return new AsyncValidateTaskRunner(threadsPrepare, eventBus, taskRepository);
+	public AsyncValidateTaskRunner validateTaskRunner(@Value("${getdown.jobrunner.threads.prepare}") Integer threadsPrepare){
+		return new AsyncValidateTaskRunner(threadsPrepare);
 	}
 
 
@@ -56,8 +60,18 @@ public class ApplicationConfiguration {
 			EventBus eventbus,
 			UrlProcessor urlProcessor,
 			WorkPathManager workPathManager,
-			AsyncValidateTaskRunner validateTaskRunner) {
-		return new DownloadService(downloadTaskRepository, downloadJobRunner, validateTaskRunner,downloadPath, eventbus, urlProcessor, workPathManager);
+			AsyncValidateTaskRunner validateTaskRunner,
+			@Autowired Collection<DownloadJobFactory> downloadJobFactories,
+			@Autowired Collection<ValidateTaskJobFactory> validateTaskJobFactories) {
+		return new DownloadService(downloadTaskRepository,
+				downloadJobRunner,
+				validateTaskRunner,
+				downloadPath,
+				eventbus,
+				urlProcessor,
+				workPathManager,
+				downloadJobFactories,
+				validateTaskJobFactories);
 	}
 
 	@Bean

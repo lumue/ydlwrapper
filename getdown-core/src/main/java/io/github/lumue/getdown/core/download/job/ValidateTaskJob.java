@@ -1,9 +1,10 @@
-package io.github.lumue.getdown.core.download.task;
+package io.github.lumue.getdown.core.download.job;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.lumue.getdown.core.common.util.Observable;
 import io.github.lumue.getdown.core.common.util.ObservableTemplate;
 import io.github.lumue.getdown.core.common.util.Observer;
+import io.github.lumue.getdown.core.download.task.DownloadTask;
 
 public abstract class ValidateTaskJob implements Runnable, Observable {
 	

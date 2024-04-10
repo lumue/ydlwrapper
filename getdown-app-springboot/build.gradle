@@ -45,7 +45,7 @@ dependencies {
 
 	implementation "org.slf4j:slf4j-api:$slf4j_version"
 
-	testImplementation "junit:junit$junit_version"
+	testImplementation "junit:junit:$junit_version"
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	// helper libs
@@ -69,9 +69,10 @@ task docker(dependsOn: assemble) {
 
 
 task dockerBuild(type: Exec){
-	def stageDir = file(project.buildDir.absolutePath + '/docker')
 
-	workingDir stageDir
+	Directory stageDir = project.layout.buildDirectory.dir('docker').get()
+
+	workingDir stageDir.asFile
 	executable = 'docker'
 	args=['build', '-t', "lumue/getdown:${project.version}", '.']
 
@@ -92,9 +93,7 @@ task dockerRun(type: Exec){
 
 	dependsOn 'dockerBuild'
 
-	def stageDir = file(project.buildDir.absolutePath + '/docker')
-
-	workingDir stageDir
+	workingDir project.layout.buildDirectory.dir('docker').get().asFile
 	executable = 'docker'
 	args=['run','-d',
 	      '--name',"getdown_${project.version}",
@@ -109,9 +108,7 @@ task dockerRun(type: Exec){
 
 task dockerStop(type: Exec){
 
-	def stageDir = file(project.buildDir.absolutePath + '/docker')
-
-	workingDir stageDir
+	workingDir(project.layout.buildDirectory.dir('docker').get().asFile)
 	executable = 'docker'
 	args=['stop',"getdown_${project.version}"]
 
@@ -123,9 +120,7 @@ task dockerRemove(type: Exec){
 
 	dependsOn 'dockerStop'
 
-	def stageDir = file(project.buildDir.absolutePath + '/docker')
-
-	workingDir stageDir
+	workingDir project.layout.buildDirectory.dir('docker').get().asFile
 	executable = 'docker'
 	args=['rm','-f',"getdown_${project.version}"]
 
@@ -134,9 +129,6 @@ task dockerRemove(type: Exec){
 
 task dockerTagLatest(type: Exec){
 
-	mustRunAfter 'dockerBuild'
-
-	workingDir(file(project.buildDir.absolutePath + '/docker'))
 
 	executable = 'docker'
 	args= ['tag', "lumue/getdown:${project.version}", 'lumue/getdown:latest']

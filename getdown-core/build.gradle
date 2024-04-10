@@ -2,7 +2,7 @@
 apply plugin:'java'
 dependencies {
 
-	implementation 'com.github.lumue:ydlwrapper:master-SNAPSHOT'
+	implementation 'com.github.lumue:ydlwrapper:1.1'
 
     implementation "io.projectreactor:reactor-core:$reactor_version"
     implementation "io.projectreactor:reactor-bus:$reactor_version"
@@ -25,7 +25,7 @@ dependencies {
     implementation group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.6.2'
 
     implementation group: 'javax.annotation', name: 'jsr250-api', version: '1.0'
-    implementation group: 'org.springframework', name: 'spring-context', version: '4.3.17.RELEASE'
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.31'
 }
 
 apply from: '../gradle/plantuml.gradle'

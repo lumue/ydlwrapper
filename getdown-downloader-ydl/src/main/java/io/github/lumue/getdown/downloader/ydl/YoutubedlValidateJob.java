@@ -1,8 +1,8 @@
-package io.github.lumue.getdown.core.download.downloader;
+package io.github.lumue.getdown.downloader.ydl;
 
 import io.github.lumue.getdown.core.download.task.DownloadFormat;
 import io.github.lumue.getdown.core.download.task.DownloadTask;
-import io.github.lumue.getdown.core.download.task.ValidateTaskJob;
+import io.github.lumue.getdown.core.download.job.ValidateTaskJob;
 import io.github.lumue.ydlwrapper.download.YdlDownloadTask;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.Format;
 import io.github.lumue.ydlwrapper.metadata.single_info_json.HttpHeaders;
@@ -23,16 +23,16 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-public class YoutubedlValidateTaskJob extends ValidateTaskJob {
+public class YoutubedlValidateJob extends ValidateTaskJob {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(YoutubedlValidateTaskJob.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(YoutubedlValidateJob.class);
 	private final transient AtomicReference<YdlDownloadTask> ydlTaskReference = new AtomicReference<>(null);
 	private boolean forceMp4OnYoutube = true;
 	
 	private String pathToYdl = "/usr/local/bin/youtube-dl";
 	
 	
-	public YoutubedlValidateTaskJob(DownloadTask task) {
+	public YoutubedlValidateJob(DownloadTask task) {
 		super(task);
 	}
 	
@@ -83,13 +83,13 @@ public class YoutubedlValidateTaskJob extends ValidateTaskJob {
 	
 	private List<DownloadFormat> toFormatsFromRequested(List<RequestedFormat> requestedFormats) {
 		return requestedFormats.stream()
-				.map(YoutubedlValidateTaskJob::toFormat)
+				.map(YoutubedlValidateJob::toFormat)
 				.collect(Collectors.toList());
 	}
 	
 	private List<DownloadFormat> toFormats(List<Format> formats) {
 		return formats.stream()
-				.map(YoutubedlValidateTaskJob::toFormat)
+				.map(YoutubedlValidateJob::toFormat)
 				.collect(Collectors.toList());
 	}
 	
