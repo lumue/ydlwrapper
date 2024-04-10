@@ -2,8 +2,6 @@
 apply plugin:'java'
 dependencies {
 
-	implementation 'com.github.lumue:ydlwrapper:1.1'
-
     implementation "io.projectreactor:reactor-core:$reactor_version"
     implementation "io.projectreactor:reactor-bus:$reactor_version"
 
