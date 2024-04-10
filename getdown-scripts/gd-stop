@@ -1,0 +1,7 @@
+#!/bin/bash
+getdown_api=${GETDOWN_API:-"https://getdown.local.lumue.net"}
+dlscript="curl --silent -X DELETE --location $getdown_api/download/"
+$dlscript$1
+
+
+

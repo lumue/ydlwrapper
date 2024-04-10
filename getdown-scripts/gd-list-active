@@ -1,0 +1,3 @@
+#!/bin/bash
+getdown_api=${GETDOWN_API:-"https://getdown.local.lumue.net"}
+curl --silent -X GET --location "$getdown_api/download/state/running"  | jq -j '.[] | .name," - ",.handle,"\n",.state,"\t",.message,"\n\n"'

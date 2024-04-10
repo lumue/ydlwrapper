@@ -1,0 +1,6 @@
+#!/bin/bash
+while read p; do
+  gd-add $p
+done <$1
+
+
