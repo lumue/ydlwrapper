@@ -28,7 +28,9 @@ sourceSets {
 
 
 dependencies {
+
 	implementation project(':getdown-core')
+	runtimeOnly project(':getdown-downloader-ydl')
 	implementation project(':getdown-ux-console')
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
