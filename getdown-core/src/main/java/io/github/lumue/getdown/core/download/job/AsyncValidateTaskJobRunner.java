@@ -1,16 +1,11 @@
-package io.github.lumue.getdown.core.download.task;
+package io.github.lumue.getdown.core.download.job;
 
-import io.github.lumue.getdown.core.common.util.Observer;
-import io.github.lumue.getdown.core.download.job.ValidateTaskJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import reactor.bus.Event;
-import reactor.bus.EventBus;
 
 import javax.annotation.PostConstruct;
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -22,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * jobs are added to a queue, and then taken one by one and passed to
  * the prepare and download executors.
  */
-public class AsyncValidateTaskRunner implements Runnable {
+public class AsyncValidateTaskJobRunner implements Runnable {
 
 
 	private final ThreadPoolTaskExecutor prepareExecutor;
@@ -38,11 +33,11 @@ public class AsyncValidateTaskRunner implements Runnable {
 	});
 
 
-	private static Logger LOGGER = LoggerFactory.getLogger(AsyncValidateTaskRunner.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(AsyncValidateTaskJobRunner.class);
 	private final Executor jobRunner;
 
 
-	public AsyncValidateTaskRunner(
+	public AsyncValidateTaskJobRunner(
 			int maxThreadsPrepare) {
 		super();
 		this.prepareExecutor = executor("validate-task-executor",maxThreadsPrepare);
@@ -51,14 +46,14 @@ public class AsyncValidateTaskRunner implements Runnable {
 
 
 	private void runValidation(final ValidateTaskJob validateJob) {
-		AsyncValidateTaskRunner.LOGGER.debug("validating " +validateJob);
+		AsyncValidateTaskJobRunner.LOGGER.debug("validating " +validateJob);
 			CompletableFuture.runAsync(validateJob, prepareExecutor);
 			
 	}
 
 	public void submitJob(final ValidateTaskJob validateTaskJob) {
 		String jobUrl = validateTaskJob.getTask().getSourceUrl();
-		AsyncValidateTaskRunner.LOGGER.debug("queueing job " + jobUrl + " for validation");
+		AsyncValidateTaskJobRunner.LOGGER.debug("queueing job " + jobUrl + " for validation");
 
 
 		taskQueue.add(validateTaskJob);

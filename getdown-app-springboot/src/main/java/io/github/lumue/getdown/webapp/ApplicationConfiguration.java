@@ -5,10 +5,10 @@ import io.github.lumue.getdown.core.download.DownloadJobFactory;
 import io.github.lumue.getdown.core.download.DownloadService;
 import io.github.lumue.getdown.core.download.ValidateTaskJobFactory;
 import io.github.lumue.getdown.core.download.files.WorkPathManager;
-import io.github.lumue.getdown.core.download.job.AsyncJobRunner;
+import io.github.lumue.getdown.core.download.job.AsyncDownloadJobRunner;
 import io.github.lumue.getdown.core.download.job.ChainingUrlProcessor;
 import io.github.lumue.getdown.core.download.job.UrlProcessor;
-import io.github.lumue.getdown.core.download.task.AsyncValidateTaskRunner;
+import io.github.lumue.getdown.core.download.job.AsyncValidateTaskJobRunner;
 import io.github.lumue.getdown.core.download.task.DownloadTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,19 +34,19 @@ public class ApplicationConfiguration {
 	}
 
 	@Bean
-	public AsyncJobRunner downloadJobRunner(
+	public AsyncDownloadJobRunner downloadJobRunner(
 			@Value("${getdown.jobrunner.threads.prepare}") Integer threadsPrepare,
 			@Value("${getdown.jobrunner.threads.download}") Integer threadsDownload,
 			@Value("${getdown.jobrunner.threads.postprocess}") Integer threadsPostprocess) {
 
-		return new AsyncJobRunner(threadsPrepare,
+		return new AsyncDownloadJobRunner(threadsPrepare,
 				threadsDownload,
 				threadsPostprocess);
 	}
 	
 	@Bean
-	public AsyncValidateTaskRunner validateTaskRunner(@Value("${getdown.jobrunner.threads.prepare}") Integer threadsPrepare){
-		return new AsyncValidateTaskRunner(threadsPrepare);
+	public AsyncValidateTaskJobRunner validateTaskRunner(@Value("${getdown.jobrunner.threads.prepare}") Integer threadsPrepare){
+		return new AsyncValidateTaskJobRunner(threadsPrepare);
 	}
 
 
@@ -55,12 +55,12 @@ public class ApplicationConfiguration {
 	@Bean
 	public DownloadService downloadService(
 			DownloadTaskRepository downloadTaskRepository,
-			AsyncJobRunner downloadJobRunner,
+			AsyncDownloadJobRunner downloadJobRunner,
 			@Value("${getdown.path.media}") String downloadPath,
 			EventBus eventbus,
 			UrlProcessor urlProcessor,
 			WorkPathManager workPathManager,
-			AsyncValidateTaskRunner validateTaskRunner,
+			AsyncValidateTaskJobRunner validateTaskRunner,
 			@Autowired Collection<DownloadJobFactory> downloadJobFactories,
 			@Autowired Collection<ValidateTaskJobFactory> validateTaskJobFactories) {
 		return new DownloadService(downloadTaskRepository,

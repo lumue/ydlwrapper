@@ -3,7 +3,7 @@ package io.github.lumue.getdown.core.download;
 import io.github.lumue.getdown.core.common.util.Observer;
 import io.github.lumue.getdown.core.download.files.WorkPathManager;
 import io.github.lumue.getdown.core.download.job.*;
-import io.github.lumue.getdown.core.download.task.AsyncValidateTaskRunner;
+import io.github.lumue.getdown.core.download.job.AsyncValidateTaskJobRunner;
 import io.github.lumue.getdown.core.download.task.DownloadTask;
 import io.github.lumue.getdown.core.download.task.DownloadTaskRepository;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class DownloadService {
 
 	private final static Logger LOGGER=LoggerFactory.getLogger(DownloadService.class);
 
-	private final AsyncJobRunner downloadJobRunner;
+	private final AsyncDownloadJobRunner downloadJobRunner;
 
 	private final String downloadPath;
 
@@ -44,7 +44,7 @@ public class DownloadService {
 
 	private final WorkPathManager workPathManager;
 	
-	private final AsyncValidateTaskRunner validateTaskRunner;
+	private final AsyncValidateTaskJobRunner validateTaskRunner;
 
 	private final Collection<DownloadJobFactory> downloadJobFactories;
 	private final Collection<ValidateTaskJobFactory> validateJobFactories;
@@ -52,8 +52,8 @@ public class DownloadService {
 
 
 	public DownloadService(DownloadTaskRepository downloadTaskRepository,
-                           AsyncJobRunner downloadJobRunner,
-                           AsyncValidateTaskRunner validateTaskRunner,
+                           AsyncDownloadJobRunner downloadJobRunner,
+                           AsyncValidateTaskJobRunner validateTaskRunner,
                            String downloadPath,
                            EventBus eventbus,
                            UrlProcessor urlProcessor,

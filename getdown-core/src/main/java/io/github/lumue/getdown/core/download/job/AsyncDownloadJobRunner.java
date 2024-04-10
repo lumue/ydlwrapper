@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * jobs are added to a queue, and then taken one by one and passed to
  * the prepare and download executors.
  */
-public class AsyncJobRunner implements Runnable {
+public class AsyncDownloadJobRunner implements Runnable {
 	
 	
 	private final ThreadPoolTaskExecutor downloadExecutor;
@@ -45,11 +45,11 @@ public class AsyncJobRunner implements Runnable {
 	});
 	
 	
-	private static Logger LOGGER = LoggerFactory.getLogger(AsyncJobRunner.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(AsyncDownloadJobRunner.class);
 	private final Executor jobRunner;
 	
 	
-	public AsyncJobRunner(
+	public AsyncDownloadJobRunner(
 			int maxThreadsPrepare,
 			int maxThreadsDownload,
 			int maxThreadsPostprocess) {
@@ -63,7 +63,7 @@ public class AsyncJobRunner implements Runnable {
 	
 	private void runJob(final DownloadJob job) {
 		String jobUrl = job.getUrl();
-		AsyncJobRunner.LOGGER.debug("starting " + jobUrl);
+		AsyncDownloadJobRunner.LOGGER.debug("starting " + jobUrl);
 		running.add(job);
 		if (!job.isPrepared()) {
 			CompletableFuture.runAsync(job::prepare, prepareExecutor)
@@ -92,7 +92,7 @@ public class AsyncJobRunner implements Runnable {
 		
 		String jobUrl = job.getUrl();
 		job.waiting();
-		AsyncJobRunner.LOGGER.debug("queueing " + jobUrl + " for execution");
+		AsyncDownloadJobRunner.LOGGER.debug("queueing " + jobUrl + " for execution");
 		jobQueue.add(job);
 	}
 	
