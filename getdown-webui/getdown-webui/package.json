@@ -1,0 +1,24 @@
+{
+  "name": "getdown-webui",
+  "description": "Webcomponent getdown-webui following open-wc recommendations",
+  "license": "MIT",
+  "author": "getdown-webui",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "analyze": "cem analyze --litelement",
+    "start": "web-dev-server"
+  },
+  "dependencies": {
+    "@vaadin/grid": "^24.2.6",
+    "@vaadin/polymer-legacy-adapter": "^24.2.6",
+    "@vaadin/split-layout": "^24.2.6",
+    "@vaadin/vaadin-split-layout": "^23.3.30",
+    "lit": "^2.0.2"
+  },
+  "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.4.17",
+    "@web/dev-server": "^0.1.34"
+  },
+  "customElements": "custom-elements.json"
+}
